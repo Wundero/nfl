@@ -46,11 +46,106 @@ const nullableHexColor = z.preprocess(
 
 const urlSchema = z.url();
 
+const nullableCodeString = <T extends z.ZodType<unknown, string>>(sch: T) =>
+  z.preprocess((v) => (v === "0" ? null : v), nullableStringOf(sch));
+
+// Tolerant date parsing: accepts Date objects, epoch millis, ISO date/datetime
+// strings, "M/D/YY[, H:mm:ss]" strings and human-readable strings. Wall-clock
+// values without an explicit offset are interpreted in America/New_York (EST/EDT).
+const NFLVERSE_TIMEZONE = "America/New_York";
+
+function timeZoneOffsetMs(date: Date) {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: NFLVERSE_TIMEZONE,
+    hour12: false,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  }).formatToParts(date);
+  const get = (type: string) => Number(parts.find((p) => p.type === type)?.value ?? "0");
+  const asUtc = Date.UTC(
+    get("year"),
+    get("month") - 1,
+    get("day"),
+    get("hour") % 24,
+    get("minute"),
+    get("second"),
+  );
+  return asUtc - date.getTime();
+}
+
+function zonedTimeToDate(year: number, month: number, day: number, hour = 0, minute = 0, second = 0) {
+  const guess = Date.UTC(year, month - 1, day, hour, minute, second);
+  return new Date(guess - timeZoneOffsetMs(new Date(guess)));
+}
+
+const ISO_DATE = /^(\d{4})-(\d{2})-(\d{2})$/;
+const SLASH_DATE = /^(\d{1,2})\/(\d{1,2})\/(\d{2,4})(?:[,\s]+(\d{1,2}):(\d{2})(?::(\d{2}))?)?$/;
+const HAS_TIMEZONE = /(?:Z|[+-]\d{2}:?\d{2}|GMT[+-]\d{4})$/i;
+
+function parseDate(v: unknown): Date | null {
+  if (v === null || v === undefined || v === "") {
+    return null;
+  }
+  if (v instanceof Date) {
+    return Number.isNaN(v.getTime()) ? null : v;
+  }
+  if (typeof v === "number") {
+    return new Date(v);
+  }
+  if (typeof v !== "string") {
+    return null;
+  }
+  const s = v.trim();
+  if (!s) {
+    return null;
+  }
+  const isoDate = ISO_DATE.exec(s);
+  if (isoDate) {
+    return zonedTimeToDate(Number(isoDate[1]), Number(isoDate[2]), Number(isoDate[3]));
+  }
+  const slash = SLASH_DATE.exec(s);
+  if (slash) {
+    let year = Number(slash[3]);
+    if (year < 100) {
+      year += 2000;
+    }
+    return zonedTimeToDate(
+      year,
+      Number(slash[1]),
+      Number(slash[2]),
+      Number(slash[4] ?? 0),
+      Number(slash[5] ?? 0),
+      Number(slash[6] ?? 0),
+    );
+  }
+  const parsed = new Date(s);
+  if (Number.isNaN(parsed.getTime())) {
+    return null;
+  }
+  if (HAS_TIMEZONE.test(s)) {
+    return parsed;
+  }
+  return zonedTimeToDate(
+    parsed.getUTCFullYear(),
+    parsed.getUTCMonth() + 1,
+    parsed.getUTCDate(),
+    parsed.getUTCHours(),
+    parsed.getUTCMinutes(),
+    parsed.getUTCSeconds(),
+  );
+}
+
+const nullableDate = z.unknown().transform((v) => parseDate(v));
+
 const tradeSchema = z
   .object({
     trade_id: nullableInt.describe("The ID of the trade"),
     season: nullableInt.describe("The season (year) when the trade happened"),
-    trade_date: z.pipe(z.coerce.string(), z.iso.date()).describe("The date of the trade"),
+    trade_date: nullableDate.describe("The date of the trade"),
     gave: z.string().nullish().describe("The team (Abbreviation) which sent the resource"),
     received: z.string().nullish().describe("The team (Abbreviation) which received the resource"),
     pick_season: nullableInt.describe("The year the draft pick is for. Null = no pick traded."),
@@ -114,7 +209,7 @@ const gamesSchema = z
     // The week number of the season game, 1..22 or so
     week: nullableInt.describe("The week of the season the game took place (1-22)."),
     // The ISO date of the game
-    gameday: z.iso.date().describe("The date the game took place."),
+    gameday: nullableDate.describe("The date the game took place."),
     // The day of the week the game was played on
     weekday: z.enum(["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"])
       .describe("The day of the week the game took place."),
@@ -248,30 +343,7 @@ const playerStatsSchemaBase = z.object({
     })
     .describe("The player name"),
   player_display_name: z.string().nullish().describe("The full/display name of the player"),
-  position: z.enum([
-      "CB",
-      "DT",
-      "QB",
-      "DB",
-      "OLB",
-      "TE",
-      "FB",
-      "K",
-      "DE",
-      "MLB",
-      "FS",
-      "LB",
-      "P",
-      "WR",
-      "S",
-      "OT",
-      "G",
-      "RB",
-      "NT",
-      "ILB",
-      "C",
-      "LS",
-    ]).describe(`The position the player plays. Mapping:
+  position: nullableString.describe(`The position the player plays. Mapping:
 CB=Cornerback
 DT=Defensive Tackle
 QB=Quarterback
@@ -294,7 +366,7 @@ NT=Nose tackle (Defensive tackle)
 ILB=Interior Linebacker
 C=Center
 LS=Longsnapper`),
-  position_group: z.enum(["DB", "DL", "QB", "LB", "TE", "RB", "SPEC", "WR", "OL"]).describe(`The position group the player plays in. Mapping:
+  position_group: nullableString.describe(`The position group the player plays in. Mapping:
 DB=Defensive backs (Corners, safeties)
 DL=Defensive line (DT, DE, NT)
 QB=Quarterbacks
@@ -985,12 +1057,12 @@ const ftnChartingSchema = z.object({
   week: nullableFloat.describe("The week in the season of the game"),
   ftn_play_id: z.coerce.string().describe("The FTN ID of the play"),
   nflverse_play_id: z.coerce.string().describe("The NFL Verse ID of the play"),
-  starting_hash: nullableStringOf(z.enum(["R", "L", "M"]))
+  starting_hash: nullableCodeString(z.enum(["R", "L", "M"]))
     .describe(`The section of the field the ball started at. Mapping:
 L=Left hash
 R=Right hash
 M=Middle (center)`),
-  qb_location: nullableStringOf(z.enum(["U", "S", "P"]))
+  qb_location: nullableCodeString(z.enum(["U", "S", "P"]))
     .describe(`The starting position of the quarterback. Mapping:
 U=Under center
 S=Shotgun
@@ -1006,7 +1078,7 @@ P=Pistol`),
   is_qb_out_of_pocket: boolFromBinary.describe("Whether the QB left the pocket during the play"),
   is_interception_worthy: boolFromBinary.describe("Whether the throw was interception worthy"),
   is_throw_away: boolFromBinary.describe("Whether the throw was intended to not go to anyone"),
-  read_thrown: nullableStringOf(z.enum(["CHK", "1", "2", "3", "4", "SD", "DES"])).describe(
+  read_thrown: nullableCodeString(z.enum(["CHK", "1", "2", "3", "4", "SD", "DES"])).describe(
     `Which read was thrown to, if any. Mapping:
 CHK=Checkdown
 1-4=The numbered read in the progression
@@ -1025,7 +1097,7 @@ DES=Designed read`,
   n_blitzers: nullableInt.describe("The number of blitzers (additional rushers) on the play"),
   n_pass_rushers: nullableInt.describe("The number of pass rushers (total) on the play"),
   is_qb_fault_sack: boolFromBinary.describe("Whether the QB is at fault for taking the sack or not"),
-  date_pulled: z.pipe(z.coerce.string(), z.iso.datetime()).describe("When this data was fetched"),
+  date_pulled: nullableDate.describe("When this data was fetched"),
 });
 
 const espnQbrSeasonalSchema = z.object({
@@ -1093,71 +1165,8 @@ const espnQbrWeeklySchema = espnQbrSeasonalSchema.extend({
 const rosterWeeklySchema = z.object({
   season: nullableFloat.describe("The season (year) for the roster entry"),
   team: z.string().nullish().describe("The team (Abbreviation) for this roster entry"),
-  position: nullableStringOf(
-    z.enum([
-      "RB",
-      "CB",
-      "G",
-      "T",
-      "DT",
-      "DE",
-      "K",
-      "SS",
-      "C",
-      "FS",
-      "WR",
-      "TE",
-      "FB",
-      "OLB",
-      "QB",
-      "P",
-      "MLB",
-      "NT",
-      "ILB",
-      "LB",
-      "DB",
-      "S",
-      "LS",
-      "KR",
-      "PR",
-      "DL",
-      "OL",
-    ]),
-  ).describe("The position the player plays on this roster."),
-  depth_chart_position: nullableStringOf(
-    z.enum([
-      "K",
-      "LS",
-      "QB",
-      "P",
-      "WR",
-      "OLB",
-      "DE",
-      "TE",
-      "DT",
-      "CB",
-      "SS",
-      "T",
-      "NT",
-      "LB",
-      "FS",
-      "FB",
-      "RB",
-      "DB",
-      "S",
-      "ILB",
-      "G",
-      "OG",
-      "C",
-      "MLB",
-      "OT",
-      "OL",
-      "SAF",
-      "DL",
-      "PR",
-      "HB",
-    ]),
-  ).describe("The depth chart listed position of this player"),
+  position: nullableString.describe("The position the player plays on this roster."),
+  depth_chart_position: nullableString.describe("The depth chart listed position of this player"),
   jersey_number: z.coerce.string().describe("The jersey number this player wears"),
   status: z.enum([
         "ACT",
@@ -1209,7 +1218,7 @@ E14=On the roster as an exempt international player (International Player Pathwa
   full_name: z.string().nullish().describe("The player's full name"),
   first_name: z.string().nullish().describe("The player's first name"),
   last_name: z.string().nullish().describe("The player's last name"),
-  birth_date: z.pipe(z.coerce.string(), z.iso.date()).describe("The player's birth date"),
+  birth_date: nullableDate.describe("The player's birth date"),
   height: z.coerce.number().describe("The player's height in inches"),
   weight: z.coerce.number().describe("The player's weight in lbs"),
   college: z.string().nullish().describe("The college the player went to"),
@@ -1226,27 +1235,7 @@ E14=On the roster as an exempt international player (International Player Pathwa
   sleeper_id: nullableString.describe("The player's Sleeper ID"),
   years_exp: nullableInt.describe("The number of years the player has been in the league"),
   headshot_url: nullableStringOf(z.url()).describe("The player's headshot image URL"),
-  ngs_position: nullableStringOf(
-    z.enum([
-      "QB",
-      "WR",
-      "SLOT_WR",
-      "EDGE",
-      "INTERIOR_LINE",
-      "TE",
-      "CB",
-      "SLOT_CB",
-      "SAFETY",
-      "T",
-      "MLB",
-      "FB",
-      "RB",
-      "G",
-      "C",
-      "OLB",
-      "EXTRA_OL",
-    ]),
-  ).describe("The player's NextGenStats position"),
+  ngs_position: nullableString.describe("The player's NextGenStats position"),
   week: nullableInt.describe("The week this roster entry represents"),
   game_type: nullableStringOf(z.enum(["REG", "DIV", "WC", "CON", "SB"])).describe(
     `The game type for this week's game. Mapping:
@@ -1295,10 +1284,8 @@ const playerSchema = z.object({
   smart_id: nullableString.describe(
     "The player's SMART ID (the NFL's SMART player ID used for cross-system linking)",
   ),
-  birth_date: z
-    .pipe(z.coerce.string(), z.iso.date())
-    .describe("The player's birth date (ISO 8601 date)"),
-  position_group: z.enum(["DL", "RB", "LB", "SPEC", "WR", "DB", "TE", "OL", "QB"])
+  birth_date: nullableDate.describe("The player's birth date (ISO 8601 date)"),
+  position_group: nullableString
     .describe(
       `The player's position group. Mapping:
 DL=Defensive Line
@@ -1311,33 +1298,7 @@ TE=Tight End
 OL=Offensive Line
 QB=Quarterback`,
     ),
-  position: z.enum([
-        "NT",
-        "RB",
-        "LB",
-        "K",
-        "WR",
-        "DE",
-        "S",
-        "DB",
-        "FS",
-        "OLB",
-        "TE",
-        "CB",
-        "G",
-        "OT",
-        "DT",
-        "C",
-        "MLB",
-        "QB",
-        "SAF",
-        "LS",
-        "DL",
-        "P",
-        "ILB",
-        "OL",
-        "FB",
-      ])
+  position: nullableString
     .describe(
       `The player's primary position. Mapping:
 NT=Nose Tackle
@@ -1366,9 +1327,7 @@ ILB=Inside Linebacker
 OL=Offensive Lineman
 FB=Fullback`,
     ),
-  ngs_position_group: nullableStringOf(
-    z.enum(["RB", "WR", "DL", "DB", "OL", "TE", "LB", "QB", "SPEC"]),
-  ).describe(
+  ngs_position_group: nullableString.describe(
     `The player's Next Gen Stats position group. Mapping:
 RB=Running Back
 WR=Wide Receiver
@@ -1380,27 +1339,7 @@ LB=Linebacker
 QB=Quarterback
 SPEC=Special Teams`,
   ),
-  ngs_position: nullableStringOf(
-    z.enum([
-      "RB",
-      "WR",
-      "INTERIOR_LINE",
-      "EDGE",
-      "HIGH_SAFETY",
-      "SLOT_CB",
-      "CB",
-      "SAFETY",
-      "G",
-      "T",
-      "TE",
-      "MLB",
-      "QB",
-      "SLOT_WR",
-      "C",
-      "FB",
-      "OLB",
-    ]),
-  ).describe(
+  ngs_position: nullableString.describe(
     `The player's Next Gen Stats position. Mapping:
 RB=Running Back
 WR=Wide Receiver
@@ -1511,27 +1450,7 @@ E14=Exempt international player (International Player Pathway)`,
     "The Next Gen Stats short description of the player's status (e.g. 'Active', 'R/Injured', 'Practice Squad')",
   ),
   years_of_experience: nullableInt.describe("The player's years of NFL experience"),
-  pff_position: nullableStringOf(
-    z.enum([
-      "DI",
-      "HB",
-      "WR",
-      "S",
-      "LB",
-      "CB",
-      "G",
-      "ED",
-      "T",
-      "TE",
-      "LS",
-      "FB",
-      "K",
-      "ST",
-      "QB",
-      "C",
-      "P",
-    ]),
-  ).describe(
+  pff_position: nullableString.describe(
     `The player's Pro Football Focus position. Mapping:
 DI=Defensive Interior
 HB=Halfback
@@ -1611,37 +1530,9 @@ const draftPicksSchema = z.object({
   cfb_player_id: nullableString.describe("College Football Reference player identifier; null when empty"),
   pfr_player_name: nullableString.describe("Player name as listed on Pro-Football-Reference; null when empty"),
   hof: boolFromBinary.describe("True if the player is in the Pro Football Hall of Fame (0/null/undefined coerce to false; 'TRUE'/'FALSE' strings accepted)"),
-  position: z.enum([
-      "RB",
-      "WR",
-      "T",
-      "DE",
-      "TE",
-      "DB",
-      "G",
-      "QB",
-      "LB",
-      "C",
-      "NT",
-      "P",
-      "DT",
-      "K",
-      "FB",
-      "KR",
-      "OL",
-      "DL",
-      "OLB",
-      "CB",
-      "S",
-      "ILB",
-      "LS",
-      "OT",
-      "SAF",
-      "FS",
-      "OG",
-    ]).describe("Position at time of draft: RB=Running Back, WR=Wide Receiver, T=Tackle, DE=Defensive End, TE=Tight End, DB=Defensive Back, G=Guard, QB=Quarterback, LB=Linebacker, C=Center, NT=Nose Tackle, P=Punter, DT=Defensive Tackle, K=Kicker, FB=Fullback, KR=Kick Returner, OL=Offensive Lineman, DL=Defensive Lineman, OLB=Outside Linebacker, CB=Cornerback, S=Safety, ILB=Inside Linebacker, LS=Long Snapper, OT=Offensive Tackle, SAF=Safety, FS=Free Safety, OG=Offensive Guard"),
-  category: z.enum(["RB", "WR", "OL", "DL", "TE", "DB", "QB", "LB", "P", "K", "KR", "LS", "FS", "OG"]).describe("Broad position category: RB=Running Back, WR=Wide Receiver, OL=Offensive Line, DL=Defensive Line, TE=Tight End, DB=Defensive Back, QB=Quarterback, LB=Linebacker, P=Punter, K=Kicker, KR=Kick Returner, LS=Long Snapper, FS=Free Safety, OG=Offensive Guard"),
-  side: nullableStringOf(z.enum(["O", "D", "S"])).describe("Side of the ball: O=Offense, D=Defense, S=Special Teams; null when empty"),
+  position: nullableString.describe("Position at time of draft: RB=Running Back, WR=Wide Receiver, T=Tackle, DE=Defensive End, TE=Tight End, DB=Defensive Back, G=Guard, QB=Quarterback, LB=Linebacker, C=Center, NT=Nose Tackle, P=Punter, DT=Defensive Tackle, K=Kicker, FB=Fullback, KR=Kick Returner, OL=Offensive Lineman, DL=Defensive Lineman, OLB=Outside Linebacker, CB=Cornerback, S=Safety, ILB=Inside Linebacker, LS=Long Snapper, OT=Offensive Tackle, SAF=Safety, FS=Free Safety, OG=Offensive Guard"),
+  category: nullableString.describe("Broad position category: RB=Running Back, WR=Wide Receiver, OL=Offensive Line, DL=Defensive Line, TE=Tight End, DB=Defensive Back, QB=Quarterback, LB=Linebacker, P=Punter, K=Kicker, KR=Kick Returner, LS=Long Snapper, FS=Free Safety, OG=Offensive Guard"),
+  side: nullableString.describe("Side of the ball: O=Offense, D=Defense, S=Special Teams; null when empty"),
   college: nullableString.describe("College attended; null when empty"),
   age: nullableInt.describe("Age at the time of the draft"),
   to: nullableInt.describe("Last season year in which the player played; null when empty or unparseable"),
@@ -1670,26 +1561,7 @@ const draftPicksSchema = z.object({
 
 const histContractsSchema = z.object({
   player: z.string().nullish().describe("Player full name"),
-  position: z.enum([
-      "QB",
-      "RB",
-      "FB",
-      "WR",
-      "TE",
-      "LT",
-      "LG",
-      "C",
-      "RG",
-      "RT",
-      "IDL",
-      "ED",
-      "LB",
-      "CB",
-      "S",
-      "K",
-      "P",
-      "LS",
-    ]).describe("Player position: QB=Quarterback, RB=Running Back, FB=Fullback, WR=Wide Receiver, TE=Tight End, LT=Left Tackle, LG=Left Guard, C=Center, RG=Right Guard, RT=Right Tackle, IDL=Interior Defensive Line, ED=Edge Rusher, LB=Linebacker, CB=Cornerback, S=Safety, K=Kicker, P=Punter, LS=Long Snapper"),
+  position: nullableString.describe("Player position: QB=Quarterback, RB=Running Back, FB=Fullback, WR=Wide Receiver, TE=Tight End, LT=Left Tackle, LG=Left Guard, C=Center, RG=Right Guard, RT=Right Tackle, IDL=Interior Defensive Line, ED=Edge Rusher, LB=Linebacker, CB=Cornerback, S=Safety, K=Kicker, P=Punter, LS=Long Snapper"),
   team: z.string().nullish().describe("Team nickname, or slash-separated abbreviations when the contract spanned multiple teams (e.g. 'LAR/SEA')"),
   is_active: boolFromBinary.describe("True if the contract is currently active (0/null/undefined coerce to false)"),
   year_signed: nullableInt.describe("Calendar year in which the contract was signed"),
@@ -1703,7 +1575,7 @@ const histContractsSchema = z.object({
   inflated_guaranteed: nullableFloat.describe("Guaranteed money in USD adjusted for salary-cap inflation"),
   player_page: z.url().describe("OverTheCap player page URL"),
   otc_id: z.coerce.string().describe("OverTheCap player identifier"),
-  date_of_birth: z.string().nullish().describe("Informal date of birth string from OverTheCap; ignore in favor of other sources"),
+  date_of_birth: nullableDate.describe("Date of birth parsed from OverTheCap's informal value; prefer other sources"),
   height: z.coerce.string().describe("Informal height string in ft'in\" format; ignore in favor of other sources"),
   weight: z.coerce.string().describe("Informal weight string in lbs, may be the literal 'NA'; ignore in favor of other sources"),
   college: z.string().nullish().describe("College attended"),
@@ -1712,6 +1584,25 @@ const histContractsSchema = z.object({
   draft_overall: z.coerce.string().describe("Informal overall draft pick number string; ignore in favor of other sources"),
   draft_team: z.string().nullish().describe("Informal drafting team string; ignore in favor of other sources"),
   season_history: z.coerce.string().describe("Concise string of the seasons the player played (informal summary from OverTheCap)"),
+  gsis_id: z.string().nullish().describe("The player's GSIS (Game Statistics and Information System) ID"),
+  contract_history: z
+    .array(
+      z.object({
+        team: z.string().nullish().describe("Team name for the contract"),
+        contract_type: z.string().nullish().describe("How the contract was acquired (e.g. Drafted, Extension)"),
+        status: z.string().nullish().describe("Status of the contract (e.g. Active, Expired)"),
+        year_signed: nullableInt.describe("Calendar year the contract was signed"),
+        yrs: nullableInt.describe("Number of years on the contract"),
+        total: nullableFloat.describe("Total contract value in USD"),
+        apy: nullableFloat.describe("Average per year (APY) value in USD"),
+        guarantees: nullableFloat.describe("Guaranteed money in USD"),
+        amount_earned: nullableFloat.describe("Amount earned so far in USD"),
+        percent_earned: nullableFloat.describe("Share of the total contract value earned (0-1)"),
+        effective_apy: nullableFloat.describe("Effective APY in USD, adjusted for amount earned"),
+      }),
+    )
+    .nullish()
+    .describe("OverTheCap contract history entries for this player"),
 });
 
 // "game_id":"2026_01_ARI_LAC","pfr_game_id":"202609130sdg","season":2026,"game_type":"REG","week":1,"player":"Cole Strange","pfr_player_id":"StraCo01","position":"G","team":"LAC","opponent":"ARI","offense_snaps":55,"offense_pct":1,"defense_snaps":0,"defense_pct":0,"st_snaps":2,"st_pct":0.08
@@ -1724,56 +1615,7 @@ const snapCountSchema = z.object({
   week: nullableFloat.describe("Week number of the season"),
   player: z.string().nullish().describe("Player full name"),
   pfr_player_id: z.string().nullish().describe("Pro-Football-Reference player identifier"),
-  position: z.enum([
-      "G",
-      "T",
-      "C",
-      "QB",
-      "TE",
-      "WR",
-      "RB",
-      "FB",
-      "FS",
-      "SS",
-      "LB",
-      "CB",
-      "NT",
-      "DT",
-      "DE",
-      "K",
-      "LS",
-      "P",
-      "S",
-      "DB",
-      "OL",
-      "DL",
-      "HB",
-      "RB/W",
-      "LB/F",
-      "ILB",
-      "OLB",
-      "OT",
-      "C/G",
-      "G/T",
-      "MLB",
-      "G/C",
-      "WR/R",
-      "FB/D",
-      "DB/L",
-      "T/G",
-      "DT/D",
-      "DE/L",
-      "CB/R",
-      "FB/T",
-      "G/OT",
-      "K/P",
-      "TE/D",
-      "DE/D",
-      "FB/R",
-      "RB/F",
-      "OG",
-      "LB/S",
-    ]).describe("Player position as listed by Pro-Football-Reference; slash-separated values are combined/hybrid position labels: G=Guard, T=Tackle, C=Center, QB=Quarterback, TE=Tight End, WR=Wide Receiver, RB=Running Back, FB=Fullback, FS=Free Safety, SS=Strong Safety, LB=Linebacker, CB=Cornerback, NT=Nose Tackle, DT=Defensive Tackle, DE=Defensive End, K=Kicker, LS=Long Snapper, P=Punter, S=Safety, DB=Defensive Back, OL=Offensive Lineman, DL=Defensive Lineman, HB=Halfback, ILB=Inside Linebacker, OLB=Outside Linebacker, OT=Offensive Tackle, MLB=Middle Linebacker, OG=Offensive Guard"),
+  position: nullableString.describe("Player position as listed by Pro-Football-Reference; slash-separated values are combined/hybrid position labels: G=Guard, T=Tackle, C=Center, QB=Quarterback, TE=Tight End, WR=Wide Receiver, RB=Running Back, FB=Fullback, FS=Free Safety, SS=Strong Safety, LB=Linebacker, CB=Cornerback, NT=Nose Tackle, DT=Defensive Tackle, DE=Defensive End, K=Kicker, LS=Long Snapper, P=Punter, S=Safety, DB=Defensive Back, OL=Offensive Lineman, DL=Defensive Lineman, HB=Halfback, ILB=Inside Linebacker, OLB=Outside Linebacker, OT=Offensive Tackle, MLB=Middle Linebacker, OG=Offensive Guard"),
   team: z.string().nullish().describe("Team abbreviation"),
   opponent: z.string().nullish().describe("Opponent team abbreviation"),
   offense_snaps: nullableFloat.describe("Number of offensive snaps played"),
@@ -1787,72 +1629,8 @@ const snapCountSchema = z.object({
 const rostersSchema = z.object({
   season: nullableFloat.describe("Season year"),
   team: z.string().nullish().describe("Team abbreviation"),
-  position: nullableStringOf(
-    z.enum([
-      "OL",
-      "QB",
-      "K",
-      "TE",
-      "LS",
-      "DL",
-      "WR",
-      "P",
-      "DB",
-      "LB",
-      "RB",
-      "T",
-      "DT",
-      "FS",
-      "G",
-      "FB",
-      "OLB",
-      "CB",
-      "MLB",
-      "ILB",
-      "SS",
-      "DE",
-      "C",
-      "NT",
-      "S",
-      "KR",
-      "PR",
-      "SPEC",
-    ]),
-  ).describe("Roster position: OL=Offensive Line, QB=Quarterback, K=Kicker, TE=Tight End, LS=Long Snapper, DL=Defensive Line, WR=Wide Receiver, P=Punter, DB=Defensive Back, LB=Linebacker, RB=Running Back, T=Tackle, DT=Defensive Tackle, FS=Free Safety, G=Guard, FB=Fullback, OLB=Outside Linebacker, CB=Cornerback, MLB=Middle Linebacker, ILB=Inside Linebacker, SS=Strong Safety, DE=Defensive End, C=Center, NT=Nose Tackle, S=Safety, KR=Kick Returner, PR=Punt Returner, SPEC=Special Teams; null when empty"),
-  depth_chart_position: nullableStringOf(
-    z.enum([
-      "T",
-      "QB",
-      "K",
-      "TE",
-      "LS",
-      "DE",
-      "WR",
-      "P",
-      "FS",
-      "G",
-      "NT",
-      "SS",
-      "OLB",
-      "CB",
-      "DT",
-      "RB",
-      "C",
-      "ILB",
-      "MLB",
-      "FB",
-      "DB",
-      "LB",
-      "S",
-      "OG",
-      "OT",
-      "OL",
-      "SAF",
-      "PR",
-      "HB",
-      "DL",
-    ]),
-  ).describe("Depth chart position: T=Tackle, QB=Quarterback, K=Kicker, TE=Tight End, LS=Long Snapper, DE=Defensive End, WR=Wide Receiver, P=Punter, FS=Free Safety, G=Guard, NT=Nose Tackle, SS=Strong Safety, OLB=Outside Linebacker, CB=Cornerback, DT=Defensive Tackle, RB=Running Back, C=Center, ILB=Inside Linebacker, MLB=Middle Linebacker, FB=Fullback, DB=Defensive Back, LB=Linebacker, S=Safety, OG=Offensive Guard, OT=Offensive Tackle, OL=Offensive Line, SAF=Safety, PR=Punt Returner, HB=Halfback, DL=Defensive Line; null when empty"),
+  position: nullableString.describe("Roster position: OL=Offensive Line, QB=Quarterback, K=Kicker, TE=Tight End, LS=Long Snapper, DL=Defensive Line, WR=Wide Receiver, P=Punter, DB=Defensive Back, LB=Linebacker, RB=Running Back, T=Tackle, DT=Defensive Tackle, FS=Free Safety, G=Guard, FB=Fullback, OLB=Outside Linebacker, CB=Cornerback, MLB=Middle Linebacker, ILB=Inside Linebacker, SS=Strong Safety, DE=Defensive End, C=Center, NT=Nose Tackle, S=Safety, KR=Kick Returner, PR=Punt Returner, SPEC=Special Teams; null when empty"),
+  depth_chart_position: nullableString.describe("Depth chart position: T=Tackle, QB=Quarterback, K=Kicker, TE=Tight End, LS=Long Snapper, DE=Defensive End, WR=Wide Receiver, P=Punter, FS=Free Safety, G=Guard, NT=Nose Tackle, SS=Strong Safety, OLB=Outside Linebacker, CB=Cornerback, DT=Defensive Tackle, RB=Running Back, C=Center, ILB=Inside Linebacker, MLB=Middle Linebacker, FB=Fullback, DB=Defensive Back, LB=Linebacker, S=Safety, OG=Offensive Guard, OT=Offensive Tackle, OL=Offensive Line, SAF=Safety, PR=Punt Returner, HB=Halfback, DL=Defensive Line; null when empty"),
   jersey_number: z.coerce.string().describe("Jersey number as a string"),
   status: nullableStringOf(
     z.enum([
@@ -1879,7 +1657,7 @@ const rostersSchema = z.object({
   full_name: nullableString.describe("Player full name; null when empty"),
   first_name: z.string().nullish().describe("Player first name"),
   last_name: z.string().nullish().describe("Player last name"),
-  birth_date: coercedNullableString.describe("Informal, non-ISO birth date string from the source (e.g. 'Thu Jan 21 1982 16:00:00 GMT-0800 (Pacific Standard Time)'); prefer structured sources; null when empty"),
+  birth_date: nullableDate.describe("The player's birth date, parsed from the source's informal value"),
   height: nullableFloat.describe("Height in inches; null when empty"),
   weight: nullableInt.describe("Weight in pounds; null when empty"),
   college: nullableString.describe("College attended; null when empty"),
@@ -1898,27 +1676,7 @@ const rostersSchema = z.object({
 
   years_exp: nullableInt.describe("Years of NFL experience; null when empty"),
   headshot_url: nullableStringOf(z.url()).describe("Player headshot image URL; null when empty"),
-  ngs_position: nullableStringOf(
-    z.enum([
-      "WR",
-      "TE",
-      "QB",
-      "EDGE",
-      "T",
-      "INTERIOR_LINE",
-      "CB",
-      "SLOT_WR",
-      "C",
-      "SLOT_CB",
-      "SAFETY",
-      "MLB",
-      "G",
-      "OLB",
-      "RB",
-      "FB",
-      "EXTRA_OL",
-    ]),
-  ).describe("Next Gen Stats position: WR=Wide Receiver, TE=Tight End, QB=Quarterback, EDGE=Edge Rusher, T=Tackle, INTERIOR_LINE=Interior Offensive Line, CB=Cornerback, SLOT_WR=Slot Wide Receiver, C=Center, SLOT_CB=Slot Cornerback, SAFETY=Safety, MLB=Middle Linebacker, G=Guard, OLB=Outside Linebacker, RB=Running Back, FB=Fullback, EXTRA_OL=Extra Offensive Lineman; null when empty"),
+  ngs_position: nullableString.describe("Next Gen Stats position: WR=Wide Receiver, TE=Tight End, QB=Quarterback, EDGE=Edge Rusher, T=Tackle, INTERIOR_LINE=Interior Offensive Line, CB=Cornerback, SLOT_WR=Slot Wide Receiver, C=Center, SLOT_CB=Slot Cornerback, SAFETY=Safety, MLB=Middle Linebacker, G=Guard, OLB=Outside Linebacker, RB=Running Back, FB=Fullback, EXTRA_OL=Extra Offensive Lineman; null when empty"),
   week: nullableFloat.describe("Week of the season this roster row reflects"),
   game_type: z.enum(["REG", "WC", "CON", "DIV", "SB"]).describe("Game type for the roster week: REG=Regular Season, WC=Wild Card, CON=Conference Championship, DIV=Divisional Playoff, SB=Super Bowl"),
   status_description_abbr: nullableString.describe("GSIS abbreviated roster status description code (opaque source code, e.g. 'W03', 'A01'); null when empty"),
@@ -1980,9 +1738,6 @@ const pfrAdvStats_sznDef_schema = pfrAdvStats_sznBase_schema.extend({
   m_tkl: nullableFloat.describe("Missed tackles"),
   m_tkl_percent: nullableFloat.describe(
     "Missed-tackle percentage (0-1 fraction). Null = not recorded",
-  ),
-  loaded: nullableFloat.describe(
-    "Plays against a loaded box (8+ defenders in the box)",
   ),
   bats: nullableFloat.describe("Passes batted down (deflections at the line of scrimmage)"),
 });
@@ -2062,125 +1817,7 @@ const pfrAdvStats_sznPass_schema = pfrAdvStats_sznIdBase_schema.extend({
   ),
 });
 const pfrAdvStats_sznRushRecBase_schema = pfrAdvStats_sznBase_schema.extend({
-  pos: nullableStringOf(
-    z.enum([
-      "RB",
-      "QB",
-      "WR",
-      "FB",
-      "TE",
-      "DB",
-      "P",
-      "K",
-      "SS",
-      "LDE",
-      "RDE",
-      "FS/SS",
-      "LG",
-      "WR/QB",
-      "RLB",
-      "LB",
-      "FS",
-      "C",
-      "S",
-      "OL",
-      "CB",
-      "K-P",
-      "LT",
-      "T",
-      "LDT",
-      "DE",
-      "RT",
-      "RG",
-      "NT",
-      "G",
-      "RT/LT",
-      "RCB",
-      "LB/OLB",
-      "DT",
-      "FB/DL",
-      "LLB",
-      "OT",
-      "MLB",
-      "LILB",
-      "RILB",
-      "LCB",
-      "LCB/RCB",
-      "RCB/LCB",
-      "NT/RDT",
-      "LOLB",
-      "RDT",
-      "DB/RCB",
-      "LCB/FS",
-      "SS/LCB",
-      "RCB/DB",
-      "ROLB",
-      "LDE/RDE",
-      "RDE/NT",
-      "LLB/MLB",
-      "RCB/SS",
-      "LDT/RDT",
-      "DE/ROLB",
-      "RDE/LDT",
-      "DE/RDE",
-      "RDE/LDE",
-      "DT/FB",
-      "ROLB/RILB",
-      "LILB/RILB",
-      "MLB/RLB",
-      "DB/FS",
-      "RCB/FS",
-      "DB/LCB",
-      "SS/FS",
-      "LB/RLB",
-      "LB/ROLB",
-      "LB/RILB",
-      "RDT/LDT",
-      "DL",
-      "LB/LILB",
-      "RLB/LLB",
-      "RLB/MLB",
-      "RILB/LILB",
-      "SS/RLB",
-      "DE/DT",
-      "OLB",
-      "ROLB/LOLB",
-      "LB/LDE",
-      "DE/LOLB",
-      "DT/NT",
-      "DT/DE",
-      "LS",
-      "MLB/RILB",
-      "LOLB/ROLB",
-      "ROLB/LILB",
-      "LOLB/RDE",
-      "CB/RCB",
-      "LDT/LDE",
-      "RDT/RDE",
-      "RDT/LDE",
-      "DE/LDE",
-      "RG/C",
-      "CB/DB",
-      "DE/DL",
-      "DE/OLB",
-      "DB/S",
-      "S-SS",
-      "FS-S-SS",
-      "LCB-RCB",
-      "LB-LLB",
-      "CB-RCB",
-      "LDE-RDE",
-      "NT-RDE",
-      "CB-DB",
-      "DB-S",
-      "DT-LDE/RDE",
-      "DT-LDT",
-      "DE-RDE",
-      "DB-NT",
-      "DE-LB",
-      "DE-DT",
-    ]),
-  ).describe(
+  pos: nullableString.describe(
     "Position(s) listed by PFR, often compound (e.g. 'LCB/RCB' or 'WR/QB'). Null = not listed",
   ),
 });
@@ -2196,9 +1833,6 @@ const pfrAdvStats_sznRush_schema = pfrAdvStats_sznRushRecBase_schema.extend({
   yac_att: nullableFloat.describe("Yards after contact per attempt. Null = not recorded"),
   brk_tkl: nullableFloat.describe("Broken tackles. Null = not recorded"),
   att_br: nullableFloat.describe("Rush attempts per broken tackle. Null = not recorded"),
-  loaded: nullableFloat.describe(
-    "Carries against a loaded box (8+ defenders in the box)",
-  ),
 });
 const pfrAdvStats_sznRec_schema = pfrAdvStats_sznRushRecBase_schema.extend({
   tgt: nullableFloat.describe("Targets (times this receiver was targeted)"),
@@ -2219,9 +1853,6 @@ const pfrAdvStats_sznRec_schema = pfrAdvStats_sznRushRecBase_schema.extend({
     "Interceptions thrown when targeting this receiver. Null = not recorded",
   ),
   rat: nullableFloat.describe("Passer rating when targeted. Null = not recorded"),
-  loaded: nullableFloat.describe(
-    "Targets against a loaded box (8+ defenders in the box)",
-  ),
 });
 const pfrAdvStats_wkBase_schema = z.object({
   game_id: z.string().nullish().describe("nflverse game id"),
@@ -2381,8 +2012,7 @@ const pbpSchema = z.object({
   yardline_100: nullableFloat.describe(
     "Distance in yards from the offense's own end zone (0-100); null for non-offensive plays.",
   ),
-  game_date: z.iso.date()
-    .describe("Kickoff date of the game, ISO 8601 (YYYY-MM-DD)."),
+  game_date: nullableDate.describe("Kickoff date of the game, ISO 8601 (YYYY-MM-DD)."),
   quarter_seconds_remaining: nullableFloat.describe(
     "Seconds remaining in the quarter at the start of the play (900 at quarter start); null in overtime.",
   ),
@@ -3327,8 +2957,8 @@ const pbpSchema = z.object({
   order_sequence: nullableFloat.describe(
     "Order sequence number of the play, used for ordering plays within a game; null when unavailable.",
   ),
-  start_time: nullableString.describe(
-    "Wall-clock timestamp of the play in a non-ISO format: 'M/d/YY, HH:mm:ss' (e.g. '9/8/24, 13:03:02'); null when unavailable.",
+  start_time: nullableDate.describe(
+    "Kickoff timestamp of the play, parsed from a non-ISO format (e.g. 'M/d/YY, HH:mm:ss') in America/New_York; null when unavailable.",
   ),
   time_of_day: nullableString.describe(
     "Time of day of the play (HH:MM:SS); null when unavailable.",
@@ -3698,7 +3328,7 @@ const ngsBaseSchema = z.object({
     .describe("Season type: REG = regular season, POST = postseason"),
   week: nullableInt.describe("Week number within the season"),
   player_display_name: z.string().nullish().describe("Player's full display name as shown in the feed"),
-  player_position: z.enum(["QB", "RB", "FB", "HB", "WR", "TE"])
+  player_position: nullableString
     .describe("Player's position: QB, RB, FB, HB, WR, or TE"),
   team_abbr: nullableString.describe("Team abbreviation; null when the player is not currently on a team"),
   player_gsis_id: z.string().nullish().describe("Player's unique NFL GSIS identifier"),
@@ -3784,31 +3414,11 @@ const injuriesSchema = z.object({
   season: nullableInt.describe("Season year (e.g. 2024)"),
   game_type: z.enum(["REG", "WC", "DIV", "CON", "SB"])
     .describe("Game type: REG = regular season, WC = wild card, DIV = divisional round, CON = conference championship, SB = Super Bowl"),
+  season_type: z.enum(["REG", "POST"]).describe("Season type: REG = regular season, POST = postseason"),
   team: z.string().nullish().describe("Team abbreviation"),
   week: nullableFloat.describe("Week number within the season"),
   gsis_id: z.string().nullish().describe("Player's unique NFL GSIS identifier"),
-  position: nullableStringOf(
-    z.enum([
-      "DE",
-      "G",
-      "QB",
-      "LB",
-      "DT",
-      "T",
-      "WR",
-      "CB",
-      "S",
-      "FB",
-      "TE",
-      "K",
-      "RB",
-      "C",
-      "P",
-      "LS",
-      "KR",
-      "PR",
-    ]),
-  ).describe("Player's position abbreviation (e.g. QB, WR, LS); null if unavailable"),
+  position: nullableString.describe("Player's position abbreviation (e.g. QB, WR, LS); null if unavailable"),
   full_name: z.string().nullish().describe("Player's full name"),
   first_name: z.string().nullish().describe("Player's first name"),
   last_name: z.string().nullish().describe("Player's last name"),
@@ -3830,10 +3440,9 @@ const injuriesSchema = z.object({
   ).describe(
     "Practice participation status: 'Did Not Participate In Practice', 'Limited Participation in Practice', 'Full Participation in Practice', 'Out (Definitely Will Not Play)', or 'Note'; null if none",
   ),
-  date_modified: nullableFloat.describe("Last modification time as a millisecond Unix timestamp; null if unavailable"),
 });
 
-const depthChartsSchema = z.object({
+const depthChartsLegacySchema = z.object({
   season: nullableInt.describe("Season year (e.g. 2024)"),
   club_code: z.string().nullish().describe("Team abbreviation (club code)"),
   week: nullableInt.describe("Week number within the season; null when not applicable"),
@@ -3849,39 +3458,27 @@ const depthChartsSchema = z.object({
     .describe("Which side of the ball this depth-chart row is for: Defense, Special Teams, or Offense"),
   gsis_id: nullableString.describe("Player's unique NFL GSIS identifier; null if unavailable"),
   jersey_number: nullableString.describe("Player's jersey number as a string; null if unavailable"),
-  position: z.enum([
-      "ILB",
-      "CB",
-      "SS",
-      "K",
-      "P",
-      "WR",
-      "DE",
-      "LS",
-      "C",
-      "TE",
-      "FB",
-      "RB",
-      "QB",
-      "DT",
-      "OLB",
-      "FS",
-      "T",
-      "G",
-      "MLB",
-      "NT",
-      "DB",
-      "LB",
-      "S",
-      "PR",
-      "UK",
-      "KR",
-    ]).describe("Normalized position from the enum (e.g. QB, WR, NT); UK = unknown"),
+  position: nullableString.describe("Normalized position label (e.g. QB, WR, NT); UK = unknown"),
   elias_id: nullableString.describe("Player's Elias Sports Bureau identifier; null if unavailable"),
   depth_position: nullableString.describe(
     "Free-form depth-chart position label as printed on the chart (e.g. 'LWR', 'RDE'); distinct from the normalized position field",
   ),
   full_name: z.string().nullish().describe("Player's full name"),
+});
+
+const depthChartsSchema = z.object({
+  dt: nullableDate.describe("Snapshot timestamp for this depth chart (ISO 8601)"),
+  team: z.string().nullish().describe("Team abbreviation"),
+  player_name: z.string().nullish().describe("Player's full name"),
+  espn_id: z.string().nullish().describe("Player's ESPN ID"),
+  gsis_id: z.string().nullish().describe("Player's unique NFL GSIS identifier"),
+  pos_grp_id: z.string().nullish().describe("Position group ID"),
+  pos_grp: z.string().nullish().describe("Position group name (e.g. 'Base 4-3 D')"),
+  pos_id: z.string().nullish().describe("Position ID"),
+  pos_name: z.string().nullish().describe("Position name (e.g. 'Left Defensive End')"),
+  pos_abb: z.string().nullish().describe("Position abbreviation (e.g. 'LDE')"),
+  pos_slot: nullableInt.describe("Depth slot at the position (1 = starter)"),
+  pos_rank: nullableInt.describe("Overall rank within the position group"),
 });
 
 const combineSchema = z.object({
@@ -3956,6 +3553,6 @@ export const NFLVERSE_TAG_SCHEMA = {
     ngs_rushing: ngsRushingSchema,
   },
   injuries: injuriesSchema,
-  depth_charts: depthChartsSchema,
+  depth_charts: z.union([depthChartsSchema, depthChartsLegacySchema]),
   combine: combineSchema,
 };

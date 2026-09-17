@@ -161,6 +161,15 @@ Please fix the names to match what the data has, since I likely typo'd them.
 ```
 
 ``` -> opencode
+For the remaining failures:
+1. Depth chart year split makes sense to me
+2. Ideally the date columns become js dates, with parsing that is tolerant of the column's particular input values. It would be nice to include the dates which I did not parse myself too (e.g. the M/D/YY style dates) into js dates. Assume timezone is EST (America/New_York) unless stated otherwise
+3. I wasn't sure what `loaded` was across pfr_advstats, but I suspect it's not really needed for my data, so it can be removed.
+4. The enums for positions come from the data, but im very tempted to just make them strings (effectively just low cardinality strings) since they don't seem consistent. For the FTN 0 sentinel, I think it could be just converted to null (since it seems unknown).
+5. Please add `timeouts`, `gsis_id`, `contract_history`, and `season_type` columns. In general, it would be good to not care about `date_modified` data for any tags because we check the sha digest anyways, so its useless to us.
+```
+
+``` -> opencode
 I want to normalize the data that I parse from nflverse into a relational schema for storage in sqlite (durable objects), sharded by season.
 
 A few requirements I have:
