@@ -1,0 +1,40 @@
+import { sqliteTable, text, integer, index } from "drizzle-orm/sqlite-core";
+import { player, team } from "./reference";
+
+export const depth_chart = sqliteTable(
+  "depth_chart",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    playerId: integer("player_id").references(() => player.id),
+    teamId: integer("team_id").references(() => team.id),
+    dt: integer("dt", { mode: "timestamp_ms" }),
+    playerName: text("player_name"),
+    espnId: text("espn_id"),
+    posGrpId: text("pos_grp_id"),
+    posGrp: text("pos_grp"),
+    posId: text("pos_id"),
+    posName: text("pos_name"),
+    posAbb: text("pos_abb"),
+    posSlot: integer("pos_slot"),
+    posRank: integer("pos_rank"),
+    season: integer("season"),
+    week: integer("week"),
+    gameType: text("game_type").notNull(),
+    depthTeam: text("depth_team"),
+    lastName: text("last_name"),
+    firstName: text("first_name"),
+    footballName: text("football_name"),
+    formation: text("formation").notNull(),
+    jerseyNumber: text("jersey_number"),
+    position: text("position"),
+    eliasId: text("elias_id"),
+    depthPosition: text("depth_position"),
+    fullName: text("full_name"),
+    contentHash: text("content_hash"),
+    updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
+  },
+  (t) => [
+    index("depth_team_week_idx").on(t.teamId, t.season, t.week),
+    index("depth_player_idx").on(t.playerId),
+  ],
+);

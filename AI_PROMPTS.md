@@ -183,3 +183,11 @@ A few requirements I have:
 
 Based on the schemas in the data package and the above requirements, replace the schema in `sharded-db/src/schema/nfl.ts` with an appropriate drizzle schema. Use `drizzle-orm@rc`'s new v2 relations style (docs: https://orm.drizzle.team/docs/sqlite/relations-v1-v2, https://orm.drizzle.team/docs/sqlite/v0-v1-changes), as that version is necessary to support graphql for the query layer (which is coming later).
 ```
+
+``` -> opencode
+Why are play's player refs denormalized? I feel like the number of cols (3: name, id, sometimes team) is higher than needed, and it would be nice to normalize that. Also, there are a number of columns on play that are redundant with other stats tables, that can definitely be removed. I would prefer normalizing as much as possible for this API, since I think it makes the external APIs easier to digest.
+```
+
+``` -> opencode
+The nfl.ts file and schema.ts file are both quite large - it would be great to split out the code into proper files in a subfolder with an index file containing the main export that would be used.
+```
