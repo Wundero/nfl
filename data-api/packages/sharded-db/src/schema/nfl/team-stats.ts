@@ -6,7 +6,9 @@ export const team_week_stats = sqliteTable(
   "team_week_stats",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
-    teamId: integer("team_id").notNull().references(() => team.id),
+    teamId: integer("team_id")
+      .notNull()
+      .references(() => team.id),
     opponentTeamId: integer("opponent_team_id").references(() => team.id),
     gameId: integer("game_id").references(() => game.id),
     season: integer("season"),
@@ -158,7 +160,9 @@ export const team_season_stats = sqliteTable(
   "team_season_stats",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
-    teamId: integer("team_id").notNull().references(() => team.id),
+    teamId: integer("team_id")
+      .notNull()
+      .references(() => team.id),
     season: integer("season"),
     seasonType: text("season_type").notNull(),
     completions: integer("completions"),
@@ -297,7 +301,5 @@ export const team_season_stats = sqliteTable(
     contentHash: text("content_hash"),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
   },
-  (t) => [
-    uniqueIndex("tss_team_season_idx").on(t.teamId, t.season, t.seasonType),
-  ],
+  (t) => [uniqueIndex("tss_team_season_idx").on(t.teamId, t.season, t.seasonType)],
 );

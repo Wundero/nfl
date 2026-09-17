@@ -4,15 +4,16 @@ import { nullableInt, nullableFloat, nullableString } from "./helpers";
 export const pfrAdvStats_sznIdBase_schema = z.object({
   season: nullableInt.describe("Season year"),
   player: z.string().nullish().describe("Player's full name"),
-  pfr_id: nullableString.describe(
-    "Pro-Football-Reference player id. Null = not provided by PFR",
-  ),
+  pfr_id: nullableString.describe("Pro-Football-Reference player id. Null = not provided by PFR"),
 });
 
 export const pfrAdvStats_sznBase_schema = pfrAdvStats_sznIdBase_schema.extend({
-  tm: z.string().nullish().describe(
-    "Team abbreviation; '(N)TM' means the player played for multiple teams that season (N = number of teams)",
-  ),
+  tm: z
+    .string()
+    .nullish()
+    .describe(
+      "Team abbreviation; '(N)TM' means the player played for multiple teams that season (N = number of teams)",
+    ),
   age: nullableFloat.describe("Player's age during the season"),
   g: nullableFloat.describe("Games played"),
   gs: nullableFloat.describe("Games started"),
@@ -58,14 +59,14 @@ export const pfrAdvStats_sznDef_schema = pfrAdvStats_sznBase_schema.extend({
 export const pfrAdvStats_sznPass_schema = pfrAdvStats_sznIdBase_schema.extend({
   team: z.string().nullish().describe("Team abbreviation"),
   pass_attempts: nullableFloat.describe("Pass attempts"),
-  throwaways: nullableFloat.describe("Throwaways (passes intentionally thrown away to avoid a sack)"),
+  throwaways: nullableFloat.describe(
+    "Throwaways (passes intentionally thrown away to avoid a sack)",
+  ),
   spikes: nullableFloat.describe("Spikes (passes spiked into the ground to stop the clock)"),
   drops: nullableFloat.describe("Drops by receivers on this quarterback's passes"),
   drop_pct: nullableFloat.describe("Drop percentage (0-1 fraction). Null = not recorded"),
   bad_throws: nullableFloat.describe("Bad throws (inaccurate passes judged uncatchable)"),
-  bad_throw_pct: nullableFloat.describe(
-    "Bad-throw percentage (0-1 fraction). Null = not recorded",
-  ),
+  bad_throw_pct: nullableFloat.describe("Bad-throw percentage (0-1 fraction). Null = not recorded"),
   pocket_time: nullableFloat.describe(
     "Average time in the pocket before throwing (seconds). Null = not recorded",
   ),
@@ -84,9 +85,7 @@ export const pfrAdvStats_sznPass_schema = pfrAdvStats_sznIdBase_schema.extend({
     "On-target throw percentage (0-1 fraction). Null = not recorded",
   ),
   rpo_plays: nullableFloat.describe("Run-pass option plays. Null = not recorded"),
-  rpo_yards: nullableFloat.describe(
-    "Yards gained on run-pass option plays. Null = not recorded",
-  ),
+  rpo_yards: nullableFloat.describe("Yards gained on run-pass option plays. Null = not recorded"),
   rpo_pass_att: nullableFloat.describe(
     "Pass attempts from run-pass option plays. Null = not recorded",
   ),
@@ -155,7 +154,9 @@ export const pfrAdvStats_sznRec_schema = pfrAdvStats_sznRushRecBase_schema.exten
   yds: nullableFloat.describe("Receiving yards"),
   td: nullableFloat.describe("Receiving touchdowns. Null = not recorded"),
   x1d: nullableFloat.describe("Receiving first downs. Null = not recorded"),
-  ybc: nullableFloat.describe("Yards before catch (air yards on completed passes). Null = not recorded"),
+  ybc: nullableFloat.describe(
+    "Yards before catch (air yards on completed passes). Null = not recorded",
+  ),
   ybc_r: nullableFloat.describe("Yards before catch per reception. Null = not recorded"),
   yac: nullableFloat.describe("Yards after catch. Null = not recorded"),
   yac_r: nullableFloat.describe("Yards after catch per reception. Null = not recorded"),
@@ -175,7 +176,8 @@ export const pfrAdvStats_wkBase_schema = z.object({
   pfr_game_id: z.string().nullish().describe("Pro-Football-Reference game id"),
   season: nullableInt.describe("Season year"),
   week: nullableInt.describe("Week number"),
-  game_type: z.enum(["REG", "WC", "DIV", "CON", "SB"])
+  game_type: z
+    .enum(["REG", "WC", "DIV", "CON", "SB"])
     .describe(
       "Game type: REG (regular season), WC (wild card), DIV (divisional round), CON (conference championship), SB (Super Bowl)",
     ),
@@ -207,20 +209,14 @@ export const pfrAdvStats_wkDef_schema = pfrAdvStats_wkBase_schema.extend({
   def_passer_rating_allowed: nullableFloat.describe(
     "Passer rating allowed when targeted. Null = not recorded",
   ),
-  def_adot: nullableFloat.describe(
-    "Average depth of target allowed (yards). Null = not recorded",
-  ),
+  def_adot: nullableFloat.describe("Average depth of target allowed (yards). Null = not recorded"),
   def_air_yards_completed: nullableFloat.describe(
     "Completed air yards allowed. Null = not recorded",
   ),
-  def_yards_after_catch: nullableFloat.describe(
-    "Yards after catch allowed. Null = not recorded",
-  ),
+  def_yards_after_catch: nullableFloat.describe("Yards after catch allowed. Null = not recorded"),
   def_times_blitzed: nullableFloat.describe("Times blitzed. Null = not recorded"),
   def_times_hurried: nullableFloat.describe("Times hurried. Null = not recorded"),
-  def_times_hitqb: nullableFloat.describe(
-    "Times hit the quarterback. Null = not recorded",
-  ),
+  def_times_hitqb: nullableFloat.describe("Times hit the quarterback. Null = not recorded"),
   def_sacks: nullableFloat.describe("Sacks"),
   def_pressures: nullableFloat.describe("Pressures (hurries + knockdowns + sacks)"),
   def_tackles_combined: nullableFloat.describe("Combined tackles (solo + assisted)"),
@@ -237,9 +233,7 @@ export const pfrAdvStats_wkPassRecBase_schema = pfrAdvStats_wkBase_schema.extend
   passing_drop_pct: nullableFloat.describe(
     "Passing drop percentage (0-1 fraction). Null = not recorded",
   ),
-  receiving_drop: nullableFloat.describe(
-    "Drops by this player as a receiver. Null = not recorded",
-  ),
+  receiving_drop: nullableFloat.describe("Drops by this player as a receiver. Null = not recorded"),
   receiving_drop_pct: nullableFloat.describe(
     "Receiving drop percentage (0-1 fraction). Null = not recorded",
   ),
@@ -258,21 +252,15 @@ export const pfrAdvStats_wkPass_schema = pfrAdvStats_wkPassRecBase_schema.extend
   times_pressured_pct: nullableFloat.describe(
     "Pressure percentage (0-1 fraction). Null = not recorded",
   ),
-  def_times_blitzed: nullableFloat.describe(
-    "Times blitzed as a defender. Null = not recorded",
-  ),
-  def_times_hurried: nullableFloat.describe(
-    "Times hurried as a defender. Null = not recorded",
-  ),
+  def_times_blitzed: nullableFloat.describe("Times blitzed as a defender. Null = not recorded"),
+  def_times_hurried: nullableFloat.describe("Times hurried as a defender. Null = not recorded"),
   def_times_hitqb: nullableFloat.describe(
     "Times hit the quarterback as a defender. Null = not recorded",
   ),
 });
 
 export const pfrAdvStats_wkRec_schema = pfrAdvStats_wkPassRecBase_schema.extend({
-  rushing_broken_tackles: nullableFloat.describe(
-    "Broken tackles as a rusher. Null = not recorded",
-  ),
+  rushing_broken_tackles: nullableFloat.describe("Broken tackles as a rusher. Null = not recorded"),
   receiving_broken_tackles: nullableFloat.describe(
     "Broken tackles as a receiver. Null = not recorded",
   ),
@@ -290,9 +278,7 @@ export const pfrAdvStats_wkRush_schema = pfrAdvStats_wkBase_schema.extend({
   rushing_yards_after_contact_avg: nullableFloat.describe(
     "Rushing yards after contact per attempt. Null = not recorded",
   ),
-  rushing_broken_tackles: nullableFloat.describe(
-    "Broken tackles as a rusher. Null = not recorded",
-  ),
+  rushing_broken_tackles: nullableFloat.describe("Broken tackles as a rusher. Null = not recorded"),
   receiving_broken_tackles: nullableFloat.describe(
     "Broken tackles as a receiver. Null = not recorded",
   ),

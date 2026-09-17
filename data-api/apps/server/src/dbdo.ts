@@ -11,4 +11,6 @@ export class DatabaseDO extends DurableObject {
     this.db = createDb(this);
     migrate(this.db);
   }
+
+  // TODO rpc for: get data, upsert data, resolve gql, etc.
 }

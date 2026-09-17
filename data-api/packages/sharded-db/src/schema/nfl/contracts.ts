@@ -31,17 +31,16 @@ export const contract = sqliteTable(
     contentHash: text("content_hash"),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
   },
-  (t) => [
-    index("contract_player_idx").on(t.playerId),
-    index("contract_year_idx").on(t.yearSigned),
-  ],
+  (t) => [index("contract_player_idx").on(t.playerId), index("contract_year_idx").on(t.yearSigned)],
 );
 
 export const contract_history = sqliteTable(
   "contract_history",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
-    contractId: integer("contract_id").notNull().references(() => contract.id),
+    contractId: integer("contract_id")
+      .notNull()
+      .references(() => contract.id),
     team: text("team"),
     contractType: text("contract_type"),
     status: text("status"),
@@ -56,7 +55,5 @@ export const contract_history = sqliteTable(
     contentHash: text("content_hash"),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
   },
-  (t) => [
-    index("contract_history_contract_idx").on(t.contractId),
-  ],
+  (t) => [index("contract_history_contract_idx").on(t.contractId)],
 );

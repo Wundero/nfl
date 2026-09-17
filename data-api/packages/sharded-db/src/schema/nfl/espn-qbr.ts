@@ -31,9 +31,7 @@ export const espn_qbr_season = sqliteTable(
     contentHash: text("content_hash"),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
   },
-  (t) => [
-    index("qbr_season_team_idx").on(t.teamId, t.season),
-  ],
+  (t) => [index("qbr_season_team_idx").on(t.teamId, t.season)],
 );
 
 export const espn_qbr_week = sqliteTable(
@@ -72,7 +70,5 @@ export const espn_qbr_week = sqliteTable(
     contentHash: text("content_hash"),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
   },
-  (t) => [
-    index("qbr_week_team_idx").on(t.teamId, t.season),
-  ],
+  (t) => [index("qbr_week_team_idx").on(t.teamId, t.season)],
 );

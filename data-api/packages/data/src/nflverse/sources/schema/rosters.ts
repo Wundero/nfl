@@ -1,11 +1,21 @@
 import { z } from "zod";
-import { nullableInt, nullableFloat, nullableString, nullableStringOf, nullableDate } from "./helpers";
+import {
+  nullableInt,
+  nullableFloat,
+  nullableString,
+  nullableStringOf,
+  nullableDate,
+} from "./helpers";
 
 export const rostersSchema = z.object({
   season: nullableFloat.describe("Season year"),
   team: z.string().nullish().describe("Team abbreviation"),
-  position: nullableString.describe("Roster position: OL=Offensive Line, QB=Quarterback, K=Kicker, TE=Tight End, LS=Long Snapper, DL=Defensive Line, WR=Wide Receiver, P=Punter, DB=Defensive Back, LB=Linebacker, RB=Running Back, T=Tackle, DT=Defensive Tackle, FS=Free Safety, G=Guard, FB=Fullback, OLB=Outside Linebacker, CB=Cornerback, MLB=Middle Linebacker, ILB=Inside Linebacker, SS=Strong Safety, DE=Defensive End, C=Center, NT=Nose Tackle, S=Safety, KR=Kick Returner, PR=Punt Returner, SPEC=Special Teams; null when empty"),
-  depth_chart_position: nullableString.describe("Depth chart position: T=Tackle, QB=Quarterback, K=Kicker, TE=Tight End, LS=Long Snapper, DE=Defensive End, WR=Wide Receiver, P=Punter, FS=Free Safety, G=Guard, NT=Nose Tackle, SS=Strong Safety, OLB=Outside Linebacker, CB=Cornerback, DT=Defensive Tackle, RB=Running Back, C=Center, ILB=Inside Linebacker, MLB=Middle Linebacker, FB=Fullback, DB=Defensive Back, LB=Linebacker, S=Safety, OG=Offensive Guard, OT=Offensive Tackle, OL=Offensive Line, SAF=Safety, PR=Punt Returner, HB=Halfback, DL=Defensive Line; null when empty"),
+  position: nullableString.describe(
+    "Roster position: OL=Offensive Line, QB=Quarterback, K=Kicker, TE=Tight End, LS=Long Snapper, DL=Defensive Line, WR=Wide Receiver, P=Punter, DB=Defensive Back, LB=Linebacker, RB=Running Back, T=Tackle, DT=Defensive Tackle, FS=Free Safety, G=Guard, FB=Fullback, OLB=Outside Linebacker, CB=Cornerback, MLB=Middle Linebacker, ILB=Inside Linebacker, SS=Strong Safety, DE=Defensive End, C=Center, NT=Nose Tackle, S=Safety, KR=Kick Returner, PR=Punt Returner, SPEC=Special Teams; null when empty",
+  ),
+  depth_chart_position: nullableString.describe(
+    "Depth chart position: T=Tackle, QB=Quarterback, K=Kicker, TE=Tight End, LS=Long Snapper, DE=Defensive End, WR=Wide Receiver, P=Punter, FS=Free Safety, G=Guard, NT=Nose Tackle, SS=Strong Safety, OLB=Outside Linebacker, CB=Cornerback, DT=Defensive Tackle, RB=Running Back, C=Center, ILB=Inside Linebacker, MLB=Middle Linebacker, FB=Fullback, DB=Defensive Back, LB=Linebacker, S=Safety, OG=Offensive Guard, OT=Offensive Tackle, OL=Offensive Line, SAF=Safety, PR=Punt Returner, HB=Halfback, DL=Defensive Line; null when empty",
+  ),
   jersey_number: z.coerce.string().describe("Jersey number as a string"),
   status: nullableStringOf(
     z.enum([
@@ -28,11 +38,15 @@ export const rostersSchema = z.object({
       "RFA",
       "E14",
     ]),
-  ).describe("Roster status code: CUT=Cut, INA=Inactive, ACT=Active, RES=Reserve (injured), DEV=Developmental (practice squad), RET=Retired, TRD=Traded, EXE=Exempt, PUP=Physically Unable to Perform, SUS=Suspended, NWT=Not With Team, UFA=Unrestricted Free Agent, RFA=Restricted Free Agent; TRC, TRT, RSN, RSR and E14 are less common reserve/transaction codes whose exact meanings are not documented by the source; null when empty"),
+  ).describe(
+    "Roster status code: CUT=Cut, INA=Inactive, ACT=Active, RES=Reserve (injured), DEV=Developmental (practice squad), RET=Retired, TRD=Traded, EXE=Exempt, PUP=Physically Unable to Perform, SUS=Suspended, NWT=Not With Team, UFA=Unrestricted Free Agent, RFA=Restricted Free Agent; TRC, TRT, RSN, RSR and E14 are less common reserve/transaction codes whose exact meanings are not documented by the source; null when empty",
+  ),
   full_name: nullableString.describe("Player full name; null when empty"),
   first_name: z.string().nullish().describe("Player first name"),
   last_name: z.string().nullish().describe("Player last name"),
-  birth_date: nullableDate.describe("The player's birth date, parsed from the source's informal value"),
+  birth_date: nullableDate.describe(
+    "The player's birth date, parsed from the source's informal value",
+  ),
   height: nullableFloat.describe("Height in inches; null when empty"),
   weight: nullableInt.describe("Weight in pounds; null when empty"),
   college: nullableString.describe("College attended; null when empty"),
@@ -51,11 +65,21 @@ export const rostersSchema = z.object({
 
   years_exp: nullableInt.describe("Years of NFL experience; null when empty"),
   headshot_url: nullableStringOf(z.url()).describe("Player headshot image URL; null when empty"),
-  ngs_position: nullableString.describe("Next Gen Stats position: WR=Wide Receiver, TE=Tight End, QB=Quarterback, EDGE=Edge Rusher, T=Tackle, INTERIOR_LINE=Interior Offensive Line, CB=Cornerback, SLOT_WR=Slot Wide Receiver, C=Center, SLOT_CB=Slot Cornerback, SAFETY=Safety, MLB=Middle Linebacker, G=Guard, OLB=Outside Linebacker, RB=Running Back, FB=Fullback, EXTRA_OL=Extra Offensive Lineman; null when empty"),
+  ngs_position: nullableString.describe(
+    "Next Gen Stats position: WR=Wide Receiver, TE=Tight End, QB=Quarterback, EDGE=Edge Rusher, T=Tackle, INTERIOR_LINE=Interior Offensive Line, CB=Cornerback, SLOT_WR=Slot Wide Receiver, C=Center, SLOT_CB=Slot Cornerback, SAFETY=Safety, MLB=Middle Linebacker, G=Guard, OLB=Outside Linebacker, RB=Running Back, FB=Fullback, EXTRA_OL=Extra Offensive Lineman; null when empty",
+  ),
   week: nullableFloat.describe("Week of the season this roster row reflects"),
-  game_type: z.enum(["REG", "WC", "CON", "DIV", "SB"]).describe("Game type for the roster week: REG=Regular Season, WC=Wild Card, CON=Conference Championship, DIV=Divisional Playoff, SB=Super Bowl"),
-  status_description_abbr: nullableString.describe("GSIS abbreviated roster status description code (opaque source code, e.g. 'W03', 'A01'); null when empty"),
-  football_name: nullableString.describe("Player name as recorded by Next Gen Stats; null when empty"),
+  game_type: z
+    .enum(["REG", "WC", "CON", "DIV", "SB"])
+    .describe(
+      "Game type for the roster week: REG=Regular Season, WC=Wild Card, CON=Conference Championship, DIV=Divisional Playoff, SB=Super Bowl",
+    ),
+  status_description_abbr: nullableString.describe(
+    "GSIS abbreviated roster status description code (opaque source code, e.g. 'W03', 'A01'); null when empty",
+  ),
+  football_name: nullableString.describe(
+    "Player name as recorded by Next Gen Stats; null when empty",
+  ),
   entry_year: nullableInt.describe("Year the player first entered the NFL; null when empty"),
   rookie_year: nullableInt.describe("Player's rookie season year; null when empty"),
   draft_club: nullableString.describe("Drafting club abbreviation; null when empty"),

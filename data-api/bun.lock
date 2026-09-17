@@ -21,6 +21,7 @@
       "name": "server",
       "dependencies": {
         "@data-api/auth": "workspace:*",
+        "@data-api/data": "workspace:*",
         "@data-api/db": "workspace:*",
         "@data-api/sharded-db": "workspace:*",
         "@graphql-yoga/plugin-response-cache": "^3.25.0",

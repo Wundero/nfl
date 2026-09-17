@@ -5,16 +5,23 @@ export const depthChartsLegacySchema = z.object({
   season: nullableInt.describe("Season year (e.g. 2024)"),
   club_code: z.string().nullish().describe("Team abbreviation (club code)"),
   week: nullableInt.describe("Week number within the season; null when not applicable"),
-  game_type: z.enum(["REG", "WC", "DIV", "CON", "SBBYE", "SB"])
+  game_type: z
+    .enum(["REG", "WC", "DIV", "CON", "SBBYE", "SB"])
     .describe(
       "Game type: REG = regular season, WC = wild card, DIV = divisional round, CON = conference championship, SBBYE = Super Bowl bye week, SB = Super Bowl",
     ),
   depth_team: z.string().nullish().describe("Team name this depth-chart row belongs to"),
   last_name: z.string().nullish().describe("Player's last name"),
   first_name: z.string().nullish().describe("Player's first name"),
-  football_name: z.string().nullish().describe("Player's football name as listed on the depth chart"),
-  formation: z.enum(["Defense", "Special Teams", "Offense"])
-    .describe("Which side of the ball this depth-chart row is for: Defense, Special Teams, or Offense"),
+  football_name: z
+    .string()
+    .nullish()
+    .describe("Player's football name as listed on the depth chart"),
+  formation: z
+    .enum(["Defense", "Special Teams", "Offense"])
+    .describe(
+      "Which side of the ball this depth-chart row is for: Defense, Special Teams, or Offense",
+    ),
   gsis_id: nullableString.describe("Player's unique NFL GSIS identifier; null if unavailable"),
   jersey_number: nullableString.describe("Player's jersey number as a string; null if unavailable"),
   position: nullableString.describe("Normalized position label (e.g. QB, WR, NT); UK = unknown"),

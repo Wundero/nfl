@@ -3,8 +3,7 @@ import { nullableFloat, boolFromBinary, nullableStringOf } from "./helpers";
 
 export const espnQbrSeasonalSchema = z.object({
   season: nullableFloat.describe("The season (year) for this qb's rating"),
-  season_type: z.enum(["Regular", "Playoffs"])
-    .describe("The type of 'season' for this stat."),
+  season_type: z.enum(["Regular", "Playoffs"]).describe("The type of 'season' for this stat."),
   game_week: z
     .transform((v, ctx) => {
       if (typeof v === "number") {
@@ -39,9 +38,13 @@ export const espnQbrSeasonalSchema = z.object({
   exp_sack: nullableFloat.describe(
     "The expected sacks component of the QBR formula (sacks the QB was expected to take based on the play context)",
   ),
-  penalty: nullableFloat.describe("The penalty component of the QBR formula (penalty EPA attributed to the QB)"),
+  penalty: nullableFloat.describe(
+    "The penalty component of the QBR formula (penalty EPA attributed to the QB)",
+  ),
   qbr_raw: nullableFloat.describe("The raw QBR for this player"),
-  sack: nullableFloat.describe("The sack component of the QBR formula (EPA lost on sacks, split between QB fault and OL/other fault)"),
+  sack: nullableFloat.describe(
+    "The sack component of the QBR formula (EPA lost on sacks, split between QB fault and OL/other fault)",
+  ),
   name_first: z.string().nullish().describe("The player's first name"),
   name_last: z.string().nullish().describe("The player's last name"),
   name_display: z.string().nullish().describe("The player's display name"),
@@ -55,7 +58,10 @@ export const espnQbrSeasonalSchema = z.object({
 export const espnQbrWeeklySchema = espnQbrSeasonalSchema.extend({
   // Different:
   game_id: z.string().nullish().describe("The ESPN game ID"),
-  week_text: z.string().nullish().describe("The text description of the game week (e.g. 'Week 1' or 'Wild Card')"),
+  week_text: z
+    .string()
+    .nullish()
+    .describe("The text description of the game week (e.g. 'Week 1' or 'Wild Card')"),
   opp_id: z.string().nullish().describe("The ESPN team ID of the opponent"),
   opp_abb: z.string().nullish().describe("The abbreviation of the opposing team"),
   opp_team: z.string().nullish().describe("The full team name (city + nickname) of the opponent"),

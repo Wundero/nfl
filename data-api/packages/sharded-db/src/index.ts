@@ -17,3 +17,4 @@ export function migrate(db: Database) {
 }
 
 export type Database = ReturnType<typeof createDb>;
+export { relations };

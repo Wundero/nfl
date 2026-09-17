@@ -2,15 +2,23 @@ import { z } from "zod";
 import { nullableInt, nullableString, nullableStringOf, nullableDate } from "./helpers";
 
 export const playerSchema = z.object({
-  gsis_id: z.string().nullish().describe(
-    "The player's GSIS (Game Statistics and Information System) ID, the NFL's internal player identifier",
-  ),
-  display_name: z.string().nullish().describe("The player's display name (full name as commonly displayed)"),
+  gsis_id: z
+    .string()
+    .nullish()
+    .describe(
+      "The player's GSIS (Game Statistics and Information System) ID, the NFL's internal player identifier",
+    ),
+  display_name: z
+    .string()
+    .nullish()
+    .describe("The player's display name (full name as commonly displayed)"),
   common_first_name: z.string().nullish().describe("The player's commonly used first name"),
   first_name: z.string().nullish().describe("The player's first name"),
   last_name: z.string().nullish().describe("The player's last name"),
   short_name: nullableString.describe("The player's short name"),
-  football_name: nullableString.describe("The name the player goes by for football purposes (their preferred football name)"),
+  football_name: nullableString.describe(
+    "The name the player goes by for football purposes (their preferred football name)",
+  ),
   suffix: nullableString.describe("The player's name suffix (e.g. Jr., II, III)"),
   esb_id: nullableString.describe("The player's ESB ID"),
   nfl_id: nullableString.describe("The player's NFL.com ID"),
@@ -22,9 +30,8 @@ export const playerSchema = z.object({
     "The player's SMART ID (the NFL's SMART player ID used for cross-system linking)",
   ),
   birth_date: nullableDate.describe("The player's birth date (ISO 8601 date)"),
-  position_group: nullableString
-    .describe(
-      `The player's position group. Mapping:
+  position_group: nullableString.describe(
+    `The player's position group. Mapping:
 DL=Defensive Line
 RB=Running Back
 LB=Linebacker
@@ -34,10 +41,9 @@ DB=Defensive Back
 TE=Tight End
 OL=Offensive Line
 QB=Quarterback`,
-    ),
-  position: nullableString
-    .describe(
-      `The player's primary position. Mapping:
+  ),
+  position: nullableString.describe(
+    `The player's primary position. Mapping:
 NT=Nose Tackle
 RB=Running Back
 LB=Linebacker
@@ -63,7 +69,7 @@ P=Punter
 ILB=Inside Linebacker
 OL=Offensive Lineman
 FB=Fullback`,
-    ),
+  ),
   ngs_position_group: nullableString.describe(
     `The player's Next Gen Stats position group. Mapping:
 RB=Running Back
@@ -104,7 +110,10 @@ OLB=Outside Linebacker`,
   jersey_number: nullableString.describe("The jersey number the player wears"),
   rookie_season: nullableInt.describe("The player's rookie season (year)"),
   last_season: nullableInt.describe("The most recent season the player played"),
-  latest_team: z.string().nullish().describe("The most recent team (abbreviation) the player played for"),
+  latest_team: z
+    .string()
+    .nullish()
+    .describe("The most recent team (abbreviation) the player played for"),
   status: nullableStringOf(
     z.enum([
       "DEV",
@@ -225,9 +234,13 @@ RNFI=Reserve/Non-Football Injury
 PSUS=Suspended (PFF designation)`,
   ),
   draft_year: nullableInt.describe("The year the player was drafted (null if undrafted)"),
-  draft_round: nullableInt.describe("The round in which the player was drafted (null if undrafted)"),
+  draft_round: nullableInt.describe(
+    "The round in which the player was drafted (null if undrafted)",
+  ),
   draft_pick: nullableInt.describe(
     "The overall pick number the player was drafted at (null if undrafted)",
   ),
-  draft_team: nullableString.describe("The team (abbreviation) that drafted the player (null if undrafted)"),
+  draft_team: nullableString.describe(
+    "The team (abbreviation) that drafted the player (null if undrafted)",
+  ),
 });

@@ -36,9 +36,7 @@ export const pfr_adv_def_season = sqliteTable(
     contentHash: text("content_hash"),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
   },
-  (t) => [
-    index("pfr_adv_def_szn_player_idx").on(t.playerId),
-  ],
+  (t) => [index("pfr_adv_def_szn_player_idx").on(t.playerId)],
 );
 
 export const pfr_adv_pass_season = sqliteTable(
@@ -84,9 +82,7 @@ export const pfr_adv_pass_season = sqliteTable(
     contentHash: text("content_hash"),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
   },
-  (t) => [
-    index("pfr_adv_pass_szn_player_idx").on(t.playerId),
-  ],
+  (t) => [index("pfr_adv_pass_szn_player_idx").on(t.playerId)],
 );
 
 export const pfr_adv_rush_season = sqliteTable(
@@ -113,9 +109,7 @@ export const pfr_adv_rush_season = sqliteTable(
     contentHash: text("content_hash"),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
   },
-  (t) => [
-    index("pfr_adv_rush_szn_player_idx").on(t.playerId),
-  ],
+  (t) => [index("pfr_adv_rush_szn_player_idx").on(t.playerId)],
 );
 
 export const pfr_adv_rec_season = sqliteTable(
@@ -148,9 +142,7 @@ export const pfr_adv_rec_season = sqliteTable(
     contentHash: text("content_hash"),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
   },
-  (t) => [
-    index("pfr_adv_rec_szn_player_idx").on(t.playerId),
-  ],
+  (t) => [index("pfr_adv_rec_szn_player_idx").on(t.playerId)],
 );
 
 export const pfr_adv_def_week = sqliteTable(
@@ -189,9 +181,7 @@ export const pfr_adv_def_week = sqliteTable(
     contentHash: text("content_hash"),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
   },
-  (t) => [
-    index("pfr_adv_def_wk_player_idx").on(t.playerId),
-  ],
+  (t) => [index("pfr_adv_def_wk_player_idx").on(t.playerId)],
 );
 
 export const pfr_adv_pass_week = sqliteTable(
@@ -225,9 +215,7 @@ export const pfr_adv_pass_week = sqliteTable(
     contentHash: text("content_hash"),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
   },
-  (t) => [
-    index("pfr_adv_pass_wk_player_idx").on(t.playerId),
-  ],
+  (t) => [index("pfr_adv_pass_wk_player_idx").on(t.playerId)],
 );
 
 export const pfr_adv_rec_week = sqliteTable(
@@ -254,9 +242,7 @@ export const pfr_adv_rec_week = sqliteTable(
     contentHash: text("content_hash"),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
   },
-  (t) => [
-    index("pfr_adv_rec_wk_player_idx").on(t.playerId),
-  ],
+  (t) => [index("pfr_adv_rec_wk_player_idx").on(t.playerId)],
 );
 
 export const pfr_adv_rush_week = sqliteTable(
@@ -282,7 +268,5 @@ export const pfr_adv_rush_week = sqliteTable(
     contentHash: text("content_hash"),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
   },
-  (t) => [
-    index("pfr_adv_rush_wk_player_idx").on(t.playerId),
-  ],
+  (t) => [index("pfr_adv_rush_wk_player_idx").on(t.playerId)],
 );

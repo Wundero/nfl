@@ -1,24 +1,39 @@
 import { z } from "zod";
-import { nullableInt, nullableFloat, boolFromBinary, nullableBoolFromBinary, nullableString, coercedNullableString, nullableStringOf, nullableDate } from "./helpers";
+import {
+  nullableInt,
+  nullableFloat,
+  boolFromBinary,
+  nullableBoolFromBinary,
+  nullableString,
+  coercedNullableString,
+  nullableStringOf,
+  nullableDate,
+} from "./helpers";
 
 export const pbpSchema = z.object({
-  play_id: z.coerce.string().describe(
-    "Unique play identifier: game_id plus a zero-padded play sequence number.",
-  ),
-  game_id: z.string().nullish().describe(
-    "nflverse game identifier, formatted YYYYMMDDxx where xx is a two-character game code.",
-  ),
-  old_game_id: z.string().nullish().describe(
-    "Deprecated legacy game identifier from earlier nflverse releases, kept for compatibility.",
-  ),
+  play_id: z.coerce
+    .string()
+    .describe("Unique play identifier: game_id plus a zero-padded play sequence number."),
+  game_id: z
+    .string()
+    .nullish()
+    .describe(
+      "nflverse game identifier, formatted YYYYMMDDxx where xx is a two-character game code.",
+    ),
+  old_game_id: z
+    .string()
+    .nullish()
+    .describe(
+      "Deprecated legacy game identifier from earlier nflverse releases, kept for compatibility.",
+    ),
   home_team: z.string().nullish().describe("Home team abbreviation (e.g. KC)."),
   away_team: z.string().nullish().describe("Away team abbreviation (e.g. SF)."),
-  season_type: z.enum(["REG", "POST"])
+  season_type: z
+    .enum(["REG", "POST"])
     .describe("Season phase: REG = regular season, POST = postseason."),
-  week: nullableInt
-    .describe(
-      "Week of the season (1-18 regular season; 19+ are postseason rounds).",
-    ),
+  week: nullableInt.describe(
+    "Week of the season (1-18 regular season; 19+ are postseason rounds).",
+  ),
   posteam: nullableString.describe(
     "Abbreviation of the team with possession on the play; null when no team has possession.",
   ),
@@ -28,9 +43,12 @@ export const pbpSchema = z.object({
   defteam: nullableString.describe(
     "Abbreviation of the defensive team on the play; null when not applicable.",
   ),
-  side_of_field: z.string().nullish().describe(
-    "Which team's side of the field the ball is on: team abbreviation, or 50 at midfield.",
-  ),
+  side_of_field: z
+    .string()
+    .nullish()
+    .describe(
+      "Which team's side of the field the ball is on: team abbreviation, or 50 at midfield.",
+    ),
   yardline_100: nullableFloat.describe(
     "Distance in yards from the offense's own end zone (0-100); null for non-offensive plays.",
   ),
@@ -44,28 +62,24 @@ export const pbpSchema = z.object({
   game_seconds_remaining: nullableFloat.describe(
     "Seconds remaining in the game at the start of the play (3600 at game start).",
   ),
-  game_half: z.enum(["Half1", "Half2", "Overtime"])
+  game_half: z
+    .enum(["Half1", "Half2", "Overtime"])
     .describe("Game period: Half1 = first half, Half2 = second half, Overtime."),
-  quarter_end: boolFromBinary.describe(
-    "1 if the play ended a quarter, 0 otherwise.",
-  ),
+  quarter_end: boolFromBinary.describe("1 if the play ended a quarter, 0 otherwise."),
   drive: nullableFloat.describe(
     "Drive number of the game for the possession team (1-indexed); null when not applicable.",
   ),
   sp: boolFromBinary.describe(
     "1 if the play was a scoring play (touchdown, field goal, safety, etc.), 0 otherwise.",
   ),
-  qtr: nullableFloat
-    .describe("Quarter of the game (1-4; 5 = overtime)."),
+  qtr: nullableFloat.describe("Quarter of the game (1-4; 5 = overtime)."),
   down: nullableFloat.describe(
     "Down of the play (1-4); null for kickoffs and other non-scrimmage plays.",
   ),
   goal_to_go: nullableFloat.describe(
     "1 if the offense is within 10 yards of the end zone (goal-to-go), 0 otherwise; null for non-offensive plays.",
   ),
-  time: nullableString.describe(
-    "Game clock at the start of the play as string MM:SS (max 15:00).",
-  ),
+  time: nullableString.describe("Game clock at the start of the play as string MM:SS (max 15:00)."),
   yrdln: nullableString.describe(
     "Yard line at the start of the play, formatted 'TEAM YARDLINE' (e.g. 'ARI 40') or '50' at midfield.",
   ),
@@ -75,9 +89,7 @@ export const pbpSchema = z.object({
   ydsnet: nullableFloat.describe(
     "Net yards gained or lost by the offense on the play (negative for losses); null on kickoffs.",
   ),
-  desc: z.string().nullish().describe(
-    "Detailed natural-language description of the play.",
-  ),
+  desc: z.string().nullish().describe("Detailed natural-language description of the play."),
   play_type: nullableStringOf(
     z.enum([
       "kickoff",
@@ -96,9 +108,7 @@ export const pbpSchema = z.object({
   yards_gained: nullableFloat.describe(
     "Yards gained by the offense on the play (negative for losses); null on kickoffs and punts.",
   ),
-  shotgun: boolFromBinary.describe(
-    "1 if the offense lined up in shotgun formation, 0 otherwise.",
-  ),
+  shotgun: boolFromBinary.describe("1 if the offense lined up in shotgun formation, 0 otherwise."),
   no_huddle: boolFromBinary.describe(
     "1 if the offense ran the play without a huddle, 0 otherwise.",
   ),
@@ -138,9 +148,7 @@ export const pbpSchema = z.object({
   kick_distance: nullableFloat.describe(
     "Distance of the kick in yards (kickoff, punt, or field goal); null on non-kick plays.",
   ),
-  extra_point_result: nullableStringOf(
-    z.enum(["good", "failed", "blocked", "aborted"]),
-  ).describe(
+  extra_point_result: nullableStringOf(z.enum(["good", "failed", "blocked", "aborted"])).describe(
     "Extra point outcome: good, failed, blocked, or aborted; null on non-extra-point plays.",
   ),
   two_point_conv_result: nullableStringOf(z.enum(["success", "failure"])).describe(
@@ -173,12 +181,8 @@ export const pbpSchema = z.object({
   defteam_timeouts_remaining: nullableFloat.describe(
     "Timeouts remaining for the defensive team at the start of the play; null when no defteam.",
   ),
-  total_home_score: nullableFloat.describe(
-    "Home team's total score after the play.",
-  ),
-  total_away_score: nullableFloat.describe(
-    "Away team's total score after the play.",
-  ),
+  total_home_score: nullableFloat.describe("Home team's total score after the play."),
+  total_away_score: nullableFloat.describe("Away team's total score after the play."),
   posteam_score: nullableFloat.describe(
     "Possession team's score after the play; null when no posteam.",
   ),
@@ -224,9 +228,7 @@ export const pbpSchema = z.object({
   two_point_conversion_prob: nullableFloat.describe(
     "nflfastR model output: probability (0-1) of a successful two-point conversion attempt.",
   ),
-  ep: nullableFloat.describe(
-    "Expected points (nflfastR model) before the play.",
-  ),
+  ep: nullableFloat.describe("Expected points (nflfastR model) before the play."),
   epa: nullableFloat.describe(
     "Expected points added by the play (nflfastR model, in points); null on kickoffs and other plays without EPA.",
   ),
@@ -521,9 +523,7 @@ export const pbpSchema = z.object({
   passer_player_id: nullableString.describe(
     "GSIS player ID of the passer; null on non-pass plays.",
   ),
-  passer_player_name: nullableString.describe(
-    "Full name of the passer; null on non-pass plays.",
-  ),
+  passer_player_name: nullableString.describe("Full name of the passer; null on non-pass plays."),
   passing_yards: nullableFloat.describe(
     "Yards gained on the pass attempt; null on non-pass plays.",
   ),
@@ -542,9 +542,7 @@ export const pbpSchema = z.object({
   rusher_player_name: nullableString.describe(
     "Full name of the rusher who carried the ball; null on non-run plays.",
   ),
-  rushing_yards: nullableFloat.describe(
-    "Yards gained on the rush; null on non-run plays.",
-  ),
+  rushing_yards: nullableFloat.describe("Yards gained on the rush; null on non-run plays."),
   lateral_receiver_player_id: nullableString.describe(
     "GSIS player ID of the player who caught the lateral pass; null when not applicable.",
   ),
@@ -608,9 +606,7 @@ export const pbpSchema = z.object({
   punter_player_id: nullableString.describe(
     "GSIS player ID of the punter; null when not applicable.",
   ),
-  punter_player_name: nullableString.describe(
-    "Full name of the punter; null when not applicable.",
-  ),
+  punter_player_name: nullableString.describe("Full name of the punter; null when not applicable."),
   kicker_player_id: nullableString.describe(
     "GSIS player ID of the kicker (kickoff or field goal); null when not applicable.",
   ),
@@ -821,9 +817,7 @@ export const pbpSchema = z.object({
   return_team: nullableString.describe(
     "Team abbreviation of the team returning the kick or punt; null when not applicable.",
   ),
-  return_yards: nullableFloat.describe(
-    "Yards gained on the return; null when not applicable.",
-  ),
+  return_yards: nullableFloat.describe("Yards gained on the return; null when not applicable."),
   penalty_team: nullableString.describe(
     "Team abbreviation of the team penalized on the play; null if no penalty.",
   ),
@@ -833,101 +827,99 @@ export const pbpSchema = z.object({
   penalty_player_name: nullableString.describe(
     "Full name of the penalized player; null if no penalty or if the penalty was on the team/bench.",
   ),
-  penalty_yards: nullableFloat.describe(
-    "Yards assessed for the penalty; null if no penalty.",
-  ),
+  penalty_yards: nullableFloat.describe("Yards assessed for the penalty; null if no penalty."),
   replay_or_challenge: nullableBoolFromBinary.describe(
     "Tri-state: 1 if a replay review or coach's challenge occurred on the play, 0 otherwise, null when not applicable.",
   ),
-  replay_or_challenge_result: nullableStringOf(
-    z.enum(["reversed", "upheld", "denied"]),
-  ).describe(
+  replay_or_challenge_result: nullableStringOf(z.enum(["reversed", "upheld", "denied"])).describe(
     "Result of the replay review or challenge: reversed, upheld, or denied; null if no review occurred.",
   ),
-  penalty_type: z.pipe(
-    nullableString,
-    z.union([
-      z.null(),
-      z.enum([
-        "Unnecessary Roughness",
-        "Defensive Pass Interference",
-        "Face Mask",
-        "False Start",
-        "Defensive Holding",
-        "Roughing the Passer",
-        "Kickoff Short of Landing Zone",
-        "Offensive Holding",
-        "Defensive Too Many Men on Field",
-        "Kickoff Out of Bounds",
-        "Illegal Formation",
-        "Horse Collar Tackle",
-        "Offensive Pass Interference",
-        "Delay of Game",
-        "Defensive Offside",
-        "Kick Catch Interference",
-        "Ineligible Downfield Pass",
-        "Illegal Contact",
-        "Illegal Shift",
-        "Illegal Block Above the Waist",
-        "Player Out of Bounds on Kick",
-        "Neutral Zone Infraction",
-        "Encroachment",
-        "Illegal Use of Hands",
-        "Offensive Too Many Men on Field",
-        "Illegal Substitution",
-        "Illegal Touch Pass",
-        "Unsportsmanlike Conduct",
-        "Intentional Grounding",
-        "Fair Catch Interference",
-        "Taunting",
-        "Illegal Forward Pass",
-        "Defensive Delay of Game",
-        "Roughing the Kicker",
-        "Illegal Motion",
-        "Illegal Kick/Kicking Loose Ball",
-        "Leverage",
-        "Ineligible Downfield Kick",
-        "Chop Block",
-        "Illegal Blindside Block",
-        "Illegal Touch Kick",
-        "Clipping",
-        "Low Block",
-        "Offensive Offside",
-        "Lowering the Head to Make Forcible Contact",
-        "Tripping",
-        "Disqualification",
-        "Running Into the Kicker",
-        "Illegal Bat",
-        "Illegal Crackback",
-        "Hip Drop Tackle",
-        "Offensive 12 On-field",
-        "Personal Foul",
-        "Player Out of Bounds on Punt",
-        "Defensive 12 On-field",
-        "Offside on Free Kick",
-        "Illegal Wedge",
-        "Illegal Kick",
-        "Interference with Opportunity to Catch",
-        "Illegal Peelback",
-        "Leaping",
-        "Invalid Fair Catch Signal",
-        "Face Mask (5 Yards)",
-        "Illegal Procedure",
-        "Illegal Receiver Pass",
-        "Illegal Cut",
-        "Short Free Kick",
-        "Illegally Kicking Ball",
-        "Delay of Kickoff",
-        "Illegal Scrimmage Kick",
-        "Lowering the Head to Initiate Contact",
-        "Illegal Double-Team Block",
-        "Horse Collar",
+  penalty_type: z
+    .pipe(
+      nullableString,
+      z.union([
+        z.null(),
+        z.enum([
+          "Unnecessary Roughness",
+          "Defensive Pass Interference",
+          "Face Mask",
+          "False Start",
+          "Defensive Holding",
+          "Roughing the Passer",
+          "Kickoff Short of Landing Zone",
+          "Offensive Holding",
+          "Defensive Too Many Men on Field",
+          "Kickoff Out of Bounds",
+          "Illegal Formation",
+          "Horse Collar Tackle",
+          "Offensive Pass Interference",
+          "Delay of Game",
+          "Defensive Offside",
+          "Kick Catch Interference",
+          "Ineligible Downfield Pass",
+          "Illegal Contact",
+          "Illegal Shift",
+          "Illegal Block Above the Waist",
+          "Player Out of Bounds on Kick",
+          "Neutral Zone Infraction",
+          "Encroachment",
+          "Illegal Use of Hands",
+          "Offensive Too Many Men on Field",
+          "Illegal Substitution",
+          "Illegal Touch Pass",
+          "Unsportsmanlike Conduct",
+          "Intentional Grounding",
+          "Fair Catch Interference",
+          "Taunting",
+          "Illegal Forward Pass",
+          "Defensive Delay of Game",
+          "Roughing the Kicker",
+          "Illegal Motion",
+          "Illegal Kick/Kicking Loose Ball",
+          "Leverage",
+          "Ineligible Downfield Kick",
+          "Chop Block",
+          "Illegal Blindside Block",
+          "Illegal Touch Kick",
+          "Clipping",
+          "Low Block",
+          "Offensive Offside",
+          "Lowering the Head to Make Forcible Contact",
+          "Tripping",
+          "Disqualification",
+          "Running Into the Kicker",
+          "Illegal Bat",
+          "Illegal Crackback",
+          "Hip Drop Tackle",
+          "Offensive 12 On-field",
+          "Personal Foul",
+          "Player Out of Bounds on Punt",
+          "Defensive 12 On-field",
+          "Offside on Free Kick",
+          "Illegal Wedge",
+          "Illegal Kick",
+          "Interference with Opportunity to Catch",
+          "Illegal Peelback",
+          "Leaping",
+          "Invalid Fair Catch Signal",
+          "Face Mask (5 Yards)",
+          "Illegal Procedure",
+          "Illegal Receiver Pass",
+          "Illegal Cut",
+          "Short Free Kick",
+          "Illegally Kicking Ball",
+          "Delay of Kickoff",
+          "Illegal Scrimmage Kick",
+          "Lowering the Head to Initiate Contact",
+          "Illegal Double-Team Block",
+          "Horse Collar",
+        ]),
+        z.string(),
       ]),
-      z.string(),
-    ]),
-  ).describe(
-    "Type of penalty called on the play, e.g. 'Offensive Holding', 'False Start', 'Defensive Pass Interference', 'Roughing the Passer', 'Unnecessary Roughness' (free-form string beyond the enumerated values); null if no penalty.",
-  ),
+    )
+    .describe(
+      "Type of penalty called on the play, e.g. 'Offensive Holding', 'False Start', 'Defensive Pass Interference', 'Roughing the Passer', 'Unnecessary Roughness' (free-form string beyond the enumerated values); null if no penalty.",
+    ),
   defensive_two_point_attempt: nullableBoolFromBinary.describe(
     "Tri-state: 1 if the defense attempted a defensive two-point conversion (e.g. returning an interception or fumble on a conversion attempt), 0 otherwise, null when not applicable.",
   ),
@@ -946,16 +938,14 @@ export const pbpSchema = z.object({
   safety_player_id: nullableString.describe(
     "GSIS player ID of the player tackled or sacked in the end zone for the safety; null if no safety.",
   ),
-  season: nullableInt
-    .describe("Season year (e.g. 2024)."),
+  season: nullableInt.describe("Season year (e.g. 2024)."),
   cp: nullableFloat.describe(
     "Completion probability (0-1) of the pass attempt (nflfastR model); null on non-pass plays.",
   ),
   cpoe: nullableFloat.describe(
     "Completion percentage over expected for the pass attempt (nflfastR model); null on non-pass plays.",
   ),
-  series: nullableFloat
-    .describe("Series number within the game (nflfastR drive subdivision)."),
+  series: nullableFloat.describe("Series number within the game (nflfastR drive subdivision)."),
   series_success: boolFromBinary.describe(
     "1 if the series was successful (first down or touchdown), 0 otherwise.",
   ),
@@ -1027,11 +1017,7 @@ export const pbpSchema = z.object({
   special_teams_play: nullableBoolFromBinary.describe(
     "Tri-state: 1 if the play was a special teams play, 0 otherwise, null when not applicable.",
   ),
-  st_play_type: nullableStringOf(
-    z.enum([
-      "PENALTY",
-    ]),
-  ).describe(
+  st_play_type: nullableStringOf(z.enum(["PENALTY"])).describe(
     "Special teams play type from the NFL feed. Currently only PENALTY is ever populated; the feed does not populate other special teams play types.",
   ),
   end_clock_time: nullableString.describe(
@@ -1043,17 +1029,18 @@ export const pbpSchema = z.object({
   fixed_drive: nullableFloat.describe(
     "Drive number as computed by the nflfastR 'fixed drive' logic (1-indexed).",
   ),
-  fixed_drive_result: z.enum([
-        "Touchdown",
-        "Turnover",
-        "Field goal",
-        "End of half",
-        "Punt",
-        "Turnover on downs",
-        "Missed field goal",
-        "Opp touchdown",
-        "Safety",
-      ])
+  fixed_drive_result: z
+    .enum([
+      "Touchdown",
+      "Turnover",
+      "Field goal",
+      "End of half",
+      "Punt",
+      "Turnover on downs",
+      "Missed field goal",
+      "Opp touchdown",
+      "Safety",
+    ])
     .describe(
       "Result of the fixed drive: Touchdown, Turnover, Field goal, End of half, Punt, Turnover on downs, Missed field goal, Opp touchdown, or Safety.",
     ),
@@ -1181,32 +1168,20 @@ export const pbpSchema = z.object({
   drive_play_id_ended: coercedNullableString.describe(
     "play_id of the last play of the drive; null when unavailable.",
   ),
-  away_score: nullableFloat.describe(
-    "Away team's final score for the game.",
-  ),
-  home_score: nullableFloat.describe(
-    "Home team's final score for the game.",
-  ),
-  location: z.enum(["Home", "Neutral"])
-    .describe(
-      "Game location: Home = played at the home team's stadium, Neutral = neutral site.",
-    ),
+  away_score: nullableFloat.describe("Away team's final score for the game."),
+  home_score: nullableFloat.describe("Home team's final score for the game."),
+  location: z
+    .enum(["Home", "Neutral"])
+    .describe("Game location: Home = played at the home team's stadium, Neutral = neutral site."),
   result: nullableFloat.describe(
     "Margin of victory from the home team's perspective (home score minus away score; positive = home win).",
   ),
-  total: nullableFloat.describe(
-    "Total points scored in the game (home + away).",
-  ),
-  spread_line: nullableFloat.describe(
-    "Closing Vegas spread line (home team perspective).",
-  ),
-  total_line: nullableFloat.describe(
-    "Closing Vegas over/under total line.",
-  ),
-  div_game: boolFromBinary.describe(
-    "1 if the game was a divisional matchup, 0 otherwise.",
-  ),
-  roof: z.enum(["outdoors", "dome", "closed", "open"])
+  total: nullableFloat.describe("Total points scored in the game (home + away)."),
+  spread_line: nullableFloat.describe("Closing Vegas spread line (home team perspective)."),
+  total_line: nullableFloat.describe("Closing Vegas over/under total line."),
+  div_game: boolFromBinary.describe("1 if the game was a divisional matchup, 0 otherwise."),
+  roof: z
+    .enum(["outdoors", "dome", "closed", "open"])
     .describe(
       "Stadium roof type: outdoors, dome, closed (retractable roof closed), or open (retractable roof open).",
     ),
@@ -1228,21 +1203,11 @@ export const pbpSchema = z.object({
   temp: nullableFloat.describe(
     "Temperature in degrees Fahrenheit at kickoff; null when unavailable.",
   ),
-  wind: nullableFloat.describe(
-    "Wind speed in miles per hour at kickoff; null when unavailable.",
-  ),
-  home_coach: z.string().nullish().describe(
-    "Full name of the home team's head coach.",
-  ),
-  away_coach: z.string().nullish().describe(
-    "Full name of the away team's head coach.",
-  ),
-  stadium_id: z.string().nullish().describe(
-    "nflverse stadium identifier.",
-  ),
-  game_stadium: z.string().nullish().describe(
-    "Stadium name for the game (from schedule data).",
-  ),
+  wind: nullableFloat.describe("Wind speed in miles per hour at kickoff; null when unavailable."),
+  home_coach: z.string().nullish().describe("Full name of the home team's head coach."),
+  away_coach: z.string().nullish().describe("Full name of the away team's head coach."),
+  stadium_id: z.string().nullish().describe("nflverse stadium identifier."),
+  game_stadium: z.string().nullish().describe("Stadium name for the game (from schedule data)."),
   aborted_play: boolFromBinary.describe(
     "1 if the play was aborted (e.g. blown dead before the snap), 0 otherwise.",
   ),
@@ -1270,15 +1235,11 @@ export const pbpSchema = z.object({
   pass: boolFromBinary.describe(
     "1 if the play was a pass play (dropback with a pass attempt), 0 otherwise.",
   ),
-  rush: boolFromBinary.describe(
-    "1 if the play was a rush attempt, 0 otherwise.",
-  ),
+  rush: boolFromBinary.describe("1 if the play was a rush attempt, 0 otherwise."),
   first_down: nullableBoolFromBinary.describe(
     "Tri-state: 1 if the play earned a first down, 0 otherwise, null when not applicable.",
   ),
-  special: boolFromBinary.describe(
-    "1 if the play was a special teams play, 0 otherwise.",
-  ),
+  special: boolFromBinary.describe("1 if the play was a special teams play, 0 otherwise."),
   play: boolFromBinary.describe(
     "1 if a real football play occurred (excludes administrative events like end of quarter, timeouts, and penalty-only plays), 0 otherwise.",
   ),
@@ -1312,9 +1273,7 @@ export const pbpSchema = z.object({
   fantasy_id: nullableString.describe(
     "Fantasy player ID (duplicate of fantasy_player_id); null when unavailable.",
   ),
-  out_of_bounds: boolFromBinary.describe(
-    "1 if the play went out of bounds, 0 otherwise.",
-  ),
+  out_of_bounds: boolFromBinary.describe("1 if the play went out of bounds, 0 otherwise."),
   home_opening_kickoff: boolFromBinary.describe(
     "1 if the home team received the opening kickoff, 0 otherwise.",
   ),

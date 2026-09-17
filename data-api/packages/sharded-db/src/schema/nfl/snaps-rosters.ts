@@ -24,10 +24,7 @@ export const snap_count = sqliteTable(
     contentHash: text("content_hash"),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
   },
-  (t) => [
-    index("snap_game_idx").on(t.gameId),
-    index("snap_player_idx").on(t.playerId),
-  ],
+  (t) => [index("snap_game_idx").on(t.gameId), index("snap_player_idx").on(t.playerId)],
 );
 
 export const roster_weekly = sqliteTable(
@@ -100,8 +97,5 @@ export const roster_season = sqliteTable(
     contentHash: text("content_hash"),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
   },
-  (t) => [
-    index("rs_player_idx").on(t.playerId),
-    index("rs_team_idx").on(t.teamId, t.season),
-  ],
+  (t) => [index("rs_player_idx").on(t.playerId), index("rs_team_idx").on(t.teamId, t.season)],
 );

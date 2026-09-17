@@ -21,6 +21,8 @@ export function createAuth(
     }),
     trustedOrigins: [env.CORS_ORIGIN, ...desktopOrigins],
     emailAndPassword: { enabled: true },
+    // TODO disable email+password authn
+    // TODO add oauth for: [google, facebook, github], maybe others?
     secret: env.BETTER_AUTH_SECRET,
     baseURL: env.BETTER_AUTH_URL,
     advanced: {
@@ -30,6 +32,16 @@ export function createAuth(
         httpOnly: true,
       },
     },
-    plugins: [],
+    plugins: [
+      /*
+// TODO add plugins:
+- Admin: https://better-auth.com/docs/plugins/admin
+- Captcha: https://better-auth.com/docs/plugins/captcha
+- i18n: https://better-auth.com/docs/plugins/i18n
+- last login method: https://better-auth.com/docs/plugins/last-login-method
+- openapi: https://better-auth.com/docs/plugins/open-api
+- dbsc: https://www.npmjs.com/package/@dbsc-toolkit/better-auth
+*/
+    ],
   });
 }

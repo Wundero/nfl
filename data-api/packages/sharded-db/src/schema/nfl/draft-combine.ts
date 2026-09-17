@@ -39,10 +39,7 @@ export const draft_pick = sqliteTable(
     defInts: integer("def_ints"),
     defSacks: real("def_sacks"),
   },
-  (t) => [
-    index("draft_season_idx").on(t.season),
-    index("draft_player_idx").on(t.playerId),
-  ],
+  (t) => [index("draft_season_idx").on(t.season), index("draft_player_idx").on(t.playerId)],
 );
 
 export const combine_result = sqliteTable(
@@ -67,7 +64,5 @@ export const combine_result = sqliteTable(
     cone: real("cone"),
     shuttle: real("shuttle"),
   },
-  (t) => [
-    index("combine_season_idx").on(t.season),
-  ],
+  (t) => [index("combine_season_idx").on(t.season)],
 );

@@ -6,6 +6,7 @@ import { Readable } from "stream";
 import { finished } from "stream/promises";
 import { arrayBuffer } from "stream/consumers";
 import { WorkflowStep } from "cloudflare:workers";
+import type { DatabaseDO } from "../../../../apps/server/src/index";
 
 export const github = new Octokit({
   // auth: ENV.GITHUB_TOKEN,
@@ -139,7 +140,13 @@ function expandReleases(): Record<
 
 const FULL_RELEASE_MAP = expandReleases();
 
-export async function pullLatestNFLVerse(step: WorkflowStep, kv: KVNamespace, r2: R2Bucket) {
+export async function pullLatestNFLVerse(
+  step: WorkflowStep,
+  kv: KVNamespace,
+  r2: R2Bucket,
+  q: Queue,
+  durableObject: DurableObjectNamespace<DatabaseDO>,
+) {
   const assetsToFetch = await step.do("check-releases", async () => {
     const response = await github.request("GET /repos/{owner}/{repo}/releases", {
       owner: "nflverse",
@@ -217,6 +224,10 @@ export async function pullLatestNFLVerse(step: WorkflowStep, kv: KVNamespace, r2
           await kv.put(asset.url, asset.digest);
         });
         // TODO produce diff + upsert
+        // TODO it would be ideal to minimize data going into/out of a step, since that increases cost.
+        const diff = await step.do(`Produce diff for ${asset.url}`, async () => {});
+        await step.do(`Upsert data to sqlite for ${asset.url}`, async () => {});
+        await step.do(`Queue webhook propagation events for ${asset.url}`, async () => {});
       }),
     ),
   );

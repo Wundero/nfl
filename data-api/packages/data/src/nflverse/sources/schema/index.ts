@@ -11,7 +11,16 @@ import { draftPicksSchema } from "./draft-picks";
 import { histContractsSchema } from "./contracts";
 import { snapCountSchema } from "./snap-counts";
 import { rostersSchema } from "./rosters";
-import { pfrAdvStats_wkDef_schema, pfrAdvStats_wkPass_schema, pfrAdvStats_wkRec_schema, pfrAdvStats_wkRush_schema, pfrAdvStats_sznDef_schema, pfrAdvStats_sznPass_schema, pfrAdvStats_sznRec_schema, pfrAdvStats_sznRush_schema } from "./pfr-advstats";
+import {
+  pfrAdvStats_wkDef_schema,
+  pfrAdvStats_wkPass_schema,
+  pfrAdvStats_wkRec_schema,
+  pfrAdvStats_wkRush_schema,
+  pfrAdvStats_sznDef_schema,
+  pfrAdvStats_sznPass_schema,
+  pfrAdvStats_sznRec_schema,
+  pfrAdvStats_sznRush_schema,
+} from "./pfr-advstats";
 import { pbpSchema } from "./pbp";
 import { ngsPassingSchema, ngsReceivingSchema, ngsRushingSchema } from "./ngs";
 import { injuriesSchema } from "./injuries";

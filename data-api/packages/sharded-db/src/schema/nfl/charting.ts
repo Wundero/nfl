@@ -37,8 +37,5 @@ export const ftn_charting = sqliteTable(
     contentHash: text("content_hash"),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
   },
-  (t) => [
-    index("ftn_game_idx").on(t.gameId),
-    uniqueIndex("ftn_play_idx").on(t.nflversePlayId),
-  ],
+  (t) => [index("ftn_game_idx").on(t.gameId), uniqueIndex("ftn_play_idx").on(t.nflversePlayId)],
 );

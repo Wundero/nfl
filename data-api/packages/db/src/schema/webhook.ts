@@ -2,16 +2,19 @@ import { relations, sql } from "drizzle-orm";
 import { sqliteTable, text, integer, index, uniqueIndex } from "drizzle-orm/sqlite-core";
 import { user } from "./auth";
 
-
 export const webhook = sqliteTable("webhook", {
-  id: text("id").primaryKey().$default(() => crypto.randomUUID()), // TODO uuidv7
+  id: text("id")
+    .primaryKey()
+    .$default(() => crypto.randomUUID()), // TODO uuidv7
   // As a note, the ID of the webhook is likely to be the same as the durable object's name, so that it can be trivially
   //  loaded when sending events.
-  ownerId: text("owner_id").notNull().references(() => user.id),
+  ownerId: text("owner_id")
+    .notNull()
+    .references(() => user.id),
 
   destinationUrl: text("destination_url").notNull(),
   // TODO type this better. goal: this should repr the set of events this wh is subscribed to
-  event_config: text("event_config", {mode: "json"}).$type<Record<string, boolean>>().notNull(),
+  event_config: text("event_config", { mode: "json" }).$type<Record<string, boolean>>().notNull(),
   // TODO: add authn stuff (keys, hmac, etc.)
   // TODO: add verification stuff (response checks, etc.)
   // TODO rate limit cfgs

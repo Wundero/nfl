@@ -33,8 +33,8 @@ const yoga = createYoga<Env & ExecutionContext>({
 });
 
 app.use("/api/graphql/v1/*", async (c) => {
-  // TODO id like graphiql to be on a different endpoint
-  // TODO SSE support?
+  // TODO id like graphiql to be on a different endpoint, something like /api/graphql/playground
+  // TODO im not sure URL versioning makes sense for gql, might be more sensible to bake version into the schema
 
   // @ts-expect-error Request type confusion, but this is valid
   return yoga.fetch(c.req.raw, c.env, c.executionCtx);
@@ -42,9 +42,20 @@ app.use("/api/graphql/v1/*", async (c) => {
 
 app.use("/api/data/v1/*", async (c) => {
   // TODO openapi from drizzle, readonly
+  // TODO use Scalar, since betterauth uses that and i want to merge ba with this api schema
 });
 
+app.use("/api/webhook/v1/*", async (c) => {
+  // TODO webhook management (get, create, update, delete)
+  // TODO this should be authenticated with betterauth
+});
+
+// TODO do websocket (hibernation required) / SSE endpoints make sense for webhook alts to stream events to a client?
+
+// TODO health check endpoint
+
 app.get("/", (c) => {
+  // TODO redirect to frontend
   return c.text("OK");
 });
 

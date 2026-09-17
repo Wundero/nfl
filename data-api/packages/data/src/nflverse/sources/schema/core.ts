@@ -1,5 +1,16 @@
 import { z } from "zod";
-import { nullableInt, nullableFloat, boolFromBinary, nullableBoolFromBinary, nullableString, nullableStringOf, hexColor, nullableHexColor, urlSchema, nullableDate } from "./helpers";
+import {
+  nullableInt,
+  nullableFloat,
+  boolFromBinary,
+  nullableBoolFromBinary,
+  nullableString,
+  nullableStringOf,
+  hexColor,
+  nullableHexColor,
+  urlSchema,
+  nullableDate,
+} from "./helpers";
 
 export const tradeSchema = z
   .object({
@@ -15,7 +26,9 @@ export const tradeSchema = z
     pick_number: nullableInt.describe(
       "The absolute number of the pick in the draft of that year. Null = no pick traded.",
     ),
-    conditional: nullableBoolFromBinary.describe("Whether the pick traded is conditional. Null = no pick traded."),
+    conditional: nullableBoolFromBinary.describe(
+      "Whether the pick traded is conditional. Null = no pick traded.",
+    ),
     pfr_id: nullableString.describe(
       "Pro football reference player ID, if known. Null = either no player traded OR PFR doesn't have this player ID.",
     ),
@@ -27,16 +40,17 @@ export const tradeSchema = z
 
 export const teamsSchema = z
   .object({
-    team_abbr: z.string().nullish().describe("The team's abbreviation, e.g. ARI = Arizona Cardinals"),
+    team_abbr: z
+      .string()
+      .nullish()
+      .describe("The team's abbreviation, e.g. ARI = Arizona Cardinals"),
     team_name: z.string().nullish().describe("The team's full name, e.g. Arizona Cardinals"),
     team_id: z.coerce.number().int().describe("The team's nflverse ID, e.g. 3800."),
     team_nick: z.string().nullish().describe("The team's short name, e.g. Cardinals."),
     team_conf: z.string().nullish().describe("The team's conference, e.g. NFC"),
     team_division: z.string().nullish().describe("The team's division, e.g. NFC West"),
     team_color: hexColor.describe("The team's primary color, as a hex color (e.g. #97233F)"),
-    team_color2: hexColor.describe(
-      "The team's secondary color, as a hex color (e.g. #FFB612)",
-    ),
+    team_color2: hexColor.describe("The team's secondary color, as a hex color (e.g. #FFB612)"),
     team_color3: nullableHexColor.describe(
       "The team's tertiary color, as a hex color. Null = no tertiary color defined.",
     ),
@@ -54,14 +68,17 @@ export const teamsSchema = z
 
 export const gamesSchema = z
   .object({
-    game_id: z.string().nullish()
+    game_id: z
+      .string()
+      .nullish()
       .describe(
         "NFL Verse ID of the game, formatted as YEAR_WEEK_AWAYTEAMABBR_HOMETEAMABBR (e.g. 2023_01_ARI_WAS).",
       ),
     season: nullableInt.describe("Season (year) the game took place"),
     // The type of the game. REG = regular season game, WC = wildcard playoff game, DIV = divisional round playoff game,
     //  CON = conference championship game, SB = superbowl game
-    game_type: z.enum(["REG", "WC", "DIV", "CON", "SB"])
+    game_type: z
+      .enum(["REG", "WC", "DIV", "CON", "SB"])
       .describe(
         "The type of game being played. Values: REG=regular season game, " +
           "WC=wildcard playoff game, DIV=divisional round playoff game, CON=conference championship playoff game, SB=superbowl playoff final game",
@@ -71,7 +88,8 @@ export const gamesSchema = z
     // The ISO date of the game
     gameday: nullableDate.describe("The date the game took place."),
     // The day of the week the game was played on
-    weekday: z.enum(["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"])
+    weekday: z
+      .enum(["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"])
       .describe("The day of the week the game took place."),
     // The time of day the game was played on (I think EST? not sure though)
     gametime: nullableString.describe(
@@ -86,7 +104,8 @@ export const gamesSchema = z
     // The score the home team got (null if not yet played)
     home_score: nullableInt.describe("The score the home team got. Null = not yet played."),
     // Where the game was played for the home team (either at home or in a neutral stadium, away inverses to home)
-    location: z.enum(["Home", "Neutral"])
+    location: z
+      .enum(["Home", "Neutral"])
       .describe("Whether the game was played at home (for the home team) or in a neutral stadium."),
     // Result = home score - away score
     result: nullableInt.describe("The resulting score of the game. Equal to home-away."),
@@ -95,9 +114,12 @@ export const gamesSchema = z
     // Whether the game went into overtime
     overtime: nullableBoolFromBinary.describe("Whether the game went into overtime."),
     // Previously used game ids (one number, YEARMONTHDAYNUMBER, not as obvious what the NUMBER is)
-    old_game_id: z.coerce.number().int().describe(
-      "The previously used NFL Verse game ID, a single number in YEARMONTHDAYNUMBER format; the meaning of the trailing NUMBER is undocumented.",
-    ),
+    old_game_id: z.coerce
+      .number()
+      .int()
+      .describe(
+        "The previously used NFL Verse game ID, a single number in YEARMONTHDAYNUMBER format; the meaning of the trailing NUMBER is undocumented.",
+      ),
     // NFL GSIS ID
     gsis: nullableInt.describe("NFL Game Statistics & Information System (GSIS) ID for the game."),
     // NFL Detail ID (very little use)
@@ -111,11 +133,9 @@ export const gamesSchema = z
     // For the numbers (fantasy) ID
     ftn: nullableInt.describe("FTN (For The Numbers) ID for the game."),
     // How many days of rest the away team got
-    away_rest: nullableInt
-      .describe("Number of days of rest the away team had prior to the game."),
+    away_rest: nullableInt.describe("Number of days of rest the away team had prior to the game."),
     // How many days of rest the home team got
-    home_rest: nullableInt
-      .describe("Number of days of rest the home team had prior to the game."),
+    home_rest: nullableInt.describe("Number of days of rest the home team had prior to the game."),
     away_moneyline: nullableInt.describe(
       "The American-odds moneyline price for the away team to win outright. Null = no odds available.",
     ),

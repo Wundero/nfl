@@ -1,5 +1,11 @@
 import { z } from "zod";
-import { nullableInt, nullableFloat, boolFromBinary, nullableCodeString, nullableDate } from "./helpers";
+import {
+  nullableInt,
+  nullableFloat,
+  boolFromBinary,
+  nullableCodeString,
+  nullableDate,
+} from "./helpers";
 
 export const ftnChartingSchema = z.object({
   ftn_game_id: nullableInt.describe("The FTN ID of the game"),
@@ -36,7 +42,9 @@ CHK=Checkdown
 SD=Scramble drill
 DES=Designed read`,
   ),
-  is_catchable_ball: boolFromBinary.describe("Whether the ball can be caught by the receiver or not"),
+  is_catchable_ball: boolFromBinary.describe(
+    "Whether the ball can be caught by the receiver or not",
+  ),
   is_contested_ball: boolFromBinary.describe("Whether the ball was contested by a defender"),
   is_created_reception: boolFromBinary.describe(
     "Whether the receiver created the reception beyond what the throw gave him (e.g. had to adjust, contort, or make a difficult play to secure the catch)",
@@ -47,6 +55,8 @@ DES=Designed read`,
   ),
   n_blitzers: nullableInt.describe("The number of blitzers (additional rushers) on the play"),
   n_pass_rushers: nullableInt.describe("The number of pass rushers (total) on the play"),
-  is_qb_fault_sack: boolFromBinary.describe("Whether the QB is at fault for taking the sack or not"),
+  is_qb_fault_sack: boolFromBinary.describe(
+    "Whether the QB is at fault for taking the sack or not",
+  ),
   date_pulled: nullableDate.describe("When this data was fetched"),
 });

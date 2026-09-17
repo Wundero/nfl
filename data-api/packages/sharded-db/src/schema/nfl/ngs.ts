@@ -73,9 +73,7 @@ export const ngs_receiving = sqliteTable(
     contentHash: text("content_hash"),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
   },
-  (t) => [
-    uniqueIndex("ngs_rec_idx").on(t.playerId, t.season, t.seasonType, t.week),
-  ],
+  (t) => [uniqueIndex("ngs_rec_idx").on(t.playerId, t.season, t.seasonType, t.week)],
 );
 
 export const ngs_rushing = sqliteTable(
@@ -107,7 +105,5 @@ export const ngs_rushing = sqliteTable(
     contentHash: text("content_hash"),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
   },
-  (t) => [
-    uniqueIndex("ngs_rush_idx").on(t.playerId, t.season, t.seasonType, t.week),
-  ],
+  (t) => [uniqueIndex("ngs_rush_idx").on(t.playerId, t.season, t.seasonType, t.week)],
 );

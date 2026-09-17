@@ -6,7 +6,9 @@ export const player_week_stats = sqliteTable(
   "player_week_stats",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
-    playerId: integer("player_id").notNull().references(() => player.id),
+    playerId: integer("player_id")
+      .notNull()
+      .references(() => player.id),
     teamId: integer("team_id").references(() => team.id),
     opponentTeamId: integer("opponent_team_id").references(() => team.id),
     gameId: integer("game_id").references(() => game.id),
@@ -170,7 +172,9 @@ export const player_season_stats = sqliteTable(
   "player_season_stats",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
-    playerId: integer("player_id").notNull().references(() => player.id),
+    playerId: integer("player_id")
+      .notNull()
+      .references(() => player.id),
     teamId: integer("team_id").references(() => team.id),
     position: text("position"),
     positionGroup: text("position_group"),

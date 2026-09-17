@@ -16,15 +16,13 @@ export const nullableBoolFromBinary = z.preprocess(
 
 export const nullableString = z.preprocess(
   (v) => (v === undefined ? null : v),
-  z
-    .union([z.string(), z.null()])
-    .transform((v) => {
-      if (v === null) {
-        return null;
-      }
-      const trimmed = v.trim();
-      return trimmed.length ? trimmed : null;
-    }),
+  z.union([z.string(), z.null()]).transform((v) => {
+    if (v === null) {
+      return null;
+    }
+    const trimmed = v.trim();
+    return trimmed.length ? trimmed : null;
+  }),
 );
 
 export const coercedNullableString = z.unknown().transform((v) => {
@@ -40,10 +38,7 @@ export const nullableStringOf = <T extends z.ZodType<unknown, string>>(sch: T) =
 
 export const hexColor = z.string().regex(/^#[A-Fa-f0-9]{6}$/);
 
-export const nullableHexColor = z.preprocess(
-  (v) => (!v ? null : v),
-  z.union([z.null(), hexColor]),
-);
+export const nullableHexColor = z.preprocess((v) => (!v ? null : v), z.union([z.null(), hexColor]));
 
 export const urlSchema = z.url();
 
@@ -54,7 +49,8 @@ export const NFLVERSE_TIMEZONE = "America/New_York";
 
 export const ISO_DATE = /^(\d{4})-(\d{2})-(\d{2})$/;
 
-export const SLASH_DATE = /^(\d{1,2})\/(\d{1,2})\/(\d{2,4})(?:[,\s]+(\d{1,2}):(\d{2})(?::(\d{2}))?)?$/;
+export const SLASH_DATE =
+  /^(\d{1,2})\/(\d{1,2})\/(\d{2,4})(?:[,\s]+(\d{1,2}):(\d{2})(?::(\d{2}))?)?$/;
 
 export const HAS_TIMEZONE = /(?:Z|[+-]\d{2}:?\d{2}|GMT[+-]\d{4})$/i;
 
@@ -84,7 +80,14 @@ function timeZoneOffsetMs(date: Date) {
   return asUtc - date.getTime();
 }
 
-function zonedTimeToDate(year: number, month: number, day: number, hour = 0, minute = 0, second = 0) {
+function zonedTimeToDate(
+  year: number,
+  month: number,
+  day: number,
+  hour = 0,
+  minute = 0,
+  second = 0,
+) {
   const guess = Date.UTC(year, month - 1, day, hour, minute, second);
   return new Date(guess - timeZoneOffsetMs(new Date(guess)));
 }

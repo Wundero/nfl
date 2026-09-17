@@ -48,10 +48,15 @@ export const db = Cloudflare.D1.Database("database", {
   migrations: "../../packages/db/src/migrations",
 });
 
+export const bucket = Cloudflare.R2.Bucket("archives");
+export const kv = Cloudflare.KV.Namespace("primary-kv");
+
 export const pullDataWorkflow = Cloudflare.Workflow<PullDataWorkflow>("pull-data", {
   className: "PullDataWorkflow",
   schedules: ["0 * * * *", "30 * * * *"], // every 30 mins
 });
+
+export const whQ = Cloudflare.Queues.Queue("webhook-queue");
 
 export const server = Cloudflare.Worker("server", {
   main: "../../apps/server/src/index.ts",
@@ -62,6 +67,9 @@ export const server = Cloudflare.Worker("server", {
     DB: db,
     DATABASE_DO: dbdo,
     WEBHOOK_DO: whdo,
+    WEBHOOK_Q: whQ,
+    KV: kv,
+    BUCKET: bucket,
     CORS_ORIGIN: Config.string("CORS_ORIGIN"),
     BETTER_AUTH_SECRET: Config.redacted("BETTER_AUTH_SECRET"),
     BETTER_AUTH_URL: Cloudflare.Worker.URL,
@@ -81,7 +89,12 @@ export default Alchemy.Stack(
   },
   Effect.gen(function* () {
     yield* serverRuleset;
+    const webhookQ = yield* whQ;
     const serverWorker = yield* server;
+    yield* Cloudflare.Queues.Consumer("webhook-processor", {
+      queueId: webhookQ.queueId,
+      scriptName: serverWorker.workerName,
+    });
     const webWorker = yield* Cloudflare.Website.StaticSite("web", {
       cwd: "../../apps/web",
       command: "bun run build:cloudflare",

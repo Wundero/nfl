@@ -23,10 +23,7 @@ export const team = sqliteTable(
     contentHash: text("content_hash"),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
   },
-  (t) => [
-    uniqueIndex("team_slug_idx").on(t.slug),
-    uniqueIndex("team_abbr_idx").on(t.abbr),
-  ],
+  (t) => [uniqueIndex("team_slug_idx").on(t.slug), uniqueIndex("team_abbr_idx").on(t.abbr)],
 );
 
 export const player = sqliteTable(
@@ -84,7 +81,5 @@ export const official = sqliteTable(
     position: text("position"),
     jerseyNumber: text("jersey_number"),
   },
-  (t) => [
-    uniqueIndex("official_slug_idx").on(t.slug),
-  ],
+  (t) => [uniqueIndex("official_slug_idx").on(t.slug)],
 );

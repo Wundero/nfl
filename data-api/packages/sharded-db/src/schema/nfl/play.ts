@@ -245,7 +245,9 @@ export const play_player = sqliteTable(
   "play_player",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
-    playId: integer("play_id").notNull().references(() => play.id),
+    playId: integer("play_id")
+      .notNull()
+      .references(() => play.id),
     role: text("role").notNull(),
     slot: integer("slot"),
     playerId: integer("player_id").references(() => player.id),
@@ -264,7 +266,9 @@ export const play_team = sqliteTable(
   "play_team",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
-    playId: integer("play_id").notNull().references(() => play.id),
+    playId: integer("play_id")
+      .notNull()
+      .references(() => play.id),
     role: text("role").notNull(),
     teamId: integer("team_id").references(() => team.id),
     rawValue: text("raw_value"),

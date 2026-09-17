@@ -16,7 +16,5 @@ export const trade = sqliteTable(
     pfrId: text("pfr_id"),
     pfrName: text("pfr_name"),
   },
-  (t) => [
-    index("trade_season_idx").on(t.season),
-  ],
+  (t) => [index("trade_season_idx").on(t.season)],
 );

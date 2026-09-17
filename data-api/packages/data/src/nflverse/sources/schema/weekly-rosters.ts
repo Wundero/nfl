@@ -1,5 +1,11 @@
 import { z } from "zod";
-import { nullableInt, nullableFloat, nullableString, nullableStringOf, nullableDate } from "./helpers";
+import {
+  nullableInt,
+  nullableFloat,
+  nullableString,
+  nullableStringOf,
+  nullableDate,
+} from "./helpers";
 
 export const rosterWeeklySchema = z.object({
   season: nullableFloat.describe("The season (year) for the roster entry"),
@@ -7,29 +13,30 @@ export const rosterWeeklySchema = z.object({
   position: nullableString.describe("The position the player plays on this roster."),
   depth_chart_position: nullableString.describe("The depth chart listed position of this player"),
   jersey_number: z.coerce.string().describe("The jersey number this player wears"),
-  status: z.enum([
-        "ACT",
-        "RES",
-        "TRC",
-        "CUT",
-        "TRD",
-        "SUS",
-        "TRT",
-        "NWT",
-        "",
-        "RSN",
-        "DEV",
-        "EXE",
-        "RSR",
-        "PUP",
-        "UDF",
-        "INA",
-        "UFA",
-        "RFA",
-        "RET",
-        "E01",
-        "E14",
-      ])
+  status: z
+    .enum([
+      "ACT",
+      "RES",
+      "TRC",
+      "CUT",
+      "TRD",
+      "SUS",
+      "TRT",
+      "NWT",
+      "",
+      "RSN",
+      "DEV",
+      "EXE",
+      "RSR",
+      "PUP",
+      "UDF",
+      "INA",
+      "UFA",
+      "RFA",
+      "RET",
+      "E01",
+      "E14",
+    ])
     .describe(
       `The status of the player on the roster. Mapping:
 ACT=On the active roster
@@ -61,9 +68,12 @@ E14=On the roster as an exempt international player (International Player Pathwa
   height: z.coerce.number().describe("The player's height in inches"),
   weight: z.coerce.number().describe("The player's weight in lbs"),
   college: z.string().nullish().describe("The college the player went to"),
-  gsis_id: z.string().nullish().describe(
-    "The player's GSIS (Game Statistics and Information System) ID, the NFL's internal player identifier",
-  ),
+  gsis_id: z
+    .string()
+    .nullish()
+    .describe(
+      "The player's GSIS (Game Statistics and Information System) ID, the NFL's internal player identifier",
+    ),
   espn_id: nullableString.describe("The player's ESPN ID"),
   sportradar_id: nullableString.describe("The player's SportRadar ID"),
   yahoo_id: nullableString.describe("The player's Yahoo Sports ID"),
@@ -84,7 +94,9 @@ WC=Wild Card round
 CON=Conference championship
 SB=Super Bowl`,
   ),
-  status_description_abbr: nullableString.describe("The description (abbr) of this player's status"),
+  status_description_abbr: nullableString.describe(
+    "The description (abbr) of this player's status",
+  ),
   football_name: nullableString.describe(
     "The name the player goes by for football purposes (their preferred football name)",
   ),

@@ -5,8 +5,12 @@ export const game_official = sqliteTable(
   "game_official",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
-    gameId: integer("game_id").notNull().references(() => game.id),
-    officialId: integer("official_id").notNull().references(() => official.id),
+    gameId: integer("game_id")
+      .notNull()
+      .references(() => game.id),
+    officialId: integer("official_id")
+      .notNull()
+      .references(() => official.id),
     position: text("position"),
     jerseyNumber: text("jersey_number"),
     season: integer("season"),

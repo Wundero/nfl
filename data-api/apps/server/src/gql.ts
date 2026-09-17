@@ -6,6 +6,7 @@ import DataloaderPlugin from "@pothos/plugin-dataloader";
 import WithInputPlugin from "@pothos/plugin-with-input";
 import DirectivesPlugin from "@pothos/plugin-directives";
 
+// TODO try to integrate this rather than manually redefining it
 import { cacheControlDirective } from "@graphql-yoga/plugin-response-cache";
 
 export interface PothosTypes {
@@ -50,6 +51,7 @@ const builder = new SchemaBuilder<PothosTypes>({
   },
 });
 
+// TODO implement queries for all types. split files as needed.
 builder.queryType({
   fields: (t) => ({
     hello: t.string({
