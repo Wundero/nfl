@@ -145,3 +145,32 @@ Based on the data that nflverse's github releases provide (I will collect them s
 
 Lastly, individual schemas should not be exported from this file, just the one object.
 ```
+
+``` -> opencode
+A few schemas for the data under any given tag (e.g. qbr_season_level + qbr_week_level) can share properties with the exact same parsing logic - determine which schemas share keys and extract those. Do not extract schemas across different tags, as the validation logic may be different, and likely too is the semantic meaning.
+```
+
+``` -> opencode
+I used some pretty gross names for the shared schema utility types (e.g. boolZ1 = boolean from strings (stringbool from zod, true,false,t,f,...) + 0 or 1), with not much consistency. Please rename those shared schema helpers.
+
+I also feel using coerce everywhere is a bit gross. I can effectively guarantee `parquet` is the valid source of data, which will produce either strings or numbers (in my use case anyways), so the vast majority of properties need not be coerced. There are special cases though, such as the boolean cases and some places where the schema says float but I put string because I think it makes more sense (e.g. jersey number, most of them are floats but there are a couple with letters in one dataset so I'd rather keep strings). Based on the schema.json files and the current schemas, minimize the number of coercions that happen since they are not super necessary. Note that the helpers also do a bunch of coercion which may not be necessary, and in those cases the helper types might not even be needed if the non-coercive path is already well supported by zod.
+```
+
+``` -> opencode
+Please fix the names to match what the data has, since I likely typo'd them.
+```
+
+``` -> opencode
+I want to normalize the data that I parse from nflverse into a relational schema for storage in sqlite (durable objects), sharded by season.
+
+A few requirements I have:
+- The IDs used for a given entity should just be autoinc ints (ideally 64 bit)
+- Ideally, links between rows can be determined at parse time using e.g. team abbrs, but at query time (via the API) joins happen using the ids
+- The IDs assigned to a given entity by other parties, including nflverse's ids, should be collected in a separate table, to keep things clean
+  - Query lookup by so-called external IDs will likely require 2 steps (find row in extid table, then find row for given entity), but thats acceptable for me I think. I expect most queries to use names and/or abbreviations, not external IDs.
+- I think entities should be assigned slugs as well, mostly just `kebab-case`'ing their names (e.g. `Arizona Cardinals` -> `arizona-cardinals`), for easy lookup as a secondary form of id
+  - For collisions (e.g. `Josh Allen` has 2 players with that name, at least in some seasons), it would be helpful to put info about that entity (e.g. jersey number, position) in the slug, and if that fails to be unique, add an incrementing number that starts at 2 on the end.
+- I want to be able to "diff" a given entity from the current db state to whatever gets parsed by the parsing logic, so a mechanism to track that (e.g. sync state, though im not sure how best to handle this) in the data itself is needed. This only applies to mutable state though, and a lot of stuff (e.g. historical data, some basic player info, etc.) will never change, so the diffing logic should ideally be a bit simpler there.
+
+Based on the schemas in the data package and the above requirements, replace the schema in `sharded-db/src/schema/nfl.ts` with an appropriate drizzle schema. Use `drizzle-orm@rc`'s new v2 relations style (docs: https://orm.drizzle.team/docs/sqlite/relations-v1-v2, https://orm.drizzle.team/docs/sqlite/v0-v1-changes), as that version is necessary to support graphql for the query layer (which is coming later).
+```
