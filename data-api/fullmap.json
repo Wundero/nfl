@@ -1,0 +1,3718 @@
+{
+  "trades": [
+    {
+      "base": "trades",
+      "matches": ["trades.parquet", "trades.csv.gz", "trades.csv"]
+    }
+  ],
+  "teams": [
+    {
+      "base": "teams_colors_logos",
+      "matches": [
+        "teams_colors_logos.parquet",
+        "teams_colors_logos.csv.gz",
+        "teams_colors_logos.csv"
+      ]
+    }
+  ],
+  "schedules": [
+    {
+      "base": "games",
+      "matches": ["games.parquet", "games.csv.gz", "games.csv"]
+    }
+  ],
+  "stats_team": [
+    {
+      "base": "stats_team_week_1999",
+      "matches": [
+        "stats_team_week_1999.parquet",
+        "stats_team_week_1999.csv.gz",
+        "stats_team_week_1999.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2000",
+      "matches": [
+        "stats_team_week_2000.parquet",
+        "stats_team_week_2000.csv.gz",
+        "stats_team_week_2000.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2001",
+      "matches": [
+        "stats_team_week_2001.parquet",
+        "stats_team_week_2001.csv.gz",
+        "stats_team_week_2001.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2002",
+      "matches": [
+        "stats_team_week_2002.parquet",
+        "stats_team_week_2002.csv.gz",
+        "stats_team_week_2002.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2003",
+      "matches": [
+        "stats_team_week_2003.parquet",
+        "stats_team_week_2003.csv.gz",
+        "stats_team_week_2003.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2004",
+      "matches": [
+        "stats_team_week_2004.parquet",
+        "stats_team_week_2004.csv.gz",
+        "stats_team_week_2004.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2005",
+      "matches": [
+        "stats_team_week_2005.parquet",
+        "stats_team_week_2005.csv.gz",
+        "stats_team_week_2005.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2006",
+      "matches": [
+        "stats_team_week_2006.parquet",
+        "stats_team_week_2006.csv.gz",
+        "stats_team_week_2006.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2007",
+      "matches": [
+        "stats_team_week_2007.parquet",
+        "stats_team_week_2007.csv.gz",
+        "stats_team_week_2007.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2008",
+      "matches": [
+        "stats_team_week_2008.parquet",
+        "stats_team_week_2008.csv.gz",
+        "stats_team_week_2008.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2009",
+      "matches": [
+        "stats_team_week_2009.parquet",
+        "stats_team_week_2009.csv.gz",
+        "stats_team_week_2009.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2010",
+      "matches": [
+        "stats_team_week_2010.parquet",
+        "stats_team_week_2010.csv.gz",
+        "stats_team_week_2010.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2011",
+      "matches": [
+        "stats_team_week_2011.parquet",
+        "stats_team_week_2011.csv.gz",
+        "stats_team_week_2011.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2012",
+      "matches": [
+        "stats_team_week_2012.parquet",
+        "stats_team_week_2012.csv.gz",
+        "stats_team_week_2012.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2013",
+      "matches": [
+        "stats_team_week_2013.parquet",
+        "stats_team_week_2013.csv.gz",
+        "stats_team_week_2013.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2014",
+      "matches": [
+        "stats_team_week_2014.parquet",
+        "stats_team_week_2014.csv.gz",
+        "stats_team_week_2014.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2015",
+      "matches": [
+        "stats_team_week_2015.parquet",
+        "stats_team_week_2015.csv.gz",
+        "stats_team_week_2015.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2016",
+      "matches": [
+        "stats_team_week_2016.parquet",
+        "stats_team_week_2016.csv.gz",
+        "stats_team_week_2016.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2017",
+      "matches": [
+        "stats_team_week_2017.parquet",
+        "stats_team_week_2017.csv.gz",
+        "stats_team_week_2017.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2018",
+      "matches": [
+        "stats_team_week_2018.parquet",
+        "stats_team_week_2018.csv.gz",
+        "stats_team_week_2018.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2019",
+      "matches": [
+        "stats_team_week_2019.parquet",
+        "stats_team_week_2019.csv.gz",
+        "stats_team_week_2019.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2020",
+      "matches": [
+        "stats_team_week_2020.parquet",
+        "stats_team_week_2020.csv.gz",
+        "stats_team_week_2020.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2021",
+      "matches": [
+        "stats_team_week_2021.parquet",
+        "stats_team_week_2021.csv.gz",
+        "stats_team_week_2021.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2022",
+      "matches": [
+        "stats_team_week_2022.parquet",
+        "stats_team_week_2022.csv.gz",
+        "stats_team_week_2022.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2023",
+      "matches": [
+        "stats_team_week_2023.parquet",
+        "stats_team_week_2023.csv.gz",
+        "stats_team_week_2023.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2024",
+      "matches": [
+        "stats_team_week_2024.parquet",
+        "stats_team_week_2024.csv.gz",
+        "stats_team_week_2024.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2025",
+      "matches": [
+        "stats_team_week_2025.parquet",
+        "stats_team_week_2025.csv.gz",
+        "stats_team_week_2025.csv"
+      ]
+    },
+    {
+      "base": "stats_team_week_2026",
+      "matches": [
+        "stats_team_week_2026.parquet",
+        "stats_team_week_2026.csv.gz",
+        "stats_team_week_2026.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_1999",
+      "matches": [
+        "stats_team_reg_1999.parquet",
+        "stats_team_reg_1999.csv.gz",
+        "stats_team_reg_1999.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2000",
+      "matches": [
+        "stats_team_reg_2000.parquet",
+        "stats_team_reg_2000.csv.gz",
+        "stats_team_reg_2000.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2001",
+      "matches": [
+        "stats_team_reg_2001.parquet",
+        "stats_team_reg_2001.csv.gz",
+        "stats_team_reg_2001.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2002",
+      "matches": [
+        "stats_team_reg_2002.parquet",
+        "stats_team_reg_2002.csv.gz",
+        "stats_team_reg_2002.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2003",
+      "matches": [
+        "stats_team_reg_2003.parquet",
+        "stats_team_reg_2003.csv.gz",
+        "stats_team_reg_2003.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2004",
+      "matches": [
+        "stats_team_reg_2004.parquet",
+        "stats_team_reg_2004.csv.gz",
+        "stats_team_reg_2004.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2005",
+      "matches": [
+        "stats_team_reg_2005.parquet",
+        "stats_team_reg_2005.csv.gz",
+        "stats_team_reg_2005.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2006",
+      "matches": [
+        "stats_team_reg_2006.parquet",
+        "stats_team_reg_2006.csv.gz",
+        "stats_team_reg_2006.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2007",
+      "matches": [
+        "stats_team_reg_2007.parquet",
+        "stats_team_reg_2007.csv.gz",
+        "stats_team_reg_2007.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2008",
+      "matches": [
+        "stats_team_reg_2008.parquet",
+        "stats_team_reg_2008.csv.gz",
+        "stats_team_reg_2008.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2009",
+      "matches": [
+        "stats_team_reg_2009.parquet",
+        "stats_team_reg_2009.csv.gz",
+        "stats_team_reg_2009.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2010",
+      "matches": [
+        "stats_team_reg_2010.parquet",
+        "stats_team_reg_2010.csv.gz",
+        "stats_team_reg_2010.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2011",
+      "matches": [
+        "stats_team_reg_2011.parquet",
+        "stats_team_reg_2011.csv.gz",
+        "stats_team_reg_2011.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2012",
+      "matches": [
+        "stats_team_reg_2012.parquet",
+        "stats_team_reg_2012.csv.gz",
+        "stats_team_reg_2012.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2013",
+      "matches": [
+        "stats_team_reg_2013.parquet",
+        "stats_team_reg_2013.csv.gz",
+        "stats_team_reg_2013.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2014",
+      "matches": [
+        "stats_team_reg_2014.parquet",
+        "stats_team_reg_2014.csv.gz",
+        "stats_team_reg_2014.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2015",
+      "matches": [
+        "stats_team_reg_2015.parquet",
+        "stats_team_reg_2015.csv.gz",
+        "stats_team_reg_2015.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2016",
+      "matches": [
+        "stats_team_reg_2016.parquet",
+        "stats_team_reg_2016.csv.gz",
+        "stats_team_reg_2016.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2017",
+      "matches": [
+        "stats_team_reg_2017.parquet",
+        "stats_team_reg_2017.csv.gz",
+        "stats_team_reg_2017.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2018",
+      "matches": [
+        "stats_team_reg_2018.parquet",
+        "stats_team_reg_2018.csv.gz",
+        "stats_team_reg_2018.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2019",
+      "matches": [
+        "stats_team_reg_2019.parquet",
+        "stats_team_reg_2019.csv.gz",
+        "stats_team_reg_2019.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2020",
+      "matches": [
+        "stats_team_reg_2020.parquet",
+        "stats_team_reg_2020.csv.gz",
+        "stats_team_reg_2020.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2021",
+      "matches": [
+        "stats_team_reg_2021.parquet",
+        "stats_team_reg_2021.csv.gz",
+        "stats_team_reg_2021.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2022",
+      "matches": [
+        "stats_team_reg_2022.parquet",
+        "stats_team_reg_2022.csv.gz",
+        "stats_team_reg_2022.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2023",
+      "matches": [
+        "stats_team_reg_2023.parquet",
+        "stats_team_reg_2023.csv.gz",
+        "stats_team_reg_2023.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2024",
+      "matches": [
+        "stats_team_reg_2024.parquet",
+        "stats_team_reg_2024.csv.gz",
+        "stats_team_reg_2024.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2025",
+      "matches": [
+        "stats_team_reg_2025.parquet",
+        "stats_team_reg_2025.csv.gz",
+        "stats_team_reg_2025.csv"
+      ]
+    },
+    {
+      "base": "stats_team_reg_2026",
+      "matches": [
+        "stats_team_reg_2026.parquet",
+        "stats_team_reg_2026.csv.gz",
+        "stats_team_reg_2026.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_1999",
+      "matches": [
+        "stats_team_regpost_1999.parquet",
+        "stats_team_regpost_1999.csv.gz",
+        "stats_team_regpost_1999.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2000",
+      "matches": [
+        "stats_team_regpost_2000.parquet",
+        "stats_team_regpost_2000.csv.gz",
+        "stats_team_regpost_2000.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2001",
+      "matches": [
+        "stats_team_regpost_2001.parquet",
+        "stats_team_regpost_2001.csv.gz",
+        "stats_team_regpost_2001.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2002",
+      "matches": [
+        "stats_team_regpost_2002.parquet",
+        "stats_team_regpost_2002.csv.gz",
+        "stats_team_regpost_2002.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2003",
+      "matches": [
+        "stats_team_regpost_2003.parquet",
+        "stats_team_regpost_2003.csv.gz",
+        "stats_team_regpost_2003.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2004",
+      "matches": [
+        "stats_team_regpost_2004.parquet",
+        "stats_team_regpost_2004.csv.gz",
+        "stats_team_regpost_2004.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2005",
+      "matches": [
+        "stats_team_regpost_2005.parquet",
+        "stats_team_regpost_2005.csv.gz",
+        "stats_team_regpost_2005.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2006",
+      "matches": [
+        "stats_team_regpost_2006.parquet",
+        "stats_team_regpost_2006.csv.gz",
+        "stats_team_regpost_2006.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2007",
+      "matches": [
+        "stats_team_regpost_2007.parquet",
+        "stats_team_regpost_2007.csv.gz",
+        "stats_team_regpost_2007.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2008",
+      "matches": [
+        "stats_team_regpost_2008.parquet",
+        "stats_team_regpost_2008.csv.gz",
+        "stats_team_regpost_2008.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2009",
+      "matches": [
+        "stats_team_regpost_2009.parquet",
+        "stats_team_regpost_2009.csv.gz",
+        "stats_team_regpost_2009.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2010",
+      "matches": [
+        "stats_team_regpost_2010.parquet",
+        "stats_team_regpost_2010.csv.gz",
+        "stats_team_regpost_2010.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2011",
+      "matches": [
+        "stats_team_regpost_2011.parquet",
+        "stats_team_regpost_2011.csv.gz",
+        "stats_team_regpost_2011.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2012",
+      "matches": [
+        "stats_team_regpost_2012.parquet",
+        "stats_team_regpost_2012.csv.gz",
+        "stats_team_regpost_2012.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2013",
+      "matches": [
+        "stats_team_regpost_2013.parquet",
+        "stats_team_regpost_2013.csv.gz",
+        "stats_team_regpost_2013.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2014",
+      "matches": [
+        "stats_team_regpost_2014.parquet",
+        "stats_team_regpost_2014.csv.gz",
+        "stats_team_regpost_2014.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2015",
+      "matches": [
+        "stats_team_regpost_2015.parquet",
+        "stats_team_regpost_2015.csv.gz",
+        "stats_team_regpost_2015.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2016",
+      "matches": [
+        "stats_team_regpost_2016.parquet",
+        "stats_team_regpost_2016.csv.gz",
+        "stats_team_regpost_2016.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2017",
+      "matches": [
+        "stats_team_regpost_2017.parquet",
+        "stats_team_regpost_2017.csv.gz",
+        "stats_team_regpost_2017.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2018",
+      "matches": [
+        "stats_team_regpost_2018.parquet",
+        "stats_team_regpost_2018.csv.gz",
+        "stats_team_regpost_2018.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2019",
+      "matches": [
+        "stats_team_regpost_2019.parquet",
+        "stats_team_regpost_2019.csv.gz",
+        "stats_team_regpost_2019.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2020",
+      "matches": [
+        "stats_team_regpost_2020.parquet",
+        "stats_team_regpost_2020.csv.gz",
+        "stats_team_regpost_2020.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2021",
+      "matches": [
+        "stats_team_regpost_2021.parquet",
+        "stats_team_regpost_2021.csv.gz",
+        "stats_team_regpost_2021.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2022",
+      "matches": [
+        "stats_team_regpost_2022.parquet",
+        "stats_team_regpost_2022.csv.gz",
+        "stats_team_regpost_2022.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2023",
+      "matches": [
+        "stats_team_regpost_2023.parquet",
+        "stats_team_regpost_2023.csv.gz",
+        "stats_team_regpost_2023.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2024",
+      "matches": [
+        "stats_team_regpost_2024.parquet",
+        "stats_team_regpost_2024.csv.gz",
+        "stats_team_regpost_2024.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2025",
+      "matches": [
+        "stats_team_regpost_2025.parquet",
+        "stats_team_regpost_2025.csv.gz",
+        "stats_team_regpost_2025.csv"
+      ]
+    },
+    {
+      "base": "stats_team_regpost_2026",
+      "matches": [
+        "stats_team_regpost_2026.parquet",
+        "stats_team_regpost_2026.csv.gz",
+        "stats_team_regpost_2026.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_1999",
+      "matches": [
+        "stats_team_post_1999.parquet",
+        "stats_team_post_1999.csv.gz",
+        "stats_team_post_1999.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2000",
+      "matches": [
+        "stats_team_post_2000.parquet",
+        "stats_team_post_2000.csv.gz",
+        "stats_team_post_2000.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2001",
+      "matches": [
+        "stats_team_post_2001.parquet",
+        "stats_team_post_2001.csv.gz",
+        "stats_team_post_2001.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2002",
+      "matches": [
+        "stats_team_post_2002.parquet",
+        "stats_team_post_2002.csv.gz",
+        "stats_team_post_2002.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2003",
+      "matches": [
+        "stats_team_post_2003.parquet",
+        "stats_team_post_2003.csv.gz",
+        "stats_team_post_2003.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2004",
+      "matches": [
+        "stats_team_post_2004.parquet",
+        "stats_team_post_2004.csv.gz",
+        "stats_team_post_2004.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2005",
+      "matches": [
+        "stats_team_post_2005.parquet",
+        "stats_team_post_2005.csv.gz",
+        "stats_team_post_2005.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2006",
+      "matches": [
+        "stats_team_post_2006.parquet",
+        "stats_team_post_2006.csv.gz",
+        "stats_team_post_2006.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2007",
+      "matches": [
+        "stats_team_post_2007.parquet",
+        "stats_team_post_2007.csv.gz",
+        "stats_team_post_2007.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2008",
+      "matches": [
+        "stats_team_post_2008.parquet",
+        "stats_team_post_2008.csv.gz",
+        "stats_team_post_2008.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2009",
+      "matches": [
+        "stats_team_post_2009.parquet",
+        "stats_team_post_2009.csv.gz",
+        "stats_team_post_2009.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2010",
+      "matches": [
+        "stats_team_post_2010.parquet",
+        "stats_team_post_2010.csv.gz",
+        "stats_team_post_2010.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2011",
+      "matches": [
+        "stats_team_post_2011.parquet",
+        "stats_team_post_2011.csv.gz",
+        "stats_team_post_2011.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2012",
+      "matches": [
+        "stats_team_post_2012.parquet",
+        "stats_team_post_2012.csv.gz",
+        "stats_team_post_2012.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2013",
+      "matches": [
+        "stats_team_post_2013.parquet",
+        "stats_team_post_2013.csv.gz",
+        "stats_team_post_2013.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2014",
+      "matches": [
+        "stats_team_post_2014.parquet",
+        "stats_team_post_2014.csv.gz",
+        "stats_team_post_2014.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2015",
+      "matches": [
+        "stats_team_post_2015.parquet",
+        "stats_team_post_2015.csv.gz",
+        "stats_team_post_2015.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2016",
+      "matches": [
+        "stats_team_post_2016.parquet",
+        "stats_team_post_2016.csv.gz",
+        "stats_team_post_2016.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2017",
+      "matches": [
+        "stats_team_post_2017.parquet",
+        "stats_team_post_2017.csv.gz",
+        "stats_team_post_2017.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2018",
+      "matches": [
+        "stats_team_post_2018.parquet",
+        "stats_team_post_2018.csv.gz",
+        "stats_team_post_2018.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2019",
+      "matches": [
+        "stats_team_post_2019.parquet",
+        "stats_team_post_2019.csv.gz",
+        "stats_team_post_2019.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2020",
+      "matches": [
+        "stats_team_post_2020.parquet",
+        "stats_team_post_2020.csv.gz",
+        "stats_team_post_2020.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2021",
+      "matches": [
+        "stats_team_post_2021.parquet",
+        "stats_team_post_2021.csv.gz",
+        "stats_team_post_2021.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2022",
+      "matches": [
+        "stats_team_post_2022.parquet",
+        "stats_team_post_2022.csv.gz",
+        "stats_team_post_2022.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2023",
+      "matches": [
+        "stats_team_post_2023.parquet",
+        "stats_team_post_2023.csv.gz",
+        "stats_team_post_2023.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2024",
+      "matches": [
+        "stats_team_post_2024.parquet",
+        "stats_team_post_2024.csv.gz",
+        "stats_team_post_2024.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2025",
+      "matches": [
+        "stats_team_post_2025.parquet",
+        "stats_team_post_2025.csv.gz",
+        "stats_team_post_2025.csv"
+      ]
+    },
+    {
+      "base": "stats_team_post_2026",
+      "matches": [
+        "stats_team_post_2026.parquet",
+        "stats_team_post_2026.csv.gz",
+        "stats_team_post_2026.csv"
+      ]
+    }
+  ],
+  "stats_player": [
+    {
+      "base": "stats_player_week_1999",
+      "matches": [
+        "stats_player_week_1999.parquet",
+        "stats_player_week_1999.csv.gz",
+        "stats_player_week_1999.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2000",
+      "matches": [
+        "stats_player_week_2000.parquet",
+        "stats_player_week_2000.csv.gz",
+        "stats_player_week_2000.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2001",
+      "matches": [
+        "stats_player_week_2001.parquet",
+        "stats_player_week_2001.csv.gz",
+        "stats_player_week_2001.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2002",
+      "matches": [
+        "stats_player_week_2002.parquet",
+        "stats_player_week_2002.csv.gz",
+        "stats_player_week_2002.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2003",
+      "matches": [
+        "stats_player_week_2003.parquet",
+        "stats_player_week_2003.csv.gz",
+        "stats_player_week_2003.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2004",
+      "matches": [
+        "stats_player_week_2004.parquet",
+        "stats_player_week_2004.csv.gz",
+        "stats_player_week_2004.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2005",
+      "matches": [
+        "stats_player_week_2005.parquet",
+        "stats_player_week_2005.csv.gz",
+        "stats_player_week_2005.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2006",
+      "matches": [
+        "stats_player_week_2006.parquet",
+        "stats_player_week_2006.csv.gz",
+        "stats_player_week_2006.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2007",
+      "matches": [
+        "stats_player_week_2007.parquet",
+        "stats_player_week_2007.csv.gz",
+        "stats_player_week_2007.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2008",
+      "matches": [
+        "stats_player_week_2008.parquet",
+        "stats_player_week_2008.csv.gz",
+        "stats_player_week_2008.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2009",
+      "matches": [
+        "stats_player_week_2009.parquet",
+        "stats_player_week_2009.csv.gz",
+        "stats_player_week_2009.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2010",
+      "matches": [
+        "stats_player_week_2010.parquet",
+        "stats_player_week_2010.csv.gz",
+        "stats_player_week_2010.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2011",
+      "matches": [
+        "stats_player_week_2011.parquet",
+        "stats_player_week_2011.csv.gz",
+        "stats_player_week_2011.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2012",
+      "matches": [
+        "stats_player_week_2012.parquet",
+        "stats_player_week_2012.csv.gz",
+        "stats_player_week_2012.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2013",
+      "matches": [
+        "stats_player_week_2013.parquet",
+        "stats_player_week_2013.csv.gz",
+        "stats_player_week_2013.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2014",
+      "matches": [
+        "stats_player_week_2014.parquet",
+        "stats_player_week_2014.csv.gz",
+        "stats_player_week_2014.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2015",
+      "matches": [
+        "stats_player_week_2015.parquet",
+        "stats_player_week_2015.csv.gz",
+        "stats_player_week_2015.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2016",
+      "matches": [
+        "stats_player_week_2016.parquet",
+        "stats_player_week_2016.csv.gz",
+        "stats_player_week_2016.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2017",
+      "matches": [
+        "stats_player_week_2017.parquet",
+        "stats_player_week_2017.csv.gz",
+        "stats_player_week_2017.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2018",
+      "matches": [
+        "stats_player_week_2018.parquet",
+        "stats_player_week_2018.csv.gz",
+        "stats_player_week_2018.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2019",
+      "matches": [
+        "stats_player_week_2019.parquet",
+        "stats_player_week_2019.csv.gz",
+        "stats_player_week_2019.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2020",
+      "matches": [
+        "stats_player_week_2020.parquet",
+        "stats_player_week_2020.csv.gz",
+        "stats_player_week_2020.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2021",
+      "matches": [
+        "stats_player_week_2021.parquet",
+        "stats_player_week_2021.csv.gz",
+        "stats_player_week_2021.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2022",
+      "matches": [
+        "stats_player_week_2022.parquet",
+        "stats_player_week_2022.csv.gz",
+        "stats_player_week_2022.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2023",
+      "matches": [
+        "stats_player_week_2023.parquet",
+        "stats_player_week_2023.csv.gz",
+        "stats_player_week_2023.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2024",
+      "matches": [
+        "stats_player_week_2024.parquet",
+        "stats_player_week_2024.csv.gz",
+        "stats_player_week_2024.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2025",
+      "matches": [
+        "stats_player_week_2025.parquet",
+        "stats_player_week_2025.csv.gz",
+        "stats_player_week_2025.csv"
+      ]
+    },
+    {
+      "base": "stats_player_week_2026",
+      "matches": [
+        "stats_player_week_2026.parquet",
+        "stats_player_week_2026.csv.gz",
+        "stats_player_week_2026.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_1999",
+      "matches": [
+        "stats_player_reg_1999.parquet",
+        "stats_player_reg_1999.csv.gz",
+        "stats_player_reg_1999.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2000",
+      "matches": [
+        "stats_player_reg_2000.parquet",
+        "stats_player_reg_2000.csv.gz",
+        "stats_player_reg_2000.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2001",
+      "matches": [
+        "stats_player_reg_2001.parquet",
+        "stats_player_reg_2001.csv.gz",
+        "stats_player_reg_2001.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2002",
+      "matches": [
+        "stats_player_reg_2002.parquet",
+        "stats_player_reg_2002.csv.gz",
+        "stats_player_reg_2002.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2003",
+      "matches": [
+        "stats_player_reg_2003.parquet",
+        "stats_player_reg_2003.csv.gz",
+        "stats_player_reg_2003.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2004",
+      "matches": [
+        "stats_player_reg_2004.parquet",
+        "stats_player_reg_2004.csv.gz",
+        "stats_player_reg_2004.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2005",
+      "matches": [
+        "stats_player_reg_2005.parquet",
+        "stats_player_reg_2005.csv.gz",
+        "stats_player_reg_2005.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2006",
+      "matches": [
+        "stats_player_reg_2006.parquet",
+        "stats_player_reg_2006.csv.gz",
+        "stats_player_reg_2006.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2007",
+      "matches": [
+        "stats_player_reg_2007.parquet",
+        "stats_player_reg_2007.csv.gz",
+        "stats_player_reg_2007.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2008",
+      "matches": [
+        "stats_player_reg_2008.parquet",
+        "stats_player_reg_2008.csv.gz",
+        "stats_player_reg_2008.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2009",
+      "matches": [
+        "stats_player_reg_2009.parquet",
+        "stats_player_reg_2009.csv.gz",
+        "stats_player_reg_2009.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2010",
+      "matches": [
+        "stats_player_reg_2010.parquet",
+        "stats_player_reg_2010.csv.gz",
+        "stats_player_reg_2010.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2011",
+      "matches": [
+        "stats_player_reg_2011.parquet",
+        "stats_player_reg_2011.csv.gz",
+        "stats_player_reg_2011.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2012",
+      "matches": [
+        "stats_player_reg_2012.parquet",
+        "stats_player_reg_2012.csv.gz",
+        "stats_player_reg_2012.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2013",
+      "matches": [
+        "stats_player_reg_2013.parquet",
+        "stats_player_reg_2013.csv.gz",
+        "stats_player_reg_2013.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2014",
+      "matches": [
+        "stats_player_reg_2014.parquet",
+        "stats_player_reg_2014.csv.gz",
+        "stats_player_reg_2014.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2015",
+      "matches": [
+        "stats_player_reg_2015.parquet",
+        "stats_player_reg_2015.csv.gz",
+        "stats_player_reg_2015.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2016",
+      "matches": [
+        "stats_player_reg_2016.parquet",
+        "stats_player_reg_2016.csv.gz",
+        "stats_player_reg_2016.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2017",
+      "matches": [
+        "stats_player_reg_2017.parquet",
+        "stats_player_reg_2017.csv.gz",
+        "stats_player_reg_2017.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2018",
+      "matches": [
+        "stats_player_reg_2018.parquet",
+        "stats_player_reg_2018.csv.gz",
+        "stats_player_reg_2018.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2019",
+      "matches": [
+        "stats_player_reg_2019.parquet",
+        "stats_player_reg_2019.csv.gz",
+        "stats_player_reg_2019.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2020",
+      "matches": [
+        "stats_player_reg_2020.parquet",
+        "stats_player_reg_2020.csv.gz",
+        "stats_player_reg_2020.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2021",
+      "matches": [
+        "stats_player_reg_2021.parquet",
+        "stats_player_reg_2021.csv.gz",
+        "stats_player_reg_2021.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2022",
+      "matches": [
+        "stats_player_reg_2022.parquet",
+        "stats_player_reg_2022.csv.gz",
+        "stats_player_reg_2022.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2023",
+      "matches": [
+        "stats_player_reg_2023.parquet",
+        "stats_player_reg_2023.csv.gz",
+        "stats_player_reg_2023.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2024",
+      "matches": [
+        "stats_player_reg_2024.parquet",
+        "stats_player_reg_2024.csv.gz",
+        "stats_player_reg_2024.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2025",
+      "matches": [
+        "stats_player_reg_2025.parquet",
+        "stats_player_reg_2025.csv.gz",
+        "stats_player_reg_2025.csv"
+      ]
+    },
+    {
+      "base": "stats_player_reg_2026",
+      "matches": [
+        "stats_player_reg_2026.parquet",
+        "stats_player_reg_2026.csv.gz",
+        "stats_player_reg_2026.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_1999",
+      "matches": [
+        "stats_player_regpost_1999.parquet",
+        "stats_player_regpost_1999.csv.gz",
+        "stats_player_regpost_1999.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2000",
+      "matches": [
+        "stats_player_regpost_2000.parquet",
+        "stats_player_regpost_2000.csv.gz",
+        "stats_player_regpost_2000.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2001",
+      "matches": [
+        "stats_player_regpost_2001.parquet",
+        "stats_player_regpost_2001.csv.gz",
+        "stats_player_regpost_2001.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2002",
+      "matches": [
+        "stats_player_regpost_2002.parquet",
+        "stats_player_regpost_2002.csv.gz",
+        "stats_player_regpost_2002.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2003",
+      "matches": [
+        "stats_player_regpost_2003.parquet",
+        "stats_player_regpost_2003.csv.gz",
+        "stats_player_regpost_2003.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2004",
+      "matches": [
+        "stats_player_regpost_2004.parquet",
+        "stats_player_regpost_2004.csv.gz",
+        "stats_player_regpost_2004.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2005",
+      "matches": [
+        "stats_player_regpost_2005.parquet",
+        "stats_player_regpost_2005.csv.gz",
+        "stats_player_regpost_2005.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2006",
+      "matches": [
+        "stats_player_regpost_2006.parquet",
+        "stats_player_regpost_2006.csv.gz",
+        "stats_player_regpost_2006.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2007",
+      "matches": [
+        "stats_player_regpost_2007.parquet",
+        "stats_player_regpost_2007.csv.gz",
+        "stats_player_regpost_2007.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2008",
+      "matches": [
+        "stats_player_regpost_2008.parquet",
+        "stats_player_regpost_2008.csv.gz",
+        "stats_player_regpost_2008.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2009",
+      "matches": [
+        "stats_player_regpost_2009.parquet",
+        "stats_player_regpost_2009.csv.gz",
+        "stats_player_regpost_2009.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2010",
+      "matches": [
+        "stats_player_regpost_2010.parquet",
+        "stats_player_regpost_2010.csv.gz",
+        "stats_player_regpost_2010.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2011",
+      "matches": [
+        "stats_player_regpost_2011.parquet",
+        "stats_player_regpost_2011.csv.gz",
+        "stats_player_regpost_2011.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2012",
+      "matches": [
+        "stats_player_regpost_2012.parquet",
+        "stats_player_regpost_2012.csv.gz",
+        "stats_player_regpost_2012.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2013",
+      "matches": [
+        "stats_player_regpost_2013.parquet",
+        "stats_player_regpost_2013.csv.gz",
+        "stats_player_regpost_2013.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2014",
+      "matches": [
+        "stats_player_regpost_2014.parquet",
+        "stats_player_regpost_2014.csv.gz",
+        "stats_player_regpost_2014.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2015",
+      "matches": [
+        "stats_player_regpost_2015.parquet",
+        "stats_player_regpost_2015.csv.gz",
+        "stats_player_regpost_2015.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2016",
+      "matches": [
+        "stats_player_regpost_2016.parquet",
+        "stats_player_regpost_2016.csv.gz",
+        "stats_player_regpost_2016.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2017",
+      "matches": [
+        "stats_player_regpost_2017.parquet",
+        "stats_player_regpost_2017.csv.gz",
+        "stats_player_regpost_2017.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2018",
+      "matches": [
+        "stats_player_regpost_2018.parquet",
+        "stats_player_regpost_2018.csv.gz",
+        "stats_player_regpost_2018.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2019",
+      "matches": [
+        "stats_player_regpost_2019.parquet",
+        "stats_player_regpost_2019.csv.gz",
+        "stats_player_regpost_2019.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2020",
+      "matches": [
+        "stats_player_regpost_2020.parquet",
+        "stats_player_regpost_2020.csv.gz",
+        "stats_player_regpost_2020.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2021",
+      "matches": [
+        "stats_player_regpost_2021.parquet",
+        "stats_player_regpost_2021.csv.gz",
+        "stats_player_regpost_2021.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2022",
+      "matches": [
+        "stats_player_regpost_2022.parquet",
+        "stats_player_regpost_2022.csv.gz",
+        "stats_player_regpost_2022.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2023",
+      "matches": [
+        "stats_player_regpost_2023.parquet",
+        "stats_player_regpost_2023.csv.gz",
+        "stats_player_regpost_2023.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2024",
+      "matches": [
+        "stats_player_regpost_2024.parquet",
+        "stats_player_regpost_2024.csv.gz",
+        "stats_player_regpost_2024.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2025",
+      "matches": [
+        "stats_player_regpost_2025.parquet",
+        "stats_player_regpost_2025.csv.gz",
+        "stats_player_regpost_2025.csv"
+      ]
+    },
+    {
+      "base": "stats_player_regpost_2026",
+      "matches": [
+        "stats_player_regpost_2026.parquet",
+        "stats_player_regpost_2026.csv.gz",
+        "stats_player_regpost_2026.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_1999",
+      "matches": [
+        "stats_player_post_1999.parquet",
+        "stats_player_post_1999.csv.gz",
+        "stats_player_post_1999.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2000",
+      "matches": [
+        "stats_player_post_2000.parquet",
+        "stats_player_post_2000.csv.gz",
+        "stats_player_post_2000.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2001",
+      "matches": [
+        "stats_player_post_2001.parquet",
+        "stats_player_post_2001.csv.gz",
+        "stats_player_post_2001.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2002",
+      "matches": [
+        "stats_player_post_2002.parquet",
+        "stats_player_post_2002.csv.gz",
+        "stats_player_post_2002.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2003",
+      "matches": [
+        "stats_player_post_2003.parquet",
+        "stats_player_post_2003.csv.gz",
+        "stats_player_post_2003.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2004",
+      "matches": [
+        "stats_player_post_2004.parquet",
+        "stats_player_post_2004.csv.gz",
+        "stats_player_post_2004.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2005",
+      "matches": [
+        "stats_player_post_2005.parquet",
+        "stats_player_post_2005.csv.gz",
+        "stats_player_post_2005.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2006",
+      "matches": [
+        "stats_player_post_2006.parquet",
+        "stats_player_post_2006.csv.gz",
+        "stats_player_post_2006.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2007",
+      "matches": [
+        "stats_player_post_2007.parquet",
+        "stats_player_post_2007.csv.gz",
+        "stats_player_post_2007.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2008",
+      "matches": [
+        "stats_player_post_2008.parquet",
+        "stats_player_post_2008.csv.gz",
+        "stats_player_post_2008.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2009",
+      "matches": [
+        "stats_player_post_2009.parquet",
+        "stats_player_post_2009.csv.gz",
+        "stats_player_post_2009.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2010",
+      "matches": [
+        "stats_player_post_2010.parquet",
+        "stats_player_post_2010.csv.gz",
+        "stats_player_post_2010.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2011",
+      "matches": [
+        "stats_player_post_2011.parquet",
+        "stats_player_post_2011.csv.gz",
+        "stats_player_post_2011.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2012",
+      "matches": [
+        "stats_player_post_2012.parquet",
+        "stats_player_post_2012.csv.gz",
+        "stats_player_post_2012.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2013",
+      "matches": [
+        "stats_player_post_2013.parquet",
+        "stats_player_post_2013.csv.gz",
+        "stats_player_post_2013.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2014",
+      "matches": [
+        "stats_player_post_2014.parquet",
+        "stats_player_post_2014.csv.gz",
+        "stats_player_post_2014.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2015",
+      "matches": [
+        "stats_player_post_2015.parquet",
+        "stats_player_post_2015.csv.gz",
+        "stats_player_post_2015.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2016",
+      "matches": [
+        "stats_player_post_2016.parquet",
+        "stats_player_post_2016.csv.gz",
+        "stats_player_post_2016.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2017",
+      "matches": [
+        "stats_player_post_2017.parquet",
+        "stats_player_post_2017.csv.gz",
+        "stats_player_post_2017.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2018",
+      "matches": [
+        "stats_player_post_2018.parquet",
+        "stats_player_post_2018.csv.gz",
+        "stats_player_post_2018.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2019",
+      "matches": [
+        "stats_player_post_2019.parquet",
+        "stats_player_post_2019.csv.gz",
+        "stats_player_post_2019.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2020",
+      "matches": [
+        "stats_player_post_2020.parquet",
+        "stats_player_post_2020.csv.gz",
+        "stats_player_post_2020.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2021",
+      "matches": [
+        "stats_player_post_2021.parquet",
+        "stats_player_post_2021.csv.gz",
+        "stats_player_post_2021.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2022",
+      "matches": [
+        "stats_player_post_2022.parquet",
+        "stats_player_post_2022.csv.gz",
+        "stats_player_post_2022.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2023",
+      "matches": [
+        "stats_player_post_2023.parquet",
+        "stats_player_post_2023.csv.gz",
+        "stats_player_post_2023.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2024",
+      "matches": [
+        "stats_player_post_2024.parquet",
+        "stats_player_post_2024.csv.gz",
+        "stats_player_post_2024.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2025",
+      "matches": [
+        "stats_player_post_2025.parquet",
+        "stats_player_post_2025.csv.gz",
+        "stats_player_post_2025.csv"
+      ]
+    },
+    {
+      "base": "stats_player_post_2026",
+      "matches": [
+        "stats_player_post_2026.parquet",
+        "stats_player_post_2026.csv.gz",
+        "stats_player_post_2026.csv"
+      ]
+    }
+  ],
+  "espn_data": [
+    {
+      "base": "qbr_season_level",
+      "matches": ["qbr_season_level.parquet", "qbr_season_level.csv.gz", "qbr_season_level.csv"]
+    },
+    {
+      "base": "qbr_week_level",
+      "matches": ["qbr_week_level.parquet", "qbr_week_level.csv.gz", "qbr_week_level.csv"]
+    }
+  ],
+  "weekly_rosters": [
+    {
+      "base": "roster_weekly_1999",
+      "matches": [
+        "roster_weekly_1999.parquet",
+        "roster_weekly_1999.csv.gz",
+        "roster_weekly_1999.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2000",
+      "matches": [
+        "roster_weekly_2000.parquet",
+        "roster_weekly_2000.csv.gz",
+        "roster_weekly_2000.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2001",
+      "matches": [
+        "roster_weekly_2001.parquet",
+        "roster_weekly_2001.csv.gz",
+        "roster_weekly_2001.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2002",
+      "matches": [
+        "roster_weekly_2002.parquet",
+        "roster_weekly_2002.csv.gz",
+        "roster_weekly_2002.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2003",
+      "matches": [
+        "roster_weekly_2003.parquet",
+        "roster_weekly_2003.csv.gz",
+        "roster_weekly_2003.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2004",
+      "matches": [
+        "roster_weekly_2004.parquet",
+        "roster_weekly_2004.csv.gz",
+        "roster_weekly_2004.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2005",
+      "matches": [
+        "roster_weekly_2005.parquet",
+        "roster_weekly_2005.csv.gz",
+        "roster_weekly_2005.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2006",
+      "matches": [
+        "roster_weekly_2006.parquet",
+        "roster_weekly_2006.csv.gz",
+        "roster_weekly_2006.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2007",
+      "matches": [
+        "roster_weekly_2007.parquet",
+        "roster_weekly_2007.csv.gz",
+        "roster_weekly_2007.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2008",
+      "matches": [
+        "roster_weekly_2008.parquet",
+        "roster_weekly_2008.csv.gz",
+        "roster_weekly_2008.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2009",
+      "matches": [
+        "roster_weekly_2009.parquet",
+        "roster_weekly_2009.csv.gz",
+        "roster_weekly_2009.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2010",
+      "matches": [
+        "roster_weekly_2010.parquet",
+        "roster_weekly_2010.csv.gz",
+        "roster_weekly_2010.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2011",
+      "matches": [
+        "roster_weekly_2011.parquet",
+        "roster_weekly_2011.csv.gz",
+        "roster_weekly_2011.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2012",
+      "matches": [
+        "roster_weekly_2012.parquet",
+        "roster_weekly_2012.csv.gz",
+        "roster_weekly_2012.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2013",
+      "matches": [
+        "roster_weekly_2013.parquet",
+        "roster_weekly_2013.csv.gz",
+        "roster_weekly_2013.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2014",
+      "matches": [
+        "roster_weekly_2014.parquet",
+        "roster_weekly_2014.csv.gz",
+        "roster_weekly_2014.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2015",
+      "matches": [
+        "roster_weekly_2015.parquet",
+        "roster_weekly_2015.csv.gz",
+        "roster_weekly_2015.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2016",
+      "matches": [
+        "roster_weekly_2016.parquet",
+        "roster_weekly_2016.csv.gz",
+        "roster_weekly_2016.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2017",
+      "matches": [
+        "roster_weekly_2017.parquet",
+        "roster_weekly_2017.csv.gz",
+        "roster_weekly_2017.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2018",
+      "matches": [
+        "roster_weekly_2018.parquet",
+        "roster_weekly_2018.csv.gz",
+        "roster_weekly_2018.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2019",
+      "matches": [
+        "roster_weekly_2019.parquet",
+        "roster_weekly_2019.csv.gz",
+        "roster_weekly_2019.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2020",
+      "matches": [
+        "roster_weekly_2020.parquet",
+        "roster_weekly_2020.csv.gz",
+        "roster_weekly_2020.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2021",
+      "matches": [
+        "roster_weekly_2021.parquet",
+        "roster_weekly_2021.csv.gz",
+        "roster_weekly_2021.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2022",
+      "matches": [
+        "roster_weekly_2022.parquet",
+        "roster_weekly_2022.csv.gz",
+        "roster_weekly_2022.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2023",
+      "matches": [
+        "roster_weekly_2023.parquet",
+        "roster_weekly_2023.csv.gz",
+        "roster_weekly_2023.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2024",
+      "matches": [
+        "roster_weekly_2024.parquet",
+        "roster_weekly_2024.csv.gz",
+        "roster_weekly_2024.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2025",
+      "matches": [
+        "roster_weekly_2025.parquet",
+        "roster_weekly_2025.csv.gz",
+        "roster_weekly_2025.csv"
+      ]
+    },
+    {
+      "base": "roster_weekly_2026",
+      "matches": [
+        "roster_weekly_2026.parquet",
+        "roster_weekly_2026.csv.gz",
+        "roster_weekly_2026.csv"
+      ]
+    }
+  ],
+  "players": [
+    {
+      "base": "players",
+      "matches": ["players.parquet", "players.csv.gz", "players.csv"]
+    }
+  ],
+  "officials": [
+    {
+      "base": "officials",
+      "matches": ["officials.parquet", "officials.csv.gz", "officials.csv"]
+    }
+  ],
+  "ftn_charting": [
+    {
+      "base": "ftn_charting_1999",
+      "matches": ["ftn_charting_1999.parquet", "ftn_charting_1999.csv.gz", "ftn_charting_1999.csv"]
+    },
+    {
+      "base": "ftn_charting_2000",
+      "matches": ["ftn_charting_2000.parquet", "ftn_charting_2000.csv.gz", "ftn_charting_2000.csv"]
+    },
+    {
+      "base": "ftn_charting_2001",
+      "matches": ["ftn_charting_2001.parquet", "ftn_charting_2001.csv.gz", "ftn_charting_2001.csv"]
+    },
+    {
+      "base": "ftn_charting_2002",
+      "matches": ["ftn_charting_2002.parquet", "ftn_charting_2002.csv.gz", "ftn_charting_2002.csv"]
+    },
+    {
+      "base": "ftn_charting_2003",
+      "matches": ["ftn_charting_2003.parquet", "ftn_charting_2003.csv.gz", "ftn_charting_2003.csv"]
+    },
+    {
+      "base": "ftn_charting_2004",
+      "matches": ["ftn_charting_2004.parquet", "ftn_charting_2004.csv.gz", "ftn_charting_2004.csv"]
+    },
+    {
+      "base": "ftn_charting_2005",
+      "matches": ["ftn_charting_2005.parquet", "ftn_charting_2005.csv.gz", "ftn_charting_2005.csv"]
+    },
+    {
+      "base": "ftn_charting_2006",
+      "matches": ["ftn_charting_2006.parquet", "ftn_charting_2006.csv.gz", "ftn_charting_2006.csv"]
+    },
+    {
+      "base": "ftn_charting_2007",
+      "matches": ["ftn_charting_2007.parquet", "ftn_charting_2007.csv.gz", "ftn_charting_2007.csv"]
+    },
+    {
+      "base": "ftn_charting_2008",
+      "matches": ["ftn_charting_2008.parquet", "ftn_charting_2008.csv.gz", "ftn_charting_2008.csv"]
+    },
+    {
+      "base": "ftn_charting_2009",
+      "matches": ["ftn_charting_2009.parquet", "ftn_charting_2009.csv.gz", "ftn_charting_2009.csv"]
+    },
+    {
+      "base": "ftn_charting_2010",
+      "matches": ["ftn_charting_2010.parquet", "ftn_charting_2010.csv.gz", "ftn_charting_2010.csv"]
+    },
+    {
+      "base": "ftn_charting_2011",
+      "matches": ["ftn_charting_2011.parquet", "ftn_charting_2011.csv.gz", "ftn_charting_2011.csv"]
+    },
+    {
+      "base": "ftn_charting_2012",
+      "matches": ["ftn_charting_2012.parquet", "ftn_charting_2012.csv.gz", "ftn_charting_2012.csv"]
+    },
+    {
+      "base": "ftn_charting_2013",
+      "matches": ["ftn_charting_2013.parquet", "ftn_charting_2013.csv.gz", "ftn_charting_2013.csv"]
+    },
+    {
+      "base": "ftn_charting_2014",
+      "matches": ["ftn_charting_2014.parquet", "ftn_charting_2014.csv.gz", "ftn_charting_2014.csv"]
+    },
+    {
+      "base": "ftn_charting_2015",
+      "matches": ["ftn_charting_2015.parquet", "ftn_charting_2015.csv.gz", "ftn_charting_2015.csv"]
+    },
+    {
+      "base": "ftn_charting_2016",
+      "matches": ["ftn_charting_2016.parquet", "ftn_charting_2016.csv.gz", "ftn_charting_2016.csv"]
+    },
+    {
+      "base": "ftn_charting_2017",
+      "matches": ["ftn_charting_2017.parquet", "ftn_charting_2017.csv.gz", "ftn_charting_2017.csv"]
+    },
+    {
+      "base": "ftn_charting_2018",
+      "matches": ["ftn_charting_2018.parquet", "ftn_charting_2018.csv.gz", "ftn_charting_2018.csv"]
+    },
+    {
+      "base": "ftn_charting_2019",
+      "matches": ["ftn_charting_2019.parquet", "ftn_charting_2019.csv.gz", "ftn_charting_2019.csv"]
+    },
+    {
+      "base": "ftn_charting_2020",
+      "matches": ["ftn_charting_2020.parquet", "ftn_charting_2020.csv.gz", "ftn_charting_2020.csv"]
+    },
+    {
+      "base": "ftn_charting_2021",
+      "matches": ["ftn_charting_2021.parquet", "ftn_charting_2021.csv.gz", "ftn_charting_2021.csv"]
+    },
+    {
+      "base": "ftn_charting_2022",
+      "matches": ["ftn_charting_2022.parquet", "ftn_charting_2022.csv.gz", "ftn_charting_2022.csv"]
+    },
+    {
+      "base": "ftn_charting_2023",
+      "matches": ["ftn_charting_2023.parquet", "ftn_charting_2023.csv.gz", "ftn_charting_2023.csv"]
+    },
+    {
+      "base": "ftn_charting_2024",
+      "matches": ["ftn_charting_2024.parquet", "ftn_charting_2024.csv.gz", "ftn_charting_2024.csv"]
+    },
+    {
+      "base": "ftn_charting_2025",
+      "matches": ["ftn_charting_2025.parquet", "ftn_charting_2025.csv.gz", "ftn_charting_2025.csv"]
+    },
+    {
+      "base": "ftn_charting_2026",
+      "matches": ["ftn_charting_2026.parquet", "ftn_charting_2026.csv.gz", "ftn_charting_2026.csv"]
+    }
+  ],
+  "draft_picks": [
+    {
+      "base": "draft_picks",
+      "matches": ["draft_picks.parquet", "draft_picks.csv.gz", "draft_picks.csv"]
+    }
+  ],
+  "contracts": [
+    {
+      "base": "historical_contracts",
+      "matches": [
+        "historical_contracts.parquet",
+        "historical_contracts.csv.gz",
+        "historical_contracts.csv"
+      ]
+    }
+  ],
+  "snap_counts": [
+    {
+      "base": "snap_counts_1999",
+      "matches": ["snap_counts_1999.parquet", "snap_counts_1999.csv.gz", "snap_counts_1999.csv"]
+    },
+    {
+      "base": "snap_counts_2000",
+      "matches": ["snap_counts_2000.parquet", "snap_counts_2000.csv.gz", "snap_counts_2000.csv"]
+    },
+    {
+      "base": "snap_counts_2001",
+      "matches": ["snap_counts_2001.parquet", "snap_counts_2001.csv.gz", "snap_counts_2001.csv"]
+    },
+    {
+      "base": "snap_counts_2002",
+      "matches": ["snap_counts_2002.parquet", "snap_counts_2002.csv.gz", "snap_counts_2002.csv"]
+    },
+    {
+      "base": "snap_counts_2003",
+      "matches": ["snap_counts_2003.parquet", "snap_counts_2003.csv.gz", "snap_counts_2003.csv"]
+    },
+    {
+      "base": "snap_counts_2004",
+      "matches": ["snap_counts_2004.parquet", "snap_counts_2004.csv.gz", "snap_counts_2004.csv"]
+    },
+    {
+      "base": "snap_counts_2005",
+      "matches": ["snap_counts_2005.parquet", "snap_counts_2005.csv.gz", "snap_counts_2005.csv"]
+    },
+    {
+      "base": "snap_counts_2006",
+      "matches": ["snap_counts_2006.parquet", "snap_counts_2006.csv.gz", "snap_counts_2006.csv"]
+    },
+    {
+      "base": "snap_counts_2007",
+      "matches": ["snap_counts_2007.parquet", "snap_counts_2007.csv.gz", "snap_counts_2007.csv"]
+    },
+    {
+      "base": "snap_counts_2008",
+      "matches": ["snap_counts_2008.parquet", "snap_counts_2008.csv.gz", "snap_counts_2008.csv"]
+    },
+    {
+      "base": "snap_counts_2009",
+      "matches": ["snap_counts_2009.parquet", "snap_counts_2009.csv.gz", "snap_counts_2009.csv"]
+    },
+    {
+      "base": "snap_counts_2010",
+      "matches": ["snap_counts_2010.parquet", "snap_counts_2010.csv.gz", "snap_counts_2010.csv"]
+    },
+    {
+      "base": "snap_counts_2011",
+      "matches": ["snap_counts_2011.parquet", "snap_counts_2011.csv.gz", "snap_counts_2011.csv"]
+    },
+    {
+      "base": "snap_counts_2012",
+      "matches": ["snap_counts_2012.parquet", "snap_counts_2012.csv.gz", "snap_counts_2012.csv"]
+    },
+    {
+      "base": "snap_counts_2013",
+      "matches": ["snap_counts_2013.parquet", "snap_counts_2013.csv.gz", "snap_counts_2013.csv"]
+    },
+    {
+      "base": "snap_counts_2014",
+      "matches": ["snap_counts_2014.parquet", "snap_counts_2014.csv.gz", "snap_counts_2014.csv"]
+    },
+    {
+      "base": "snap_counts_2015",
+      "matches": ["snap_counts_2015.parquet", "snap_counts_2015.csv.gz", "snap_counts_2015.csv"]
+    },
+    {
+      "base": "snap_counts_2016",
+      "matches": ["snap_counts_2016.parquet", "snap_counts_2016.csv.gz", "snap_counts_2016.csv"]
+    },
+    {
+      "base": "snap_counts_2017",
+      "matches": ["snap_counts_2017.parquet", "snap_counts_2017.csv.gz", "snap_counts_2017.csv"]
+    },
+    {
+      "base": "snap_counts_2018",
+      "matches": ["snap_counts_2018.parquet", "snap_counts_2018.csv.gz", "snap_counts_2018.csv"]
+    },
+    {
+      "base": "snap_counts_2019",
+      "matches": ["snap_counts_2019.parquet", "snap_counts_2019.csv.gz", "snap_counts_2019.csv"]
+    },
+    {
+      "base": "snap_counts_2020",
+      "matches": ["snap_counts_2020.parquet", "snap_counts_2020.csv.gz", "snap_counts_2020.csv"]
+    },
+    {
+      "base": "snap_counts_2021",
+      "matches": ["snap_counts_2021.parquet", "snap_counts_2021.csv.gz", "snap_counts_2021.csv"]
+    },
+    {
+      "base": "snap_counts_2022",
+      "matches": ["snap_counts_2022.parquet", "snap_counts_2022.csv.gz", "snap_counts_2022.csv"]
+    },
+    {
+      "base": "snap_counts_2023",
+      "matches": ["snap_counts_2023.parquet", "snap_counts_2023.csv.gz", "snap_counts_2023.csv"]
+    },
+    {
+      "base": "snap_counts_2024",
+      "matches": ["snap_counts_2024.parquet", "snap_counts_2024.csv.gz", "snap_counts_2024.csv"]
+    },
+    {
+      "base": "snap_counts_2025",
+      "matches": ["snap_counts_2025.parquet", "snap_counts_2025.csv.gz", "snap_counts_2025.csv"]
+    },
+    {
+      "base": "snap_counts_2026",
+      "matches": ["snap_counts_2026.parquet", "snap_counts_2026.csv.gz", "snap_counts_2026.csv"]
+    }
+  ],
+  "rosters": [
+    {
+      "base": "roster_1999",
+      "matches": ["roster_1999.parquet", "roster_1999.csv.gz", "roster_1999.csv"]
+    },
+    {
+      "base": "roster_2000",
+      "matches": ["roster_2000.parquet", "roster_2000.csv.gz", "roster_2000.csv"]
+    },
+    {
+      "base": "roster_2001",
+      "matches": ["roster_2001.parquet", "roster_2001.csv.gz", "roster_2001.csv"]
+    },
+    {
+      "base": "roster_2002",
+      "matches": ["roster_2002.parquet", "roster_2002.csv.gz", "roster_2002.csv"]
+    },
+    {
+      "base": "roster_2003",
+      "matches": ["roster_2003.parquet", "roster_2003.csv.gz", "roster_2003.csv"]
+    },
+    {
+      "base": "roster_2004",
+      "matches": ["roster_2004.parquet", "roster_2004.csv.gz", "roster_2004.csv"]
+    },
+    {
+      "base": "roster_2005",
+      "matches": ["roster_2005.parquet", "roster_2005.csv.gz", "roster_2005.csv"]
+    },
+    {
+      "base": "roster_2006",
+      "matches": ["roster_2006.parquet", "roster_2006.csv.gz", "roster_2006.csv"]
+    },
+    {
+      "base": "roster_2007",
+      "matches": ["roster_2007.parquet", "roster_2007.csv.gz", "roster_2007.csv"]
+    },
+    {
+      "base": "roster_2008",
+      "matches": ["roster_2008.parquet", "roster_2008.csv.gz", "roster_2008.csv"]
+    },
+    {
+      "base": "roster_2009",
+      "matches": ["roster_2009.parquet", "roster_2009.csv.gz", "roster_2009.csv"]
+    },
+    {
+      "base": "roster_2010",
+      "matches": ["roster_2010.parquet", "roster_2010.csv.gz", "roster_2010.csv"]
+    },
+    {
+      "base": "roster_2011",
+      "matches": ["roster_2011.parquet", "roster_2011.csv.gz", "roster_2011.csv"]
+    },
+    {
+      "base": "roster_2012",
+      "matches": ["roster_2012.parquet", "roster_2012.csv.gz", "roster_2012.csv"]
+    },
+    {
+      "base": "roster_2013",
+      "matches": ["roster_2013.parquet", "roster_2013.csv.gz", "roster_2013.csv"]
+    },
+    {
+      "base": "roster_2014",
+      "matches": ["roster_2014.parquet", "roster_2014.csv.gz", "roster_2014.csv"]
+    },
+    {
+      "base": "roster_2015",
+      "matches": ["roster_2015.parquet", "roster_2015.csv.gz", "roster_2015.csv"]
+    },
+    {
+      "base": "roster_2016",
+      "matches": ["roster_2016.parquet", "roster_2016.csv.gz", "roster_2016.csv"]
+    },
+    {
+      "base": "roster_2017",
+      "matches": ["roster_2017.parquet", "roster_2017.csv.gz", "roster_2017.csv"]
+    },
+    {
+      "base": "roster_2018",
+      "matches": ["roster_2018.parquet", "roster_2018.csv.gz", "roster_2018.csv"]
+    },
+    {
+      "base": "roster_2019",
+      "matches": ["roster_2019.parquet", "roster_2019.csv.gz", "roster_2019.csv"]
+    },
+    {
+      "base": "roster_2020",
+      "matches": ["roster_2020.parquet", "roster_2020.csv.gz", "roster_2020.csv"]
+    },
+    {
+      "base": "roster_2021",
+      "matches": ["roster_2021.parquet", "roster_2021.csv.gz", "roster_2021.csv"]
+    },
+    {
+      "base": "roster_2022",
+      "matches": ["roster_2022.parquet", "roster_2022.csv.gz", "roster_2022.csv"]
+    },
+    {
+      "base": "roster_2023",
+      "matches": ["roster_2023.parquet", "roster_2023.csv.gz", "roster_2023.csv"]
+    },
+    {
+      "base": "roster_2024",
+      "matches": ["roster_2024.parquet", "roster_2024.csv.gz", "roster_2024.csv"]
+    },
+    {
+      "base": "roster_2025",
+      "matches": ["roster_2025.parquet", "roster_2025.csv.gz", "roster_2025.csv"]
+    },
+    {
+      "base": "roster_2026",
+      "matches": ["roster_2026.parquet", "roster_2026.csv.gz", "roster_2026.csv"]
+    }
+  ],
+  "pfr_advstats": [
+    {
+      "base": "advstats_week_def_1999",
+      "matches": [
+        "advstats_week_def_1999.parquet",
+        "advstats_week_def_1999.csv.gz",
+        "advstats_week_def_1999.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2000",
+      "matches": [
+        "advstats_week_def_2000.parquet",
+        "advstats_week_def_2000.csv.gz",
+        "advstats_week_def_2000.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2001",
+      "matches": [
+        "advstats_week_def_2001.parquet",
+        "advstats_week_def_2001.csv.gz",
+        "advstats_week_def_2001.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2002",
+      "matches": [
+        "advstats_week_def_2002.parquet",
+        "advstats_week_def_2002.csv.gz",
+        "advstats_week_def_2002.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2003",
+      "matches": [
+        "advstats_week_def_2003.parquet",
+        "advstats_week_def_2003.csv.gz",
+        "advstats_week_def_2003.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2004",
+      "matches": [
+        "advstats_week_def_2004.parquet",
+        "advstats_week_def_2004.csv.gz",
+        "advstats_week_def_2004.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2005",
+      "matches": [
+        "advstats_week_def_2005.parquet",
+        "advstats_week_def_2005.csv.gz",
+        "advstats_week_def_2005.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2006",
+      "matches": [
+        "advstats_week_def_2006.parquet",
+        "advstats_week_def_2006.csv.gz",
+        "advstats_week_def_2006.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2007",
+      "matches": [
+        "advstats_week_def_2007.parquet",
+        "advstats_week_def_2007.csv.gz",
+        "advstats_week_def_2007.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2008",
+      "matches": [
+        "advstats_week_def_2008.parquet",
+        "advstats_week_def_2008.csv.gz",
+        "advstats_week_def_2008.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2009",
+      "matches": [
+        "advstats_week_def_2009.parquet",
+        "advstats_week_def_2009.csv.gz",
+        "advstats_week_def_2009.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2010",
+      "matches": [
+        "advstats_week_def_2010.parquet",
+        "advstats_week_def_2010.csv.gz",
+        "advstats_week_def_2010.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2011",
+      "matches": [
+        "advstats_week_def_2011.parquet",
+        "advstats_week_def_2011.csv.gz",
+        "advstats_week_def_2011.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2012",
+      "matches": [
+        "advstats_week_def_2012.parquet",
+        "advstats_week_def_2012.csv.gz",
+        "advstats_week_def_2012.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2013",
+      "matches": [
+        "advstats_week_def_2013.parquet",
+        "advstats_week_def_2013.csv.gz",
+        "advstats_week_def_2013.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2014",
+      "matches": [
+        "advstats_week_def_2014.parquet",
+        "advstats_week_def_2014.csv.gz",
+        "advstats_week_def_2014.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2015",
+      "matches": [
+        "advstats_week_def_2015.parquet",
+        "advstats_week_def_2015.csv.gz",
+        "advstats_week_def_2015.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2016",
+      "matches": [
+        "advstats_week_def_2016.parquet",
+        "advstats_week_def_2016.csv.gz",
+        "advstats_week_def_2016.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2017",
+      "matches": [
+        "advstats_week_def_2017.parquet",
+        "advstats_week_def_2017.csv.gz",
+        "advstats_week_def_2017.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2018",
+      "matches": [
+        "advstats_week_def_2018.parquet",
+        "advstats_week_def_2018.csv.gz",
+        "advstats_week_def_2018.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2019",
+      "matches": [
+        "advstats_week_def_2019.parquet",
+        "advstats_week_def_2019.csv.gz",
+        "advstats_week_def_2019.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2020",
+      "matches": [
+        "advstats_week_def_2020.parquet",
+        "advstats_week_def_2020.csv.gz",
+        "advstats_week_def_2020.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2021",
+      "matches": [
+        "advstats_week_def_2021.parquet",
+        "advstats_week_def_2021.csv.gz",
+        "advstats_week_def_2021.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2022",
+      "matches": [
+        "advstats_week_def_2022.parquet",
+        "advstats_week_def_2022.csv.gz",
+        "advstats_week_def_2022.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2023",
+      "matches": [
+        "advstats_week_def_2023.parquet",
+        "advstats_week_def_2023.csv.gz",
+        "advstats_week_def_2023.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2024",
+      "matches": [
+        "advstats_week_def_2024.parquet",
+        "advstats_week_def_2024.csv.gz",
+        "advstats_week_def_2024.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2025",
+      "matches": [
+        "advstats_week_def_2025.parquet",
+        "advstats_week_def_2025.csv.gz",
+        "advstats_week_def_2025.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_def_2026",
+      "matches": [
+        "advstats_week_def_2026.parquet",
+        "advstats_week_def_2026.csv.gz",
+        "advstats_week_def_2026.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_1999",
+      "matches": [
+        "advstats_week_pass_1999.parquet",
+        "advstats_week_pass_1999.csv.gz",
+        "advstats_week_pass_1999.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2000",
+      "matches": [
+        "advstats_week_pass_2000.parquet",
+        "advstats_week_pass_2000.csv.gz",
+        "advstats_week_pass_2000.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2001",
+      "matches": [
+        "advstats_week_pass_2001.parquet",
+        "advstats_week_pass_2001.csv.gz",
+        "advstats_week_pass_2001.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2002",
+      "matches": [
+        "advstats_week_pass_2002.parquet",
+        "advstats_week_pass_2002.csv.gz",
+        "advstats_week_pass_2002.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2003",
+      "matches": [
+        "advstats_week_pass_2003.parquet",
+        "advstats_week_pass_2003.csv.gz",
+        "advstats_week_pass_2003.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2004",
+      "matches": [
+        "advstats_week_pass_2004.parquet",
+        "advstats_week_pass_2004.csv.gz",
+        "advstats_week_pass_2004.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2005",
+      "matches": [
+        "advstats_week_pass_2005.parquet",
+        "advstats_week_pass_2005.csv.gz",
+        "advstats_week_pass_2005.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2006",
+      "matches": [
+        "advstats_week_pass_2006.parquet",
+        "advstats_week_pass_2006.csv.gz",
+        "advstats_week_pass_2006.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2007",
+      "matches": [
+        "advstats_week_pass_2007.parquet",
+        "advstats_week_pass_2007.csv.gz",
+        "advstats_week_pass_2007.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2008",
+      "matches": [
+        "advstats_week_pass_2008.parquet",
+        "advstats_week_pass_2008.csv.gz",
+        "advstats_week_pass_2008.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2009",
+      "matches": [
+        "advstats_week_pass_2009.parquet",
+        "advstats_week_pass_2009.csv.gz",
+        "advstats_week_pass_2009.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2010",
+      "matches": [
+        "advstats_week_pass_2010.parquet",
+        "advstats_week_pass_2010.csv.gz",
+        "advstats_week_pass_2010.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2011",
+      "matches": [
+        "advstats_week_pass_2011.parquet",
+        "advstats_week_pass_2011.csv.gz",
+        "advstats_week_pass_2011.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2012",
+      "matches": [
+        "advstats_week_pass_2012.parquet",
+        "advstats_week_pass_2012.csv.gz",
+        "advstats_week_pass_2012.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2013",
+      "matches": [
+        "advstats_week_pass_2013.parquet",
+        "advstats_week_pass_2013.csv.gz",
+        "advstats_week_pass_2013.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2014",
+      "matches": [
+        "advstats_week_pass_2014.parquet",
+        "advstats_week_pass_2014.csv.gz",
+        "advstats_week_pass_2014.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2015",
+      "matches": [
+        "advstats_week_pass_2015.parquet",
+        "advstats_week_pass_2015.csv.gz",
+        "advstats_week_pass_2015.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2016",
+      "matches": [
+        "advstats_week_pass_2016.parquet",
+        "advstats_week_pass_2016.csv.gz",
+        "advstats_week_pass_2016.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2017",
+      "matches": [
+        "advstats_week_pass_2017.parquet",
+        "advstats_week_pass_2017.csv.gz",
+        "advstats_week_pass_2017.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2018",
+      "matches": [
+        "advstats_week_pass_2018.parquet",
+        "advstats_week_pass_2018.csv.gz",
+        "advstats_week_pass_2018.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2019",
+      "matches": [
+        "advstats_week_pass_2019.parquet",
+        "advstats_week_pass_2019.csv.gz",
+        "advstats_week_pass_2019.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2020",
+      "matches": [
+        "advstats_week_pass_2020.parquet",
+        "advstats_week_pass_2020.csv.gz",
+        "advstats_week_pass_2020.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2021",
+      "matches": [
+        "advstats_week_pass_2021.parquet",
+        "advstats_week_pass_2021.csv.gz",
+        "advstats_week_pass_2021.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2022",
+      "matches": [
+        "advstats_week_pass_2022.parquet",
+        "advstats_week_pass_2022.csv.gz",
+        "advstats_week_pass_2022.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2023",
+      "matches": [
+        "advstats_week_pass_2023.parquet",
+        "advstats_week_pass_2023.csv.gz",
+        "advstats_week_pass_2023.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2024",
+      "matches": [
+        "advstats_week_pass_2024.parquet",
+        "advstats_week_pass_2024.csv.gz",
+        "advstats_week_pass_2024.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2025",
+      "matches": [
+        "advstats_week_pass_2025.parquet",
+        "advstats_week_pass_2025.csv.gz",
+        "advstats_week_pass_2025.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_pass_2026",
+      "matches": [
+        "advstats_week_pass_2026.parquet",
+        "advstats_week_pass_2026.csv.gz",
+        "advstats_week_pass_2026.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_1999",
+      "matches": [
+        "advstats_week_rec_1999.parquet",
+        "advstats_week_rec_1999.csv.gz",
+        "advstats_week_rec_1999.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2000",
+      "matches": [
+        "advstats_week_rec_2000.parquet",
+        "advstats_week_rec_2000.csv.gz",
+        "advstats_week_rec_2000.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2001",
+      "matches": [
+        "advstats_week_rec_2001.parquet",
+        "advstats_week_rec_2001.csv.gz",
+        "advstats_week_rec_2001.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2002",
+      "matches": [
+        "advstats_week_rec_2002.parquet",
+        "advstats_week_rec_2002.csv.gz",
+        "advstats_week_rec_2002.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2003",
+      "matches": [
+        "advstats_week_rec_2003.parquet",
+        "advstats_week_rec_2003.csv.gz",
+        "advstats_week_rec_2003.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2004",
+      "matches": [
+        "advstats_week_rec_2004.parquet",
+        "advstats_week_rec_2004.csv.gz",
+        "advstats_week_rec_2004.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2005",
+      "matches": [
+        "advstats_week_rec_2005.parquet",
+        "advstats_week_rec_2005.csv.gz",
+        "advstats_week_rec_2005.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2006",
+      "matches": [
+        "advstats_week_rec_2006.parquet",
+        "advstats_week_rec_2006.csv.gz",
+        "advstats_week_rec_2006.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2007",
+      "matches": [
+        "advstats_week_rec_2007.parquet",
+        "advstats_week_rec_2007.csv.gz",
+        "advstats_week_rec_2007.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2008",
+      "matches": [
+        "advstats_week_rec_2008.parquet",
+        "advstats_week_rec_2008.csv.gz",
+        "advstats_week_rec_2008.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2009",
+      "matches": [
+        "advstats_week_rec_2009.parquet",
+        "advstats_week_rec_2009.csv.gz",
+        "advstats_week_rec_2009.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2010",
+      "matches": [
+        "advstats_week_rec_2010.parquet",
+        "advstats_week_rec_2010.csv.gz",
+        "advstats_week_rec_2010.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2011",
+      "matches": [
+        "advstats_week_rec_2011.parquet",
+        "advstats_week_rec_2011.csv.gz",
+        "advstats_week_rec_2011.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2012",
+      "matches": [
+        "advstats_week_rec_2012.parquet",
+        "advstats_week_rec_2012.csv.gz",
+        "advstats_week_rec_2012.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2013",
+      "matches": [
+        "advstats_week_rec_2013.parquet",
+        "advstats_week_rec_2013.csv.gz",
+        "advstats_week_rec_2013.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2014",
+      "matches": [
+        "advstats_week_rec_2014.parquet",
+        "advstats_week_rec_2014.csv.gz",
+        "advstats_week_rec_2014.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2015",
+      "matches": [
+        "advstats_week_rec_2015.parquet",
+        "advstats_week_rec_2015.csv.gz",
+        "advstats_week_rec_2015.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2016",
+      "matches": [
+        "advstats_week_rec_2016.parquet",
+        "advstats_week_rec_2016.csv.gz",
+        "advstats_week_rec_2016.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2017",
+      "matches": [
+        "advstats_week_rec_2017.parquet",
+        "advstats_week_rec_2017.csv.gz",
+        "advstats_week_rec_2017.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2018",
+      "matches": [
+        "advstats_week_rec_2018.parquet",
+        "advstats_week_rec_2018.csv.gz",
+        "advstats_week_rec_2018.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2019",
+      "matches": [
+        "advstats_week_rec_2019.parquet",
+        "advstats_week_rec_2019.csv.gz",
+        "advstats_week_rec_2019.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2020",
+      "matches": [
+        "advstats_week_rec_2020.parquet",
+        "advstats_week_rec_2020.csv.gz",
+        "advstats_week_rec_2020.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2021",
+      "matches": [
+        "advstats_week_rec_2021.parquet",
+        "advstats_week_rec_2021.csv.gz",
+        "advstats_week_rec_2021.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2022",
+      "matches": [
+        "advstats_week_rec_2022.parquet",
+        "advstats_week_rec_2022.csv.gz",
+        "advstats_week_rec_2022.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2023",
+      "matches": [
+        "advstats_week_rec_2023.parquet",
+        "advstats_week_rec_2023.csv.gz",
+        "advstats_week_rec_2023.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2024",
+      "matches": [
+        "advstats_week_rec_2024.parquet",
+        "advstats_week_rec_2024.csv.gz",
+        "advstats_week_rec_2024.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2025",
+      "matches": [
+        "advstats_week_rec_2025.parquet",
+        "advstats_week_rec_2025.csv.gz",
+        "advstats_week_rec_2025.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rec_2026",
+      "matches": [
+        "advstats_week_rec_2026.parquet",
+        "advstats_week_rec_2026.csv.gz",
+        "advstats_week_rec_2026.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_1999",
+      "matches": [
+        "advstats_week_rush_1999.parquet",
+        "advstats_week_rush_1999.csv.gz",
+        "advstats_week_rush_1999.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2000",
+      "matches": [
+        "advstats_week_rush_2000.parquet",
+        "advstats_week_rush_2000.csv.gz",
+        "advstats_week_rush_2000.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2001",
+      "matches": [
+        "advstats_week_rush_2001.parquet",
+        "advstats_week_rush_2001.csv.gz",
+        "advstats_week_rush_2001.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2002",
+      "matches": [
+        "advstats_week_rush_2002.parquet",
+        "advstats_week_rush_2002.csv.gz",
+        "advstats_week_rush_2002.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2003",
+      "matches": [
+        "advstats_week_rush_2003.parquet",
+        "advstats_week_rush_2003.csv.gz",
+        "advstats_week_rush_2003.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2004",
+      "matches": [
+        "advstats_week_rush_2004.parquet",
+        "advstats_week_rush_2004.csv.gz",
+        "advstats_week_rush_2004.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2005",
+      "matches": [
+        "advstats_week_rush_2005.parquet",
+        "advstats_week_rush_2005.csv.gz",
+        "advstats_week_rush_2005.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2006",
+      "matches": [
+        "advstats_week_rush_2006.parquet",
+        "advstats_week_rush_2006.csv.gz",
+        "advstats_week_rush_2006.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2007",
+      "matches": [
+        "advstats_week_rush_2007.parquet",
+        "advstats_week_rush_2007.csv.gz",
+        "advstats_week_rush_2007.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2008",
+      "matches": [
+        "advstats_week_rush_2008.parquet",
+        "advstats_week_rush_2008.csv.gz",
+        "advstats_week_rush_2008.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2009",
+      "matches": [
+        "advstats_week_rush_2009.parquet",
+        "advstats_week_rush_2009.csv.gz",
+        "advstats_week_rush_2009.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2010",
+      "matches": [
+        "advstats_week_rush_2010.parquet",
+        "advstats_week_rush_2010.csv.gz",
+        "advstats_week_rush_2010.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2011",
+      "matches": [
+        "advstats_week_rush_2011.parquet",
+        "advstats_week_rush_2011.csv.gz",
+        "advstats_week_rush_2011.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2012",
+      "matches": [
+        "advstats_week_rush_2012.parquet",
+        "advstats_week_rush_2012.csv.gz",
+        "advstats_week_rush_2012.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2013",
+      "matches": [
+        "advstats_week_rush_2013.parquet",
+        "advstats_week_rush_2013.csv.gz",
+        "advstats_week_rush_2013.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2014",
+      "matches": [
+        "advstats_week_rush_2014.parquet",
+        "advstats_week_rush_2014.csv.gz",
+        "advstats_week_rush_2014.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2015",
+      "matches": [
+        "advstats_week_rush_2015.parquet",
+        "advstats_week_rush_2015.csv.gz",
+        "advstats_week_rush_2015.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2016",
+      "matches": [
+        "advstats_week_rush_2016.parquet",
+        "advstats_week_rush_2016.csv.gz",
+        "advstats_week_rush_2016.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2017",
+      "matches": [
+        "advstats_week_rush_2017.parquet",
+        "advstats_week_rush_2017.csv.gz",
+        "advstats_week_rush_2017.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2018",
+      "matches": [
+        "advstats_week_rush_2018.parquet",
+        "advstats_week_rush_2018.csv.gz",
+        "advstats_week_rush_2018.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2019",
+      "matches": [
+        "advstats_week_rush_2019.parquet",
+        "advstats_week_rush_2019.csv.gz",
+        "advstats_week_rush_2019.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2020",
+      "matches": [
+        "advstats_week_rush_2020.parquet",
+        "advstats_week_rush_2020.csv.gz",
+        "advstats_week_rush_2020.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2021",
+      "matches": [
+        "advstats_week_rush_2021.parquet",
+        "advstats_week_rush_2021.csv.gz",
+        "advstats_week_rush_2021.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2022",
+      "matches": [
+        "advstats_week_rush_2022.parquet",
+        "advstats_week_rush_2022.csv.gz",
+        "advstats_week_rush_2022.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2023",
+      "matches": [
+        "advstats_week_rush_2023.parquet",
+        "advstats_week_rush_2023.csv.gz",
+        "advstats_week_rush_2023.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2024",
+      "matches": [
+        "advstats_week_rush_2024.parquet",
+        "advstats_week_rush_2024.csv.gz",
+        "advstats_week_rush_2024.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2025",
+      "matches": [
+        "advstats_week_rush_2025.parquet",
+        "advstats_week_rush_2025.csv.gz",
+        "advstats_week_rush_2025.csv"
+      ]
+    },
+    {
+      "base": "advstats_week_rush_2026",
+      "matches": [
+        "advstats_week_rush_2026.parquet",
+        "advstats_week_rush_2026.csv.gz",
+        "advstats_week_rush_2026.csv"
+      ]
+    },
+    {
+      "base": "advstats_season_def",
+      "matches": [
+        "advstats_season_def.parquet",
+        "advstats_season_def.csv.gz",
+        "advstats_season_def.csv"
+      ]
+    },
+    {
+      "base": "advstats_season_pass",
+      "matches": [
+        "advstats_season_pass.parquet",
+        "advstats_season_pass.csv.gz",
+        "advstats_season_pass.csv"
+      ]
+    },
+    {
+      "base": "advstats_season_rec",
+      "matches": [
+        "advstats_season_rec.parquet",
+        "advstats_season_rec.csv.gz",
+        "advstats_season_rec.csv"
+      ]
+    },
+    {
+      "base": "advstats_season_rush",
+      "matches": [
+        "advstats_season_rush.parquet",
+        "advstats_season_rush.csv.gz",
+        "advstats_season_rush.csv"
+      ]
+    }
+  ],
+  "pbp": [
+    {
+      "base": "play_by_play_1999",
+      "matches": ["play_by_play_1999.parquet", "play_by_play_1999.csv.gz", "play_by_play_1999.csv"]
+    },
+    {
+      "base": "play_by_play_2000",
+      "matches": ["play_by_play_2000.parquet", "play_by_play_2000.csv.gz", "play_by_play_2000.csv"]
+    },
+    {
+      "base": "play_by_play_2001",
+      "matches": ["play_by_play_2001.parquet", "play_by_play_2001.csv.gz", "play_by_play_2001.csv"]
+    },
+    {
+      "base": "play_by_play_2002",
+      "matches": ["play_by_play_2002.parquet", "play_by_play_2002.csv.gz", "play_by_play_2002.csv"]
+    },
+    {
+      "base": "play_by_play_2003",
+      "matches": ["play_by_play_2003.parquet", "play_by_play_2003.csv.gz", "play_by_play_2003.csv"]
+    },
+    {
+      "base": "play_by_play_2004",
+      "matches": ["play_by_play_2004.parquet", "play_by_play_2004.csv.gz", "play_by_play_2004.csv"]
+    },
+    {
+      "base": "play_by_play_2005",
+      "matches": ["play_by_play_2005.parquet", "play_by_play_2005.csv.gz", "play_by_play_2005.csv"]
+    },
+    {
+      "base": "play_by_play_2006",
+      "matches": ["play_by_play_2006.parquet", "play_by_play_2006.csv.gz", "play_by_play_2006.csv"]
+    },
+    {
+      "base": "play_by_play_2007",
+      "matches": ["play_by_play_2007.parquet", "play_by_play_2007.csv.gz", "play_by_play_2007.csv"]
+    },
+    {
+      "base": "play_by_play_2008",
+      "matches": ["play_by_play_2008.parquet", "play_by_play_2008.csv.gz", "play_by_play_2008.csv"]
+    },
+    {
+      "base": "play_by_play_2009",
+      "matches": ["play_by_play_2009.parquet", "play_by_play_2009.csv.gz", "play_by_play_2009.csv"]
+    },
+    {
+      "base": "play_by_play_2010",
+      "matches": ["play_by_play_2010.parquet", "play_by_play_2010.csv.gz", "play_by_play_2010.csv"]
+    },
+    {
+      "base": "play_by_play_2011",
+      "matches": ["play_by_play_2011.parquet", "play_by_play_2011.csv.gz", "play_by_play_2011.csv"]
+    },
+    {
+      "base": "play_by_play_2012",
+      "matches": ["play_by_play_2012.parquet", "play_by_play_2012.csv.gz", "play_by_play_2012.csv"]
+    },
+    {
+      "base": "play_by_play_2013",
+      "matches": ["play_by_play_2013.parquet", "play_by_play_2013.csv.gz", "play_by_play_2013.csv"]
+    },
+    {
+      "base": "play_by_play_2014",
+      "matches": ["play_by_play_2014.parquet", "play_by_play_2014.csv.gz", "play_by_play_2014.csv"]
+    },
+    {
+      "base": "play_by_play_2015",
+      "matches": ["play_by_play_2015.parquet", "play_by_play_2015.csv.gz", "play_by_play_2015.csv"]
+    },
+    {
+      "base": "play_by_play_2016",
+      "matches": ["play_by_play_2016.parquet", "play_by_play_2016.csv.gz", "play_by_play_2016.csv"]
+    },
+    {
+      "base": "play_by_play_2017",
+      "matches": ["play_by_play_2017.parquet", "play_by_play_2017.csv.gz", "play_by_play_2017.csv"]
+    },
+    {
+      "base": "play_by_play_2018",
+      "matches": ["play_by_play_2018.parquet", "play_by_play_2018.csv.gz", "play_by_play_2018.csv"]
+    },
+    {
+      "base": "play_by_play_2019",
+      "matches": ["play_by_play_2019.parquet", "play_by_play_2019.csv.gz", "play_by_play_2019.csv"]
+    },
+    {
+      "base": "play_by_play_2020",
+      "matches": ["play_by_play_2020.parquet", "play_by_play_2020.csv.gz", "play_by_play_2020.csv"]
+    },
+    {
+      "base": "play_by_play_2021",
+      "matches": ["play_by_play_2021.parquet", "play_by_play_2021.csv.gz", "play_by_play_2021.csv"]
+    },
+    {
+      "base": "play_by_play_2022",
+      "matches": ["play_by_play_2022.parquet", "play_by_play_2022.csv.gz", "play_by_play_2022.csv"]
+    },
+    {
+      "base": "play_by_play_2023",
+      "matches": ["play_by_play_2023.parquet", "play_by_play_2023.csv.gz", "play_by_play_2023.csv"]
+    },
+    {
+      "base": "play_by_play_2024",
+      "matches": ["play_by_play_2024.parquet", "play_by_play_2024.csv.gz", "play_by_play_2024.csv"]
+    },
+    {
+      "base": "play_by_play_2025",
+      "matches": ["play_by_play_2025.parquet", "play_by_play_2025.csv.gz", "play_by_play_2025.csv"]
+    },
+    {
+      "base": "play_by_play_2026",
+      "matches": ["play_by_play_2026.parquet", "play_by_play_2026.csv.gz", "play_by_play_2026.csv"]
+    }
+  ],
+  "nextgen_stats": [
+    {
+      "base": "ngs_passing",
+      "matches": ["ngs_passing.parquet", "ngs_passing.csv.gz", "ngs_passing.csv"]
+    },
+    {
+      "base": "ngs_receiving",
+      "matches": ["ngs_receiving.parquet", "ngs_receiving.csv.gz", "ngs_receiving.csv"]
+    },
+    {
+      "base": "ngs_rushing",
+      "matches": ["ngs_rushing.parquet", "ngs_rushing.csv.gz", "ngs_rushing.csv"]
+    }
+  ],
+  "injuries": [
+    {
+      "base": "injuries_1999",
+      "matches": ["injuries_1999.parquet", "injuries_1999.csv.gz", "injuries_1999.csv"]
+    },
+    {
+      "base": "injuries_2000",
+      "matches": ["injuries_2000.parquet", "injuries_2000.csv.gz", "injuries_2000.csv"]
+    },
+    {
+      "base": "injuries_2001",
+      "matches": ["injuries_2001.parquet", "injuries_2001.csv.gz", "injuries_2001.csv"]
+    },
+    {
+      "base": "injuries_2002",
+      "matches": ["injuries_2002.parquet", "injuries_2002.csv.gz", "injuries_2002.csv"]
+    },
+    {
+      "base": "injuries_2003",
+      "matches": ["injuries_2003.parquet", "injuries_2003.csv.gz", "injuries_2003.csv"]
+    },
+    {
+      "base": "injuries_2004",
+      "matches": ["injuries_2004.parquet", "injuries_2004.csv.gz", "injuries_2004.csv"]
+    },
+    {
+      "base": "injuries_2005",
+      "matches": ["injuries_2005.parquet", "injuries_2005.csv.gz", "injuries_2005.csv"]
+    },
+    {
+      "base": "injuries_2006",
+      "matches": ["injuries_2006.parquet", "injuries_2006.csv.gz", "injuries_2006.csv"]
+    },
+    {
+      "base": "injuries_2007",
+      "matches": ["injuries_2007.parquet", "injuries_2007.csv.gz", "injuries_2007.csv"]
+    },
+    {
+      "base": "injuries_2008",
+      "matches": ["injuries_2008.parquet", "injuries_2008.csv.gz", "injuries_2008.csv"]
+    },
+    {
+      "base": "injuries_2009",
+      "matches": ["injuries_2009.parquet", "injuries_2009.csv.gz", "injuries_2009.csv"]
+    },
+    {
+      "base": "injuries_2010",
+      "matches": ["injuries_2010.parquet", "injuries_2010.csv.gz", "injuries_2010.csv"]
+    },
+    {
+      "base": "injuries_2011",
+      "matches": ["injuries_2011.parquet", "injuries_2011.csv.gz", "injuries_2011.csv"]
+    },
+    {
+      "base": "injuries_2012",
+      "matches": ["injuries_2012.parquet", "injuries_2012.csv.gz", "injuries_2012.csv"]
+    },
+    {
+      "base": "injuries_2013",
+      "matches": ["injuries_2013.parquet", "injuries_2013.csv.gz", "injuries_2013.csv"]
+    },
+    {
+      "base": "injuries_2014",
+      "matches": ["injuries_2014.parquet", "injuries_2014.csv.gz", "injuries_2014.csv"]
+    },
+    {
+      "base": "injuries_2015",
+      "matches": ["injuries_2015.parquet", "injuries_2015.csv.gz", "injuries_2015.csv"]
+    },
+    {
+      "base": "injuries_2016",
+      "matches": ["injuries_2016.parquet", "injuries_2016.csv.gz", "injuries_2016.csv"]
+    },
+    {
+      "base": "injuries_2017",
+      "matches": ["injuries_2017.parquet", "injuries_2017.csv.gz", "injuries_2017.csv"]
+    },
+    {
+      "base": "injuries_2018",
+      "matches": ["injuries_2018.parquet", "injuries_2018.csv.gz", "injuries_2018.csv"]
+    },
+    {
+      "base": "injuries_2019",
+      "matches": ["injuries_2019.parquet", "injuries_2019.csv.gz", "injuries_2019.csv"]
+    },
+    {
+      "base": "injuries_2020",
+      "matches": ["injuries_2020.parquet", "injuries_2020.csv.gz", "injuries_2020.csv"]
+    },
+    {
+      "base": "injuries_2021",
+      "matches": ["injuries_2021.parquet", "injuries_2021.csv.gz", "injuries_2021.csv"]
+    },
+    {
+      "base": "injuries_2022",
+      "matches": ["injuries_2022.parquet", "injuries_2022.csv.gz", "injuries_2022.csv"]
+    },
+    {
+      "base": "injuries_2023",
+      "matches": ["injuries_2023.parquet", "injuries_2023.csv.gz", "injuries_2023.csv"]
+    },
+    {
+      "base": "injuries_2024",
+      "matches": ["injuries_2024.parquet", "injuries_2024.csv.gz", "injuries_2024.csv"]
+    },
+    {
+      "base": "injuries_2025",
+      "matches": ["injuries_2025.parquet", "injuries_2025.csv.gz", "injuries_2025.csv"]
+    },
+    {
+      "base": "injuries_2026",
+      "matches": ["injuries_2026.parquet", "injuries_2026.csv.gz", "injuries_2026.csv"]
+    }
+  ],
+  "depth_charts": [
+    {
+      "base": "depth_charts_1999",
+      "matches": ["depth_charts_1999.parquet", "depth_charts_1999.csv.gz", "depth_charts_1999.csv"]
+    },
+    {
+      "base": "depth_charts_2000",
+      "matches": ["depth_charts_2000.parquet", "depth_charts_2000.csv.gz", "depth_charts_2000.csv"]
+    },
+    {
+      "base": "depth_charts_2001",
+      "matches": ["depth_charts_2001.parquet", "depth_charts_2001.csv.gz", "depth_charts_2001.csv"]
+    },
+    {
+      "base": "depth_charts_2002",
+      "matches": ["depth_charts_2002.parquet", "depth_charts_2002.csv.gz", "depth_charts_2002.csv"]
+    },
+    {
+      "base": "depth_charts_2003",
+      "matches": ["depth_charts_2003.parquet", "depth_charts_2003.csv.gz", "depth_charts_2003.csv"]
+    },
+    {
+      "base": "depth_charts_2004",
+      "matches": ["depth_charts_2004.parquet", "depth_charts_2004.csv.gz", "depth_charts_2004.csv"]
+    },
+    {
+      "base": "depth_charts_2005",
+      "matches": ["depth_charts_2005.parquet", "depth_charts_2005.csv.gz", "depth_charts_2005.csv"]
+    },
+    {
+      "base": "depth_charts_2006",
+      "matches": ["depth_charts_2006.parquet", "depth_charts_2006.csv.gz", "depth_charts_2006.csv"]
+    },
+    {
+      "base": "depth_charts_2007",
+      "matches": ["depth_charts_2007.parquet", "depth_charts_2007.csv.gz", "depth_charts_2007.csv"]
+    },
+    {
+      "base": "depth_charts_2008",
+      "matches": ["depth_charts_2008.parquet", "depth_charts_2008.csv.gz", "depth_charts_2008.csv"]
+    },
+    {
+      "base": "depth_charts_2009",
+      "matches": ["depth_charts_2009.parquet", "depth_charts_2009.csv.gz", "depth_charts_2009.csv"]
+    },
+    {
+      "base": "depth_charts_2010",
+      "matches": ["depth_charts_2010.parquet", "depth_charts_2010.csv.gz", "depth_charts_2010.csv"]
+    },
+    {
+      "base": "depth_charts_2011",
+      "matches": ["depth_charts_2011.parquet", "depth_charts_2011.csv.gz", "depth_charts_2011.csv"]
+    },
+    {
+      "base": "depth_charts_2012",
+      "matches": ["depth_charts_2012.parquet", "depth_charts_2012.csv.gz", "depth_charts_2012.csv"]
+    },
+    {
+      "base": "depth_charts_2013",
+      "matches": ["depth_charts_2013.parquet", "depth_charts_2013.csv.gz", "depth_charts_2013.csv"]
+    },
+    {
+      "base": "depth_charts_2014",
+      "matches": ["depth_charts_2014.parquet", "depth_charts_2014.csv.gz", "depth_charts_2014.csv"]
+    },
+    {
+      "base": "depth_charts_2015",
+      "matches": ["depth_charts_2015.parquet", "depth_charts_2015.csv.gz", "depth_charts_2015.csv"]
+    },
+    {
+      "base": "depth_charts_2016",
+      "matches": ["depth_charts_2016.parquet", "depth_charts_2016.csv.gz", "depth_charts_2016.csv"]
+    },
+    {
+      "base": "depth_charts_2017",
+      "matches": ["depth_charts_2017.parquet", "depth_charts_2017.csv.gz", "depth_charts_2017.csv"]
+    },
+    {
+      "base": "depth_charts_2018",
+      "matches": ["depth_charts_2018.parquet", "depth_charts_2018.csv.gz", "depth_charts_2018.csv"]
+    },
+    {
+      "base": "depth_charts_2019",
+      "matches": ["depth_charts_2019.parquet", "depth_charts_2019.csv.gz", "depth_charts_2019.csv"]
+    },
+    {
+      "base": "depth_charts_2020",
+      "matches": ["depth_charts_2020.parquet", "depth_charts_2020.csv.gz", "depth_charts_2020.csv"]
+    },
+    {
+      "base": "depth_charts_2021",
+      "matches": ["depth_charts_2021.parquet", "depth_charts_2021.csv.gz", "depth_charts_2021.csv"]
+    },
+    {
+      "base": "depth_charts_2022",
+      "matches": ["depth_charts_2022.parquet", "depth_charts_2022.csv.gz", "depth_charts_2022.csv"]
+    },
+    {
+      "base": "depth_charts_2023",
+      "matches": ["depth_charts_2023.parquet", "depth_charts_2023.csv.gz", "depth_charts_2023.csv"]
+    },
+    {
+      "base": "depth_charts_2024",
+      "matches": ["depth_charts_2024.parquet", "depth_charts_2024.csv.gz", "depth_charts_2024.csv"]
+    },
+    {
+      "base": "depth_charts_2025",
+      "matches": ["depth_charts_2025.parquet", "depth_charts_2025.csv.gz", "depth_charts_2025.csv"]
+    },
+    {
+      "base": "depth_charts_2026",
+      "matches": ["depth_charts_2026.parquet", "depth_charts_2026.csv.gz", "depth_charts_2026.csv"]
+    }
+  ],
+  "combine": [
+    {
+      "base": "combine",
+      "matches": ["combine.parquet", "combine.csv.gz", "combine.csv"]
+    }
+  ]
+}

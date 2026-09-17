@@ -3,7 +3,7 @@
 
 # Prompts used when writing this project:
 
-```
+``` -> claude
 I am playing fantasy football this season, and not doing so great, but i was curious about a potential ai league, where different ai/computer algorithms compete in a fantasy league. I was curious about setting up such a league to provide algos with the best chance, and i think data collection and wrangling is hard for me to wrap my head around. In my mind, the ideal setup is just as much data as possible - all game stats, player stats for all players active in the league including their college stats, coach stats, historic matchup stats, etc. - but im not really sure (a) where i would get the data, (b) what data is valuable, or (c) how i could use said data to make meaningful predictions if i were building my own statistical model of the game.
 
 Some data points i thought could be meaningful:
@@ -14,7 +14,7 @@ Some data points i thought could be meaningful:
 - Team head to heads, away and home differential
 ```
 
-```
+``` -> claude
 I would like to see a good schema, though for a league id also like a "more data = more better" approach to allow each algo to determine what data it cares about. Some algos id like to try:
 - Genuine models like xgboost/etc. that can make stat predictions
 - LLMs which just get the data as json and make a decision using their internal logic/prompt logic
@@ -22,7 +22,7 @@ I would like to see a good schema, though for a league id also like a "more data
 I also want to facilitate trading between algorithms as part of the league, and im not sure how best to make that work.
 ```
 
-```
+``` -> claude
 Another thought ive had is making an "agentic" algo which gets the core data as its prompt, but also has access to tools which can pull other stats as desired. How could this work?
 
 Im also ok with rngbot getting ruined in trades, though id like it to be something like rng() * trade_value_for_me > 0.5 or something, so it is more likely to accept good trades and less to accept bad ones (ideally as a scale from 0-1 for trade value)
@@ -30,50 +30,118 @@ Im also ok with rngbot getting ruined in trades, though id like it to be somethi
 Another question: when would it make sense to run this playground? I was thinking to run it a few times a week, given the infrequency of real world events, but im not sure that makes sense vs continuously running it and triggering each algo based on events (e.g. game-start, player-injured, trade-offered, game-starts-in-1h, etc.) - i want a decent amount of time to allow the llm agent to run, so i want to build some lenience into the event timings rather than game starts in 5 seconds, decide now on who is on your active roster.
 ```
 
-```
+``` -> claude
 Last piece: i want this to be in typescript or rust as much as possible, and id like to build a visualization website in nextjs that will display stuff. The website need not be designed now, but i want to make sure any non-typescript behaviors can run in a way that typescript can iface with, such as with NAPI or an http api. I expect to run this mostly locally (save for llm apis), but am considering running on vercel/cloudflare if its an idea other people i know would be interested in, and in that case ill put non-ts items into docker containers.
 ```
 
-```
+``` -> claude
 What apis exist for getting nfl and cfb data in typescript/rust?
 ```
 
-```
+``` -> claude
 Could it be worth building a separate api for aggregating all the data, storing it in e.g. r2 or d1/dosqlite, and then serving that to my system / just publicly?
 
 Also, what prior art exists for this project?
 ```
 
-```
+``` -> claude
 For the licensing of the data, if i do a public api, itll likely be free, but i want to make sure the data is itself properly licensed and handled, so what would that look like?
 
 For fantasy point scoring, i believe different websites (espn, nfl.com, yahoo sports) have slightly different scoring algorithms to determine a player's points - are they public for people to use and/or are there inferred algorithm impls? Id like to make the scoring system a config option when making a league, so if i can make a system able to score based on all major fantasy league systems thatd be ideal
 ```
 
-```
+``` -> claude
 If i were to make my aggregator open source, would that be allowed, what licensing could i use (ideally mit), and are there other sources of college data that are able to be licensed this way? I really would like to make the data public and free where possible.
 ```
 
-```
+``` -> claude
 For the aggregator, whats the best way to automatically pull relevant data? Is it just a cron job (or cf workflow) which polls the nflverse/etc. data sources daily?
 ```
 
-```
+``` -> claude
 I am gonna commit to making the data aggregation+api separate, so this api should be able to ignore the league concept entirely and just track the raw data, and i can figure out d1/do topology separately. One feature which might be cook is webhooks, especially given the delta/diff functionality expected to be present - which could also drive the fantasy league sim event setup, albeit likely filtered+debounced - if i want to make the public api scalable and reasonably cheap, how can i implement a good webhook solution on cloudflare that properly fans out, keeps request counts low-ish, handles proper authn, etc.? I plan to gate webhooks behind auth(n+z) and limit per-account webhooks, but thats likely kind of weak so i want to make sure even large wh counts are reasonably inexpensive
 ```
 
-```
+``` -> claude
 Another piece of the public daya api puzzle im curious about is caching - i believe i can cache most data using standard cache control headers when responding from a worker, but how best can i design that setup for the type of data this api has?  And is there a mechanism caching can support to improve my webhook costs?
 ```
 
-```
+``` -> claude
 Is there a way to configure cache rules via wrangler, should i look at cloudflare.config.ts (or whatever its called), iac tools like alchemy/sst/pulumi, or just manually configure in the dashboard? I want to minimize worker hits using the cache to keep the api cheap and fast
 ```
 
-```
+``` -> claude
 Ive seen cloudflare.config.ts (or something like that) recently in cf blogs and stuff, but cant find docs on it - what is it and where can i find up to date info on it?
 ```
 
-```
+``` -> claude
 I am going to use drizzle and durable-object sqlite for my sharded database (d1 sharding is nontrivial for workers), what should my schema look like (roughly) for the data?
+```
+
+``` -> claude
+I want to use workflows + hyparquet to process parquet data into db updates, and my goal is this flow:
+
+1. Take download stream from github
+2. Pipe through hyparquet to convert to a stream of *row* chunks (ndjson)
+3. For each chunk, process the data and update the row in dosql if needed
+
+
+How would I do this, and does this even make sense to do given parquet's columnar approach vs this row-oriented approach? I have to be able to process parquet because not all csv data from nflverse is up to date, but all parquet data is.
+```
+
+``` -> claude
+I am storing the downloaded files in R2 - aiming to be an effective mirror of the github releases, more or less - so how would I apply the range query setup against R2 since it doesn't directly use HTTP (im using the workers binding)?
+```
+
+``` -> claude
+given that i want to run this in a cloudflare workflow, would it make sense to just load the whole file into memory (all the files are likely to be <= 100mb each, even uncompressed), then process the whole thing using hyparquet / csv reading to produce the diff? I already have to request the whole file anyways to store it into R2, so it might make sense to tee the response, load the whole thing in one step, and update the sqlite db based on the relevant data.
+```
+
+``` -> claude
+I am wanting to use a lot more of the nflverse (and probably the other sources too) in my data and in my database, and I was wondering if it would make sense to build 2 APIs:
+
+1. The first API would be a standard HTTP RESTful API, with OpenAPI specs, and a standard openapi/swagger schema + playground
+2. The second API would be a readonly (so doesn't control webhooks, namely) GraphQL API, which allows users to fetch the data they care about
+
+
+My questions:
+
+* Does graphql even make sense?
+* How best should the graphql server be implemented? Specifically, what typescript libraries should I use to plug my API with, specifically for hono+cloudflare workers where possible
+* How does caching integrate with graphql? I very much want to cache aggressively for it, but I am unsure what that would look like.
+* How would graphql work wrt the sharded db architecture (season sharding, with one shard that groups data which has no season) and how can I "federate" the setup properly through relevant sharded dos?
+```
+
+``` -> claude
+the drizzle plugin requires a single database client for drizzle for it to work, but that doesn't really make sense in my case (I think) given the sharding behaviors.
+
+This is my current builder:
+
+`ts
+const builder = new SchemaBuilder<PothosTypes>({
+  plugins: [DrizzlePlugin, DataloaderPlugin, RelayPlugin, WithInputPlugin, DirectivesPlugin],
+  drizzle: {
+    client: (c) =>{
+      const doStub = c.DATABASE_DO.getByName(`data-${c.season ?? "all"}`);
+      return createDb(null as any);
+    },
+    relations,
+    getTableConfig,
+  },
+  relay: {
+    nodesOnConnection: true,
+  },
+})
+`
+
+`createDb` expects `DurableObjectStorage` as a param (in a DO's context, passing `this` works as intended), since thats what the drizzle client expects, but it doesn't make sense from outside the context of a DO to refer to its storage. 
+
+Ideally, all of my types from my schema get autogenerated into pothos types, with appropriate data loading and relay pagination, but im not quite sure how to  do that.
+```
+
+
+``` -> opencode
+Based on the data that nflverse's github releases provide (I will collect them separately), I have devised zod schemas which can more or less process the input data into structured (ish) types. For each type, write a good description into a describe() call for each field, using existing ones as references (except when they are //todos, in which case please replace those; also, the stats_player and stats_team schemas have outdated descriptions that need updating). Once done, setup the exported NFLVERSE_TAG_SCHEMA (refer to the RELEASE_MAP for the keys of this object, and different array values should likely be mapped to different object values in this tag schema object) with all of the schemas. If you need data references, the ignored `data-pull` folder contains the parquet files, an `enums.json` file per tag which dedupes all values for each key, and a `.schema.json` file per tag+grouped type which has a very rudimentary schema (parquet type + enums in some cases), but ideally you can do your work without that, since those are large files which aren't trivial to parse manually.
+
+Lastly, individual schemas should not be exported from this file, just the one object.
 ```

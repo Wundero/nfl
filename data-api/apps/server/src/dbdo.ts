@@ -9,9 +9,6 @@ export class DatabaseDO extends DurableObject {
     super(ctx, env);
     this.storage = ctx.storage;
     this.db = createDb(this);
-
-    ctx.blockConcurrencyWhile(async () => {
-      await migrate(this.db);
-    });
+    migrate(this.db);
   }
 }

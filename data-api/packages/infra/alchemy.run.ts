@@ -4,6 +4,8 @@ import * as Config from "effect/Config";
 import * as Effect from "effect/Effect";
 import "varlock/auto-load";
 
+import type { DatabaseDO, PullDataWorkflow, WebhookDO } from "../../apps/server/src/index";
+
 export const zone = Cloudflare.Zone.Zone("zone", {
   name: "nfl.1d.gg",
 });
@@ -34,16 +36,21 @@ export const serverRuleset = Cloudflare.Ruleset.Ruleset("CacheRules", {
   ],
 });
 
-export const dbdo = Cloudflare.DurableObject("database-do", {
+export const dbdo = Cloudflare.DurableObject<DatabaseDO>("database-do", {
   className: "DatabaseDO",
 });
 
-export const whdo = Cloudflare.DurableObject("webhook-do", {
+export const whdo = Cloudflare.DurableObject<WebhookDO>("webhook-do", {
   className: "WebhookDO",
 });
 
 export const db = Cloudflare.D1.Database("database", {
   migrations: "../../packages/db/src/migrations",
+});
+
+export const pullDataWorkflow = Cloudflare.Workflow<PullDataWorkflow>("pull-data", {
+  className: "PullDataWorkflow",
+  schedules: ["0 * * * *", "30 * * * *"], // every 30 mins
 });
 
 export const server = Cloudflare.Worker("server", {

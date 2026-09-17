@@ -1,5 +1,6 @@
 import { sqliteTable, text, integer, real, index, uniqueIndex } from "drizzle-orm/sqlite-core";
-import { relations } from "drizzle-orm";
+
+// TODO this set of tables is incomplete vs what I want, read thru nflverse data and build a nice schema
 
 export const teams = sqliteTable(
   "team",
@@ -138,78 +139,3 @@ export const syncState = sqliteTable(
   },
   (t) => [index("sync_version_idx").on(t.versionHash)],
 );
-
-export const teamRelations = relations(teams, ({ many }) => ({
-  players: many(players),
-  homeGames: many(games, {
-    relationName: "homeGames",
-  }),
-  awayGames: many(games, {
-    relationName: "awayGames",
-  }),
-  playerGameStats: many(playerGameStats),
-  injuries: many(injuryReports),
-  odds: many(oddsLines),
-}));
-export const playerRelations = relations(players, ({ one, many }) => ({
-  team: one(teams, {
-    fields: [players.teamId],
-    references: [teams.id],
-  }),
-  games: many(games),
-  stats: many(playerGameStats),
-  odds: many(oddsLines),
-  injuries: many(injuryReports),
-}));
-export const gameRelations = relations(games, ({ one, many }) => ({
-  homeTeam: one(teams, {
-    relationName: "homeGames",
-    fields: [games.homeTeamId],
-    references: [teams.id],
-  }),
-  awayTeam: one(teams, {
-    relationName: "awayGames",
-    fields: [games.awayTeamId],
-    references: [teams.id],
-  }),
-  pgs: many(playerGameStats),
-  odds: many(oddsLines),
-}));
-export const pgsRelations = relations(playerGameStats, ({ one }) => ({
-  player: one(players, {
-    fields: [playerGameStats.playerId],
-    references: [players.id],
-  }),
-  game: one(games, {
-    fields: [playerGameStats.gameId],
-    references: [games.id],
-  }),
-  team: one(teams, {
-    fields: [playerGameStats.teamId],
-    references: [teams.id],
-  }),
-}));
-export const oddsRelations = relations(oddsLines, ({ one }) => ({
-  player: one(players, {
-    fields: [oddsLines.playerId],
-    references: [players.id],
-  }),
-  team: one(teams, {
-    fields: [oddsLines.teamId],
-    references: [teams.id],
-  }),
-  game: one(games, {
-    fields: [oddsLines.gameId],
-    references: [games.id],
-  }),
-}));
-export const irRelations = relations(injuryReports, ({ one }) => ({
-  player: one(players, {
-    fields: [injuryReports.playerId],
-    references: [players.id],
-  }),
-  team: one(teams, {
-    fields: [injuryReports.teamId],
-    references: [teams.id],
-  }),
-}));

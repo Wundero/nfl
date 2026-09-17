@@ -39,8 +39,8 @@
     "db:generate": "vp run --filter @data-api/db db:generate",
     "deploy": "vp run --filter @data-api/infra deploy",
     "destroy": "vp run --filter @data-api/infra destroy",
-    "env:generate": "varlock codegen --path ./apps/web/ && varlock codegen --path ./apps/server/ && varlock codegen --path ./packages/db/",
-    "postinstall": "varlock codegen --path ./apps/web/ && varlock codegen --path ./apps/server/ && varlock codegen --path ./packages/db/"
+    "env:generate": "varlock codegen --path ./apps/web/ && varlock codegen --path ./apps/server/ && varlock codegen --path ./packages/db/ && varlock codegen --path ./packages/sharded-db/ && varlock codegen --path ./packages/data/",
+    "postinstall": "bun env:generate"
   },
   "dependencies": {
     "zod": "catalog:"

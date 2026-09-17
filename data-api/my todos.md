@@ -1,0 +1,23 @@
+Things to do:
+
+- Wrangle remaining data sources from nflverse into csv/parquet schemas
+  - Make sure .coerce is (a) needed and (b) works as expected for both csv + parquet
+- Look into other data sources (ref: design doc), and for useful ones, build a fetch setup, schema, parser, etc.
+- Based on _all_ data source schemas, create a unified database schema for sharded-db
+  - Note that the shards are per-season, and there should be an "overall" type shard for complete historical data
+  - It would be nice to have a standard ID mechanism for entities, and a table which stores external ids for each entity
+- Build the remaining workflow steps to put the data from every source into the databases
+- Build the API in a standard way to get the relevant data, with appropriate cache headers + cloudflare cache API usage
+- Setup cache invalidation via tags from the workflows
+- Setup OpenAPI gen+docs+viewer
+  - Would GraphQL be good here? I feel like the data shape kind of suits gql. If so, use relay-style and other best practices
+    - Also add playground (or graphiql or whatever)
+    - How does caching on cf work for this?
+- Build webhooks integration (new pkg) setup
+  - Should be fully authenticated with testing, dns, etc.
+  - _Must_ batch events together
+  - Support a sync-token + poll approach for missed events
+  - Ideally only emit diffs, could also just be a notif to say "this dataset has changed"
+  - Gate behind authn
+- Build simple web iface with authn pages, wh admin pages, basic docs
+- Migrate sharded db to drizzle v1 properly
