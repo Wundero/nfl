@@ -34,7 +34,6 @@ const yoga = createYoga<Env & ExecutionContext>({
 });
 
 app.use("/api/graphql", async (c) => {
-
   // @ts-expect-error Request type confusion, but this is valid
   return yoga.fetch(c.req.raw, c.env, c.executionCtx);
 });

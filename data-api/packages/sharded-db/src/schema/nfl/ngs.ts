@@ -1,109 +1,105 @@
-import { sqliteTable, text, integer, real, index, uniqueIndex } from "drizzle-orm/sqlite-core";
-import { player, team } from "./reference";
+import { sqliteTable, text, integer, real, uniqueIndex } from "drizzle-orm/sqlite-core";
+import { player, season, team, week } from "./reference";
 
-export const ngs_passing = sqliteTable(
+const meta = () => ({
+  contentHash: text("content_hash"),
+  updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
+});
+
+export const ngsPassing = sqliteTable(
   "ngs_passing",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
-    playerId: integer("player_id").references(() => player.id),
+    playerId: integer("player_id")
+      .notNull()
+      .references(() => player.id),
     teamId: integer("team_id").references(() => team.id),
-    season: integer("season"),
-    seasonType: text("season_type").notNull(),
-    week: integer("week"),
-    playerDisplayName: text("player_display_name"),
-    playerPosition: text("player_position"),
-    playerFirstName: text("player_first_name"),
-    playerLastName: text("player_last_name"),
-    playerJerseyNumber: text("player_jersey_number").notNull(),
-    playerShortName: text("player_short_name"),
-    avgTimeToThrow: real("avg_time_to_throw"),
-    avgCompletedAirYards: real("avg_completed_air_yards"),
-    avgIntendedAirYards: real("avg_intended_air_yards"),
-    avgAirYardsDifferential: real("avg_air_yards_differential"),
+    seasonId: integer("season_id")
+      .notNull()
+      .references(() => season.id),
+    weekId: integer("week_id")
+      .notNull()
+      .references(() => week.id),
+    averageTimeToThrow: real("average_time_to_throw"),
+    averageCompletedAirYards: real("average_completed_air_yards"),
+    averageIntendedAirYards: real("average_intended_air_yards"),
+    averageAirYardsDifferential: real("average_air_yards_differential"),
     aggressiveness: real("aggressiveness"),
-    maxCompletedAirDistance: real("max_completed_air_distance"),
-    avgAirYardsToSticks: real("avg_air_yards_to_sticks"),
-    attempts: real("attempts"),
-    passYards: real("pass_yards"),
-    passTouchdowns: real("pass_touchdowns"),
-    interceptions: real("interceptions"),
+    maximumCompletedAirDistance: real("maximum_completed_air_distance"),
+    averageAirYardsToSticks: real("average_air_yards_to_sticks"),
+    attempts: integer("attempts"),
+    passingYards: integer("passing_yards"),
+    passingTouchdowns: integer("passing_touchdowns"),
+    interceptions: integer("interceptions"),
     passerRating: real("passer_rating"),
-    completions: real("completions"),
+    completions: integer("completions"),
     completionPercentage: real("completion_percentage"),
     expectedCompletionPercentage: real("expected_completion_percentage"),
     completionPercentageAboveExpectation: real("completion_percentage_above_expectation"),
-    avgAirDistance: real("avg_air_distance"),
-    maxAirDistance: real("max_air_distance"),
-    contentHash: text("content_hash"),
-    updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
+    averageAirDistance: real("average_air_distance"),
+    maximumAirDistance: real("maximum_air_distance"),
+    ...meta(),
   },
-  (t) => [
-    uniqueIndex("ngs_pass_idx").on(t.playerId, t.season, t.seasonType, t.week),
-    index("ngs_pass_game_week_idx").on(t.season, t.week),
-  ],
+  (t) => [uniqueIndex("ngs_passing_unique_idx").on(t.playerId, t.seasonId, t.weekId)],
 );
 
-export const ngs_receiving = sqliteTable(
+export const ngsReceiving = sqliteTable(
   "ngs_receiving",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
-    playerId: integer("player_id").references(() => player.id),
+    playerId: integer("player_id")
+      .notNull()
+      .references(() => player.id),
     teamId: integer("team_id").references(() => team.id),
-    season: integer("season"),
-    seasonType: text("season_type").notNull(),
-    week: integer("week"),
-    playerDisplayName: text("player_display_name"),
-    playerPosition: text("player_position"),
-    playerFirstName: text("player_first_name"),
-    playerLastName: text("player_last_name"),
-    playerJerseyNumber: text("player_jersey_number").notNull(),
-    playerShortName: text("player_short_name"),
-    avgCushion: real("avg_cushion"),
-    avgSeparation: real("avg_separation"),
-    avgIntendedAirYards: real("avg_intended_air_yards"),
+    seasonId: integer("season_id")
+      .notNull()
+      .references(() => season.id),
+    weekId: integer("week_id")
+      .notNull()
+      .references(() => week.id),
+    averageCushion: real("average_cushion"),
+    averageSeparation: real("average_separation"),
+    averageIntendedAirYards: real("average_intended_air_yards"),
     percentShareOfIntendedAirYards: real("percent_share_of_intended_air_yards"),
-    receptions: real("receptions"),
-    targets: real("targets"),
+    receptions: integer("receptions"),
+    targets: integer("targets"),
     catchPercentage: real("catch_percentage"),
-    yards: real("yards"),
-    recTouchdowns: real("rec_touchdowns"),
-    avgYac: real("avg_yac"),
-    avgExpectedYac: real("avg_expected_yac"),
-    avgYacAboveExpectation: real("avg_yac_above_expectation"),
-    contentHash: text("content_hash"),
-    updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
+    yards: integer("yards"),
+    receivingTouchdowns: integer("receiving_touchdowns"),
+    averageYardsAfterCatch: real("average_yards_after_catch"),
+    averageExpectedYardsAfterCatch: real("average_expected_yards_after_catch"),
+    averageYardsAfterCatchAboveExpectation: real("average_yards_after_catch_above_expectation"),
+    ...meta(),
   },
-  (t) => [uniqueIndex("ngs_rec_idx").on(t.playerId, t.season, t.seasonType, t.week)],
+  (t) => [uniqueIndex("ngs_receiving_unique_idx").on(t.playerId, t.seasonId, t.weekId)],
 );
 
-export const ngs_rushing = sqliteTable(
+export const ngsRushing = sqliteTable(
   "ngs_rushing",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
-    playerId: integer("player_id").references(() => player.id),
+    playerId: integer("player_id")
+      .notNull()
+      .references(() => player.id),
     teamId: integer("team_id").references(() => team.id),
-    season: integer("season"),
-    seasonType: text("season_type").notNull(),
-    week: integer("week"),
-    playerDisplayName: text("player_display_name"),
-    playerPosition: text("player_position"),
-    playerFirstName: text("player_first_name"),
-    playerLastName: text("player_last_name"),
-    playerJerseyNumber: text("player_jersey_number").notNull(),
-    playerShortName: text("player_short_name"),
+    seasonId: integer("season_id")
+      .notNull()
+      .references(() => season.id),
+    weekId: integer("week_id")
+      .notNull()
+      .references(() => week.id),
     efficiency: real("efficiency"),
-    percentAttemptsGteEightDefenders: real("percent_attempts_gte_eight_defenders"),
-    avgTimeToLos: real("avg_time_to_los"),
-    rushAttempts: real("rush_attempts"),
-    rushYards: real("rush_yards"),
-    avgRushYards: real("avg_rush_yards"),
-    rushTouchdowns: real("rush_touchdowns"),
-    expectedRushYards: real("expected_rush_yards"),
-    rushYardsOverExpected: real("rush_yards_over_expected"),
-    rushYardsOverExpectedPerAtt: real("rush_yards_over_expected_per_att"),
-    rushPctOverExpected: real("rush_pct_over_expected"),
-    contentHash: text("content_hash"),
-    updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
+    percentAttemptsWithEightPlusDefenders: real("percent_attempts_with_eight_plus_defenders"),
+    averageTimeToLineOfScrimmage: real("average_time_to_line_of_scrimmage"),
+    rushingAttempts: integer("rushing_attempts"),
+    rushingYards: integer("rushing_yards"),
+    averageRushingYards: real("average_rushing_yards"),
+    rushingTouchdowns: integer("rushing_touchdowns"),
+    expectedRushingYards: real("expected_rushing_yards"),
+    rushingYardsOverExpected: real("rushing_yards_over_expected"),
+    rushingYardsOverExpectedPerAttempt: real("rushing_yards_over_expected_per_attempt"),
+    rushingPercentageOverExpected: real("rushing_percentage_over_expected"),
+    ...meta(),
   },
-  (t) => [uniqueIndex("ngs_rush_idx").on(t.playerId, t.season, t.seasonType, t.week)],
+  (t) => [uniqueIndex("ngs_rushing_unique_idx").on(t.playerId, t.seasonId, t.weekId)],
 );

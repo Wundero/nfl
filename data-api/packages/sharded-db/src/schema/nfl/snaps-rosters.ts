@@ -1,101 +1,62 @@
-import { sqliteTable, text, integer, real, index } from "drizzle-orm/sqlite-core";
+import { sqliteTable, text, integer, real, index, uniqueIndex } from "drizzle-orm/sqlite-core";
 import { game } from "./games";
-import { player, team } from "./reference";
+import { player, position, season, team, week } from "./reference";
 
-export const snap_count = sqliteTable(
+export const snapCount = sqliteTable(
   "snap_count",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
-    gameId: integer("game_id").references(() => game.id),
-    playerId: integer("player_id").references(() => player.id),
-    playerName: text("player_name"),
+    playerId: integer("player_id")
+      .notNull()
+      .references(() => player.id),
     teamId: integer("team_id").references(() => team.id),
-    opponentTeamId: integer("opponent_team_id").references(() => team.id),
-    season: real("season"),
-    gameType: text("game_type").notNull(),
-    week: real("week"),
-    position: text("position"),
-    offenseSnaps: real("offense_snaps"),
-    offensePct: real("offense_pct"),
-    defenseSnaps: real("defense_snaps"),
-    defensePct: real("defense_pct"),
-    stSnaps: real("st_snaps"),
-    stPct: real("st_pct"),
-    contentHash: text("content_hash"),
-    updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
-  },
-  (t) => [index("snap_game_idx").on(t.gameId), index("snap_player_idx").on(t.playerId)],
-);
-
-export const roster_weekly = sqliteTable(
-  "roster_weekly",
-  {
-    id: integer("id").primaryKey({ autoIncrement: true }),
-    playerId: integer("player_id").references(() => player.id),
-    teamId: integer("team_id").references(() => team.id),
-    season: real("season"),
-    position: text("position"),
-    depthChartPosition: text("depth_chart_position"),
-    jerseyNumber: text("jersey_number").notNull(),
-    status: text("status").notNull(),
-    fullName: text("full_name"),
-    firstName: text("first_name"),
-    lastName: text("last_name"),
-    birthDate: integer("birth_date", { mode: "timestamp_ms" }),
-    height: text("height").notNull(),
-    weight: text("weight").notNull(),
-    college: text("college"),
-    yearsExp: integer("years_exp"),
-    headshotUrl: text("headshot_url"),
-    ngsPosition: text("ngs_position"),
-    week: integer("week"),
-    gameType: text("game_type"),
-    statusDescriptionAbbr: text("status_description_abbr"),
-    footballName: text("football_name"),
-    entryYear: integer("entry_year"),
-    rookieYear: integer("rookie_year"),
-    draftClub: text("draft_club"),
-    draftNumber: integer("draft_number"),
+    gameId: integer("game_id")
+      .notNull()
+      .references(() => game.id),
+    positionId: integer("position_id").references(() => position.id),
+    offenseSnaps: integer("offense_snaps"),
+    offensePercentage: real("offense_percentage"),
+    defenseSnaps: integer("defense_snaps"),
+    defensePercentage: real("defense_percentage"),
+    specialTeamsSnaps: integer("special_teams_snaps"),
+    specialTeamsPercentage: real("special_teams_percentage"),
     contentHash: text("content_hash"),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
   },
   (t) => [
-    index("rw_player_idx").on(t.playerId),
-    index("rw_team_week_idx").on(t.teamId, t.season, t.week),
+    uniqueIndex("snap_count_player_game_idx").on(t.playerId, t.gameId),
+    index("snap_count_content_hash_idx").on(t.contentHash),
   ],
 );
 
-export const roster_season = sqliteTable(
-  "roster_season",
+export const rosterDepthChart = sqliteTable(
+  "roster_depth_chart",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
-    playerId: integer("player_id").references(() => player.id),
+    playerId: integer("player_id")
+      .notNull()
+      .references(() => player.id),
     teamId: integer("team_id").references(() => team.id),
-    season: real("season"),
-    position: text("position"),
-    depthChartPosition: text("depth_chart_position"),
-    jerseyNumber: text("jersey_number").notNull(),
+    seasonId: integer("season_id")
+      .notNull()
+      .references(() => season.id),
+    // Null for season-level roster entries that are not tied to a specific week.
+    weekId: integer("week_id").references(() => week.id),
+    gameType: text("game_type"),
+    formation: text("formation"),
+    depthTeam: text("depth_team"),
+    positionId: integer("position_id").references(() => position.id),
+    depthPosition: text("depth_position"),
+    slot: integer("slot"),
+    rank: integer("rank"),
     status: text("status"),
-    fullName: text("full_name"),
-    firstName: text("first_name"),
-    lastName: text("last_name"),
-    birthDate: integer("birth_date", { mode: "timestamp_ms" }),
-    height: real("height"),
-    weight: integer("weight"),
-    college: text("college"),
-    yearsExp: integer("years_exp"),
-    headshotUrl: text("headshot_url"),
-    ngsPosition: text("ngs_position"),
-    week: real("week"),
-    gameType: text("game_type").notNull(),
-    statusDescriptionAbbr: text("status_description_abbr"),
-    footballName: text("football_name"),
-    entryYear: integer("entry_year"),
-    rookieYear: integer("rookie_year"),
-    draftClub: text("draft_club"),
-    draftNumber: integer("draft_number"),
+    statusDescriptionAbbreviation: text("status_description_abbreviation"),
     contentHash: text("content_hash"),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
   },
-  (t) => [index("rs_player_idx").on(t.playerId), index("rs_team_idx").on(t.teamId, t.season)],
+  (t) => [
+    index("roster_depth_chart_player_idx").on(t.playerId),
+    index("roster_depth_chart_team_week_idx").on(t.teamId, t.seasonId, t.weekId),
+    index("roster_depth_chart_content_hash_idx").on(t.contentHash),
+  ],
 );

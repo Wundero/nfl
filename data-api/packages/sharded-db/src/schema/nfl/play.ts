@@ -1,41 +1,116 @@
-import { sqliteTable, text, integer, real, index } from "drizzle-orm/sqlite-core";
+import { sqliteTable, text, integer, real, index, uniqueIndex } from "drizzle-orm/sqlite-core";
 import { game } from "./games";
-import { team, player } from "./reference";
+import { player, team } from "./reference";
 
+// flags bitfield, bits in order:
+// 0 quarterEnd
+// 1 scoringPlay
+// 2 shotgun
+// 3 noHuddle
+// 4 qbDropback
+// 5 qbKneel
+// 6 qbSpike
+// 7 qbScramble
+// 8 timeout
+// 9 puntBlocked
+// 10 firstDownRush
+// 11 firstDownPass
+// 12 firstDownPenalty
+// 13 thirdDownConverted
+// 14 thirdDownFailed
+// 15 fourthDownConverted
+// 16 fourthDownFailed
+// 17 incompletePass
+// 18 touchback
+// 19 interception
+// 20 puntInsideTwenty
+// 21 puntInEndzone
+// 22 puntOutOfBounds
+// 23 puntDowned
+// 24 puntFairCatch
+// 25 kickoffInsideTwenty
+// 26 kickoffInEndzone
+// 27 kickoffOutOfBounds
+// 28 kickoffDowned
+// 29 kickoffFairCatch
+// flags2 bitfield, bits in order:
+// 0 fumbleForced
+// 1 fumbleNotForced
+// 2 fumbleOutOfBounds
+// 3 soloTackle
+// 4 safety
+// 5 penalty
+// 6 tackledForLoss
+// 7 fumbleLost
+// 8 ownKickoffRecovery
+// 9 ownKickoffRecoveryTd
+// 10 qbHit
+// 11 rushAttempt
+// 12 passAttempt
+// 13 sack
+// 14 touchdown
+// 15 passTouchdown
+// 16 rushTouchdown
+// 17 returnTouchdown
+// 18 extraPointAttempt
+// 19 twoPointAttempt
+// 20 fieldGoalAttempt
+// 21 kickoffAttempt
+// 22 puntAttempt
+// 23 fumble
+// 24 completePass
+// 25 assistTackle
+// 26 lateralReception
+// 27 lateralRush
+// 28 lateralReturn
+// 29 lateralRecovery
+// flags3 bitfield, bits in order:
+// 0 tackleWithAssist
+// 1 replayOrChallenge
+// 2 defensiveTwoPointAttempt
+// 3 defensiveTwoPointConv
+// 4 defensiveExtraPointAttempt
+// 5 defensiveExtraPointConv
+// 6 seriesSuccess
+// 7 playDeleted
+// 8 specialTeamsPlay
+// 9 driveInside20
+// 10 driveEndedWithScore
+// 11 abortedPlay
+// 12 success
+// 13 pass
+// 14 rush
+// 15 firstDown
+// 16 special
+// 17 play
+// 18 outOfBounds
 export const play = sqliteTable(
   "play",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
-    gameId: integer("game_id").references(() => game.id),
-    posteamId: integer("posteam_id").references(() => team.id),
-    defteamId: integer("defteam_id").references(() => team.id),
-    playId: text("play_id").notNull(),
-    week: integer("week"),
-    posteamType: text("posteam_type"),
+    gameId: integer("game_id").notNull().references(() => game.id),
+    possessionTeamId: integer("possession_team_id").references(() => team.id),
+    defensiveTeamId: integer("defensive_team_id").references(() => team.id),
+    possessionType: text("possession_type"),
+    flags: integer("flags"),
+    flags2: integer("flags2"),
+    flags3: integer("flags3"),
     yardline100: real("yardline_100"),
     quarterSecondsRemaining: real("quarter_seconds_remaining"),
     halfSecondsRemaining: real("half_seconds_remaining"),
     gameSecondsRemaining: real("game_seconds_remaining"),
-    gameHalf: text("game_half").notNull(),
-    quarterEnd: integer("quarter_end", { mode: "boolean" }).notNull(),
+    gameHalf: text("game_half"),
     drive: real("drive"),
-    sp: integer("sp", { mode: "boolean" }).notNull(),
-    qtr: real("qtr"),
+    quarter: real("quarter"),
     down: real("down"),
     goalToGo: real("goal_to_go"),
     time: text("time"),
-    yrdln: text("yrdln"),
-    ydstogo: real("ydstogo"),
-    ydsnet: real("ydsnet"),
-    desc: text("desc"),
-    playType: text("play_type"),
+    yardLine: text("yardLine"),
+    yardsToGo: real("yardsToGo"),
+    netYards: real("netYards"),
+    playDescription: text("playDescription"),
+    playType: text("playType"),
     yardsGained: real("yards_gained"),
-    shotgun: integer("shotgun", { mode: "boolean" }).notNull(),
-    noHuddle: integer("no_huddle", { mode: "boolean" }).notNull(),
-    qbDropback: integer("qb_dropback", { mode: "boolean" }),
-    qbKneel: integer("qb_kneel", { mode: "boolean" }),
-    qbSpike: integer("qb_spike", { mode: "boolean" }),
-    qbScramble: integer("qb_scramble", { mode: "boolean" }),
     passLength: text("pass_length"),
     passLocation: text("pass_location"),
     airYards: real("air_yards"),
@@ -46,163 +121,61 @@ export const play = sqliteTable(
     kickDistance: real("kick_distance"),
     extraPointResult: text("extra_point_result"),
     twoPointConvResult: text("two_point_conv_result"),
-    homeTimeoutsRemaining: real("home_timeouts_remaining"),
-    awayTimeoutsRemaining: real("away_timeouts_remaining"),
-    timeout: integer("timeout", { mode: "boolean" }),
-    totalHomeScore: real("total_home_score"),
-    totalAwayScore: real("total_away_score"),
-    posteamScore: real("posteam_score"),
-    defteamScore: real("defteam_score"),
-    scoreDifferential: real("score_differential"),
-    posteamScorePost: real("posteam_score_post"),
-    defteamScorePost: real("defteam_score_post"),
-    scoreDifferentialPost: real("score_differential_post"),
-    noScoreProb: real("no_score_prob"),
-    oppFgProb: real("opp_fg_prob"),
-    oppSafetyProb: real("opp_safety_prob"),
-    oppTdProb: real("opp_td_prob"),
-    fgProb: real("fg_prob"),
-    safetyProb: real("safety_prob"),
-    tdProb: real("td_prob"),
-    extraPointProb: real("extra_point_prob"),
-    twoPointConversionProb: real("two_point_conversion_prob"),
+    posteamTimeoutsRemaining: real("posteam_timeouts_remaining"),
+    defteamTimeoutsRemaining: real("defteam_timeouts_remaining"),
+    noScoreProbability: real("noScoreProbability"),
+    opponentFieldGoalProbability: real("opponentFieldGoalProbability"),
+    opponentSafetyProbability: real("opponentSafetyProbability"),
+    opponentTouchdownProbability: real("opponentTouchdownProbability"),
+    fieldGoalProbability: real("fieldGoalProbability"),
+    safetyProbability: real("safetyProbability"),
+    touchdownProbability: real("touchdownProbability"),
+    extraPointProbability: real("extraPointProbability"),
+    twoPointConversionProbability: real("twoPointConversionProbability"),
     ep: real("ep"),
-    epa: real("epa"),
-    totalHomeEpa: real("total_home_epa"),
-    totalAwayEpa: real("total_away_epa"),
-    totalHomeRushEpa: real("total_home_rush_epa"),
-    totalAwayRushEpa: real("total_away_rush_epa"),
-    totalHomePassEpa: real("total_home_pass_epa"),
-    totalAwayPassEpa: real("total_away_pass_epa"),
+    expectedPointsAdded: real("expectedPointsAdded"),
     airEpa: real("air_epa"),
     yacEpa: real("yac_epa"),
     compAirEpa: real("comp_air_epa"),
     compYacEpa: real("comp_yac_epa"),
-    totalHomeCompAirEpa: real("total_home_comp_air_epa"),
-    totalAwayCompAirEpa: real("total_away_comp_air_epa"),
-    totalHomeCompYacEpa: real("total_home_comp_yac_epa"),
-    totalAwayCompYacEpa: real("total_away_comp_yac_epa"),
-    totalHomeRawAirEpa: real("total_home_raw_air_epa"),
-    totalAwayRawAirEpa: real("total_away_raw_air_epa"),
-    totalHomeRawYacEpa: real("total_home_raw_yac_epa"),
-    totalAwayRawYacEpa: real("total_away_raw_yac_epa"),
-    wp: real("wp"),
-    defWp: real("def_wp"),
-    homeWp: real("home_wp"),
-    awayWp: real("away_wp"),
-    wpa: real("wpa"),
-    vegasWpa: real("vegas_wpa"),
+    winProbability: real("winProbability"),
+    defensiveWinProbability: real("defensiveWinProbability"),
+    winProbabilityAdded: real("winProbabilityAdded"),
+    vegasWinProbabilityAdded: real("vegasWinProbabilityAdded"),
     vegasHomeWpa: real("vegas_home_wpa"),
-    homeWpPost: real("home_wp_post"),
-    awayWpPost: real("away_wp_post"),
-    vegasWp: real("vegas_wp"),
-    vegasHomeWp: real("vegas_home_wp"),
-    totalHomeRushWpa: real("total_home_rush_wpa"),
-    totalAwayRushWpa: real("total_away_rush_wpa"),
-    totalHomePassWpa: real("total_home_pass_wpa"),
-    totalAwayPassWpa: real("total_away_pass_wpa"),
+    vegasWinProbability: real("vegasWinProbability"),
+    vegasHomeWinProbability: real("vegasHomeWinProbability"),
     airWpa: real("air_wpa"),
     yacWpa: real("yac_wpa"),
     compAirWpa: real("comp_air_wpa"),
     compYacWpa: real("comp_yac_wpa"),
-    totalHomeCompAirWpa: real("total_home_comp_air_wpa"),
-    totalAwayCompAirWpa: real("total_away_comp_air_wpa"),
-    totalHomeCompYacWpa: real("total_home_comp_yac_wpa"),
-    totalAwayCompYacWpa: real("total_away_comp_yac_wpa"),
-    totalHomeRawAirWpa: real("total_home_raw_air_wpa"),
-    totalAwayRawAirWpa: real("total_away_raw_air_wpa"),
-    totalHomeRawYacWpa: real("total_home_raw_yac_wpa"),
-    totalAwayRawYacWpa: real("total_away_raw_yac_wpa"),
-    puntBlocked: integer("punt_blocked", { mode: "boolean" }),
-    firstDownRush: integer("first_down_rush", { mode: "boolean" }),
-    firstDownPass: integer("first_down_pass", { mode: "boolean" }),
-    firstDownPenalty: integer("first_down_penalty", { mode: "boolean" }),
-    thirdDownConverted: integer("third_down_converted", { mode: "boolean" }),
-    thirdDownFailed: integer("third_down_failed", { mode: "boolean" }),
-    fourthDownConverted: integer("fourth_down_converted", { mode: "boolean" }),
-    fourthDownFailed: integer("fourth_down_failed", { mode: "boolean" }),
-    incompletePass: integer("incomplete_pass", { mode: "boolean" }),
-    touchback: integer("touchback", { mode: "boolean" }),
-    interception: integer("interception", { mode: "boolean" }),
-    puntInsideTwenty: integer("punt_inside_twenty", { mode: "boolean" }),
-    puntInEndzone: integer("punt_in_endzone", { mode: "boolean" }),
-    puntOutOfBounds: integer("punt_out_of_bounds", { mode: "boolean" }),
-    puntDowned: integer("punt_downed", { mode: "boolean" }),
-    puntFairCatch: integer("punt_fair_catch", { mode: "boolean" }),
-    kickoffInsideTwenty: integer("kickoff_inside_twenty", { mode: "boolean" }),
-    kickoffInEndzone: integer("kickoff_in_endzone", { mode: "boolean" }),
-    kickoffOutOfBounds: integer("kickoff_out_of_bounds", { mode: "boolean" }),
-    kickoffDowned: integer("kickoff_downed", { mode: "boolean" }),
-    kickoffFairCatch: integer("kickoff_fair_catch", { mode: "boolean" }),
-    fumbleForced: integer("fumble_forced", { mode: "boolean" }),
-    fumbleNotForced: integer("fumble_not_forced", { mode: "boolean" }),
-    fumbleOutOfBounds: integer("fumble_out_of_bounds", { mode: "boolean" }),
-    soloTackle: integer("solo_tackle", { mode: "boolean" }),
-    safety: integer("safety", { mode: "boolean" }),
-    penalty: integer("penalty", { mode: "boolean" }),
-    tackledForLoss: integer("tackled_for_loss", { mode: "boolean" }),
-    fumbleLost: integer("fumble_lost", { mode: "boolean" }),
-    ownKickoffRecovery: integer("own_kickoff_recovery", { mode: "boolean" }),
-    ownKickoffRecoveryTd: integer("own_kickoff_recovery_td", { mode: "boolean" }),
-    qbHit: integer("qb_hit", { mode: "boolean" }),
-    rushAttempt: integer("rush_attempt", { mode: "boolean" }),
-    passAttempt: integer("pass_attempt", { mode: "boolean" }),
-    sack: integer("sack", { mode: "boolean" }),
-    touchdown: integer("touchdown", { mode: "boolean" }),
-    passTouchdown: integer("pass_touchdown", { mode: "boolean" }),
-    rushTouchdown: integer("rush_touchdown", { mode: "boolean" }),
-    returnTouchdown: integer("return_touchdown", { mode: "boolean" }),
-    extraPointAttempt: integer("extra_point_attempt", { mode: "boolean" }),
-    twoPointAttempt: integer("two_point_attempt", { mode: "boolean" }),
-    fieldGoalAttempt: integer("field_goal_attempt", { mode: "boolean" }),
-    kickoffAttempt: integer("kickoff_attempt", { mode: "boolean" }),
-    puntAttempt: integer("punt_attempt", { mode: "boolean" }),
-    fumble: integer("fumble", { mode: "boolean" }),
-    completePass: integer("complete_pass", { mode: "boolean" }),
-    assistTackle: integer("assist_tackle", { mode: "boolean" }),
-    lateralReception: integer("lateral_reception", { mode: "boolean" }),
-    lateralRush: integer("lateral_rush", { mode: "boolean" }),
-    lateralReturn: integer("lateral_return", { mode: "boolean" }),
-    lateralRecovery: integer("lateral_recovery", { mode: "boolean" }),
     passingYards: real("passing_yards"),
     receivingYards: real("receiving_yards"),
     rushingYards: real("rushing_yards"),
     lateralReceivingYards: real("lateral_receiving_yards"),
     lateralRushingYards: real("lateral_rushing_yards"),
-    tackleWithAssist: integer("tackle_with_assist", { mode: "boolean" }),
     fumbleRecovery1Yards: real("fumble_recovery_1_yards"),
     fumbleRecovery2Yards: real("fumble_recovery_2_yards"),
     returnYards: real("return_yards"),
     penaltyYards: real("penalty_yards"),
-    replayOrChallenge: integer("replay_or_challenge", { mode: "boolean" }),
     replayOrChallengeResult: text("replay_or_challenge_result"),
     penaltyType: text("penalty_type"),
-    defensiveTwoPointAttempt: integer("defensive_two_point_attempt", { mode: "boolean" }),
-    defensiveTwoPointConv: integer("defensive_two_point_conv", { mode: "boolean" }),
-    defensiveExtraPointAttempt: integer("defensive_extra_point_attempt", { mode: "boolean" }),
-    defensiveExtraPointConv: integer("defensive_extra_point_conv", { mode: "boolean" }),
-    season: integer("season"),
-    cp: real("cp"),
-    cpoe: real("cpoe"),
+    completionProbability: real("completionProbability"),
+    completionPercentageOverExpected: real("completionPercentageOverExpected"),
     series: real("series"),
-    seriesSuccess: integer("series_success", { mode: "boolean" }).notNull(),
     seriesResult: text("series_result"),
     orderSequence: real("order_sequence"),
     playClock: text("play_clock"),
-    playDeleted: integer("play_deleted", { mode: "boolean" }),
-    playTypeNfl: text("play_type_nfl"),
-    specialTeamsPlay: integer("special_teams_play", { mode: "boolean" }),
+    nflPlayType: text("nflPlayType"),
     stPlayType: text("st_play_type"),
     endClockTime: text("end_clock_time"),
     endYardLine: text("end_yard_line"),
     fixedDrive: real("fixed_drive"),
-    fixedDriveResult: text("fixed_drive_result").notNull(),
-    driveRealStartTime: text("drive_real_start_time").notNull(),
+    fixedDriveResult: text("fixed_drive_result"),
+    driveRealStartTime: text("drive_real_start_time"),
     drivePlayCount: real("drive_play_count"),
     driveTimeOfPossession: text("drive_time_of_possession"),
     driveFirstDowns: real("drive_first_downs"),
-    driveInside20: integer("drive_inside20", { mode: "boolean" }),
-    driveEndedWithScore: integer("drive_ended_with_score", { mode: "boolean" }),
     driveQuarterStart: real("drive_quarter_start"),
     driveQuarterEnd: real("drive_quarter_end"),
     driveYardsPenalized: real("drive_yards_penalized"),
@@ -212,36 +185,64 @@ export const play = sqliteTable(
     driveGameClockEnd: text("drive_game_clock_end"),
     driveStartYardLine: text("drive_start_yard_line"),
     driveEndYardLine: text("drive_end_yard_line"),
-    drivePlayIdStarted: text("drive_play_id_started").notNull(),
-    drivePlayIdEnded: text("drive_play_id_ended").notNull(),
-    abortedPlay: integer("aborted_play", { mode: "boolean" }).notNull(),
-    success: integer("success", { mode: "boolean" }),
-    pass: integer("pass", { mode: "boolean" }).notNull(),
-    rush: integer("rush", { mode: "boolean" }).notNull(),
-    firstDown: integer("first_down", { mode: "boolean" }),
-    special: integer("special", { mode: "boolean" }).notNull(),
-    play: integer("play", { mode: "boolean" }).notNull(),
-    outOfBounds: integer("out_of_bounds", { mode: "boolean" }).notNull(),
-    homeOpeningKickoff: integer("home_opening_kickoff", { mode: "boolean" }).notNull(),
-    qbEpa: real("qb_epa"),
-    xyacEpa: real("xyac_epa"),
-    xyacMeanYardage: real("xyac_mean_yardage"),
-    xyacMedianYardage: real("xyac_median_yardage"),
-    xyacSuccess: real("xyac_success"),
-    xyacFd: real("xyac_fd"),
-    xpass: real("xpass"),
-    passOe: real("pass_oe"),
+    drivePlayIdStarted: text("drive_play_id_started"),
+    drivePlayIdEnded: text("drive_play_id_ended"),
+    quarterbackExpectedPointsAdded: real("quarterbackExpectedPointsAdded"),
+    expectedYardsAfterCatchExpectedPointsAdded: real("expectedYardsAfterCatchExpectedPointsAdded"),
+    expectedYardsAfterCatchMeanYardage: real("expectedYardsAfterCatchMeanYardage"),
+    expectedYardsAfterCatchMedianYardage: real("expectedYardsAfterCatchMedianYardage"),
+    expectedYardsAfterCatchSuccess: real("expectedYardsAfterCatchSuccess"),
+    expectedYardsAfterCatchFirstDown: real("expectedYardsAfterCatchFirstDown"),
+    expectedPassRate: real("expectedPassRate"),
+    passOverExpected: real("passOverExpected"),
     contentHash: text("content_hash"),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
   },
   (t) => [
     index("play_game_idx").on(t.gameId),
-    index("play_season_week_idx").on(t.season, t.week),
-    index("play_posteam_idx").on(t.posteamId),
+    index("play_possession_team_idx").on(t.possessionTeamId),
+    index("play_defensive_team_idx").on(t.defensiveTeamId),
+    index("play_content_hash_idx").on(t.contentHash),
   ],
 );
 
-export const play_player = sqliteTable(
+export const playTeamStats = sqliteTable(
+  "play_team_stats",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    playId: integer("play_id")
+      .notNull()
+      .references(() => play.id),
+    teamId: integer("team_id")
+      .notNull()
+      .references(() => team.id),
+    isHome: integer("is_home", { mode: "boolean" }).notNull(),
+    score: integer("score"),
+    scoreDifferential: integer("score_differential"),
+    timeoutsRemaining: real("timeouts_remaining"),
+    expectedPointsAdded: real("expected_points_added"),
+    rushEpa: real("rush_epa"),
+    passEpa: real("pass_epa"),
+    compAirEpa: real("comp_air_epa"),
+    compYacEpa: real("comp_yac_epa"),
+    rawAirEpa: real("raw_air_epa"),
+    rawYacEpa: real("raw_yac_epa"),
+    winProbability: real("win_probability"),
+    wpPost: real("wp_post"),
+    rushWpa: real("rush_wpa"),
+    passWpa: real("pass_wpa"),
+    compAirWpa: real("comp_air_wpa"),
+    compYacWpa: real("comp_yac_wpa"),
+    rawAirWpa: real("raw_air_wpa"),
+    rawYacWpa: real("raw_yac_wpa"),
+  },
+  (t) => [
+    uniqueIndex("play_team_stats_unique_idx").on(t.playId, t.teamId),
+    index("play_team_stats_team_idx").on(t.teamId),
+  ],
+);
+
+export const playPlayer = sqliteTable(
   "play_player",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
@@ -262,7 +263,7 @@ export const play_player = sqliteTable(
   ],
 );
 
-export const play_team = sqliteTable(
+export const playTeam = sqliteTable(
   "play_team",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),

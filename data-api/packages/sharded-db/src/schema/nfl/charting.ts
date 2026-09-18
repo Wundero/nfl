@@ -1,41 +1,33 @@
-import { sqliteTable, text, integer, real, index, uniqueIndex } from "drizzle-orm/sqlite-core";
+import { sqliteTable, text, integer, index, uniqueIndex } from "drizzle-orm/sqlite-core";
 import { game } from "./games";
+import { play } from "./play";
 
-export const ftn_charting = sqliteTable(
+// flags bitfield, bits in order:
+// 0 isNoHuddle, 1 isMotion, 2 isPlayAction, 3 isScreenPass, 4 isRunPassOption, 5 isTrickPlay,
+// 6 isQbOutOfPocket, 7 isInterceptionWorthy, 8 isThrowAway, 9 isCatchableBall, 10 isContestedBall,
+// 11 isCreatedReception, 12 isDrop, 13 isQbSneak, 14 isQbFaultSack
+export const ftnCharting = sqliteTable(
   "ftn_charting",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
-    gameId: integer("game_id").references(() => game.id),
-    ftnGameId: integer("ftn_game_id"),
-    season: real("season"),
-    week: real("week"),
-    ftnPlayId: text("ftn_play_id").notNull(),
-    nflversePlayId: text("nflverse_play_id").notNull(),
+    gameId: integer("game_id")
+      .notNull()
+      .references(() => game.id),
+    playId: integer("play_id").references(() => play.id),
+    flags: integer("flags").notNull(),
     startingHash: text("starting_hash"),
-    qbLocation: text("qb_location"),
-    nOffenseBackfield: integer("n_offense_backfield"),
-    nDefenseBox: integer("n_defense_box"),
-    isNoHuddle: integer("is_no_huddle", { mode: "boolean" }).notNull(),
-    isMotion: integer("is_motion", { mode: "boolean" }).notNull(),
-    isPlayAction: integer("is_play_action", { mode: "boolean" }).notNull(),
-    isScreenPass: integer("is_screen_pass", { mode: "boolean" }).notNull(),
-    isRpo: integer("is_rpo", { mode: "boolean" }).notNull(),
-    isTrickPlay: integer("is_trick_play", { mode: "boolean" }).notNull(),
-    isQbOutOfPocket: integer("is_qb_out_of_pocket", { mode: "boolean" }).notNull(),
-    isInterceptionWorthy: integer("is_interception_worthy", { mode: "boolean" }).notNull(),
-    isThrowAway: integer("is_throw_away", { mode: "boolean" }).notNull(),
+    quarterbackLocation: text("quarterback_location"),
+    offenseBackfieldCount: integer("offense_backfield_count"),
+    defenseBoxCount: integer("defense_box_count"),
     readThrown: text("read_thrown"),
-    isCatchableBall: integer("is_catchable_ball", { mode: "boolean" }).notNull(),
-    isContestedBall: integer("is_contested_ball", { mode: "boolean" }).notNull(),
-    isCreatedReception: integer("is_created_reception", { mode: "boolean" }).notNull(),
-    isDrop: integer("is_drop", { mode: "boolean" }).notNull(),
-    isQbSneak: integer("is_qb_sneak", { mode: "boolean" }).notNull(),
-    nBlitzers: integer("n_blitzers"),
-    nPassRushers: integer("n_pass_rushers"),
-    isQbFaultSack: integer("is_qb_fault_sack", { mode: "boolean" }).notNull(),
-    datePulled: integer("date_pulled", { mode: "timestamp_ms" }),
+    blitzerCount: integer("blitzer_count"),
+    passRusherCount: integer("pass_rusher_count"),
     contentHash: text("content_hash"),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
   },
-  (t) => [index("ftn_game_idx").on(t.gameId), uniqueIndex("ftn_play_idx").on(t.nflversePlayId)],
+  (t) => [
+    index("ftn_charting_game_idx").on(t.gameId),
+    uniqueIndex("ftn_charting_play_idx").on(t.playId),
+    index("ftn_charting_content_hash_idx").on(t.contentHash),
+  ],
 );

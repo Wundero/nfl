@@ -199,3 +199,86 @@ I want to make sure my server API exposes a graphql endpoint AND a separate grap
 ``` -> opencode
 As a general question, how best should I handle api versioning for graphql? I feel as though it should be a bit different to how RESTful apis handle versioning, and I want to make a proper decision on how I should version APIs before I launch the app.
 ```
+
+``` -> opencode
+Some criticisms of the db schema:
+- Team Colors should be named nicer, namely 1 -> primary, 2 -> secondary, 3 -> tertiary, 4 -> quaternary
+- abbr column on teams should be called abbreviation
+- nick column should probably be a string[] (json text col type), since some teams have multiple nicknames. the column should also be called nicknames.
+- team conf, division, and abbreviation should be non-null
+- some team logos (wikipedia and espn, namely) should be nullable
+  - it would be preferable to split logos into: [icon, text, extras]
+    - icon would be teamLogoSquared
+    - text would be teamWordmark
+    - extras would be [teamLogoWikipedia, teamLogoEspn, ... any others that get added later]
+- the team table shouldn't contain the conference+league logo, those can be static assets since NFC/AFC/NFL logos are mostly unchanging.
+- player displaynames should be non-null
+- the difference between common first name, first name, last name, short name and football name isn't super obvious, and honestly feels kind of unneeded. I would like to trim down to `firstName`, `lastName` and `displayName` if possible (or maybe just `fullName` + `displayName`).
+- player date of birth should be non-null
+- player position group + position (ngs and regular) feel like they can be normalized into a separate table, especially since positions can change sometimes
+- height + weight would be nice to track as a latest, and having historical height+weight tracking for a player could be nice
+- jersey numbers can also change, so a latest jersey num + historical ones would be great
+- yearsOfExperience is fairly easy to infer from rookieSeason, lastSeason and the current year
+- I would prefer acronyms like pff, ngs, etc. to be expanded, especially on these core tables
+- draft pick need not be embedded in the player, it can be pulled from the draft pick table. similarly to draft yr, round and team.
+- for FTN charting, the following should be extracted to the external id table
+  - ftnGameId
+  - ftnPlayId
+  - nflversePlayId
+- given that nflversePlayId exists on ftn charting, it should be able to FK -> the play table, so id like to see that added
+- in many tables, ive seen season + week be nullable real values. These should almost always be notNull + integers. Any case where this is not true should have explicit comments explaining why.
+- In the interest of storage space, it might be preferred to convert the booleans on the ftn charting table into a bitset integer instead.
+- ftn charting need not track datePulled
+- the contract table can normalize the draft info, like player
+- player dob, height, weight, college and page can be removed from the contract table
+- for the depth chart table, `dt` makes no sense as a name - and im not sure what it even offers vs the updatedAt value. either remove or rename it.
+- player name is unneeded on the depth chart table
+- espnId, posGrpId, etc. can either be extracted to the externalId table or replaced with an appropriate FK
+- player jersey number is unneeded on the depth chart table
+- the draft pick table feels too bloated:
+  - hof boolean, allpro, probowls, seasonsStarted, etc. makes more sense on a career player stats section than here
+  - all of the stats can also move to another table
+  - this table likely should be minimal, just the pick info, college, position, team, age when drafted, etc.
+  - draftOvr can move from combine result into the pick table i think
+- the combine result can normalize draft info to the draft table and use an fk
+- player name need not be on combine table
+- height + weight cols on the combine table should be renamed OR moved to a fk to the player height history table
+- id like to extract colleges into their own reference table, and any table which needs a reference to it (draft pick, player, combine result) can use an fk
+- espn qbr stats dont need to include name info, headshots, team names, etc.
+- for espn qbr weekly data, it would be nice to have an FK to the game played, and to drop the team, opp, week, etc. info in favor of that FK
+- game official table can drop season type, season, week, etc. since the game has that info and it should be inferrable from that data.
+- it might be nice to replace the game QB ids with a table which references which players played in which game, not sure what that would look like though
+- game season + week must be notNull
+- I would like stadiums to have a reference table
+- games referencing stadiums can then determine the surface + roof info based on the stadium
+- coaches should also have a reference table, and games should point to coaches by id
+- ngs tables also can remove player name + jersey info
+- in general, season+week might be nice to coalesce into gameId where possible, since the game represents exactly that info
+- the pfr advanced stats should expand the column names out from acronyms
+- season + week should likely have reference tables, though they can be simple tables
+- pfr advanced stat tables need not include player age, position, etc.
+- I think content hash columns should all be `unique` or at least have indexes
+- pfr weekly stats shouldn't have a pfrGameId/season/week, and instead a gameId FK -> game table, and the game table can track its own pfr id in the external id table
+- pfr weekly stats also dont need pfrPlayerId/name
+- on play table, posteam + defteam should be named something more obvious
+- the playId col on play table should be external id, with the correct source type
+- play table should expand acronyms in column names
+- like the ftn table, booleans would be nice as a bitset if possible (maybe more than one if enough cols exist)
+- id like to coalesce away/home -> posteam/defteam, with a simple "is posteam home or away" field (i think this is posteamType) determining whether home/away = posteam or not
+- opp -> defteam or something makes more sense to me also
+- the columns on the plays table should be grouped in the text together with similar columns, and defining cols (e.g. game id, season, etc.) should be at the top
+- player week stats can likely be turned into player game stats, and info like headshot url / position can be norm'd into proper tables (player, depth chart, etc.)
+- i think a fair number of the stats on the player stat table can be split out into different categories: punts, field goals, passes, receptions, etc. - it might make sense to split those into separate tables and only create rows in those separate tables for players who actually record stats in those categories, to keep data size down by reducing flat column count
+- player stats (week + szn) have acronyms (e.g. gwfg) that should be expanded (e.g. gameWinningFieldGoal)
+- snap count can likely omit opponent team id + player name + game type +season/week/gameType, since that is data on the game/player/etc. tables
+- roster weekly and depth chart seem to be more or less the same - merge these two tables into one table and normalize out duplicate data
+- team stats can remove opponent id from weekly since game stores that
+- trades should not have pfrId/pfrName, and should instead have a nullable playerId FK -> player table, to indicate the player traded
+- trades should be a discriminated union of [player, pick] trades. The data coming into the API can sometimes merge the two together, but that can feel a bit awkward to me. I want each individual trade resource tracked separately, likely as a separate table or tables. The trade table would be `id`, `season`, `tradeDate`, and then the `trade_player` table would be `id`, `tradeId`, `fromTeamId`, `toTeamId`, `tradedPlayerId`, and the `trade_pick` table would be `id`, `tradeId`, `fromTeamId`, `toTeamId`,`pickSeason`, `pickRound`, `pickNumber`. I am not sure how to encode conditional trades, but I would like that data tracked somehow in the trade schema
+
+Address the criticisms I have of the tables, and in general aggressively normalize the tables with junctions, fks, etc. as much as possible.
+```
+
+``` -> opencode
+I feel like the plays table can also use some splitting, similar to the player stats table. maybe split into [gamestate, home stats, away stats] or something. Also, play passer/rusher/receiver/etc. ids need not be there, and should be covered by playPlayer table. 
+```

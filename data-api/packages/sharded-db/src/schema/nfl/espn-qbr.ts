@@ -1,74 +1,49 @@
-import { sqliteTable, text, integer, real, index } from "drizzle-orm/sqlite-core";
-import { player, team } from "./reference";
+import { sqliteTable, text, integer, real, uniqueIndex } from "drizzle-orm/sqlite-core";
+import { game } from "./games";
+import { player, season } from "./reference";
 
-export const espn_qbr_season = sqliteTable(
+const metrics = () => ({
+  rank: real("rank"),
+  qualified: integer("qualified", { mode: "boolean" }),
+  totalQbr: real("total_qbr"),
+  pointsAdded: real("points_added"),
+  quarterbackPlays: real("quarterback_plays"),
+  expectedPointsAddedTotal: real("expected_points_added_total"),
+  passing: real("passing"),
+  rushing: real("rushing"),
+  expectedSacks: real("expected_sacks"),
+  penalty: real("penalty"),
+  rawQbr: real("raw_qbr"),
+  sacks: real("sacks"),
+  contentHash: text("content_hash"),
+  updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
+});
+
+export const espnQbrSeason = sqliteTable(
   "espn_qbr_season",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
-    playerId: integer("player_id").references(() => player.id),
-    teamId: integer("team_id").references(() => team.id),
-    season: real("season"),
+    playerId: integer("player_id")
+      .notNull()
+      .references(() => player.id),
+    seasonId: integer("season_id")
+      .notNull()
+      .references(() => season.id),
     seasonType: text("season_type").notNull(),
-    gameWeek: text("game_week").notNull(),
-    nameShort: text("name_short"),
-    rank: real("rank"),
-    qbrTotal: real("qbr_total"),
-    ptsAdded: real("pts_added"),
-    qbPlays: real("qb_plays"),
-    epaTotal: real("epa_total"),
-    pass: real("pass"),
-    run: real("run"),
-    expSack: real("exp_sack"),
-    penalty: real("penalty"),
-    qbrRaw: real("qbr_raw"),
-    sack: real("sack"),
-    nameFirst: text("name_first"),
-    nameLast: text("name_last"),
-    nameDisplay: text("name_display"),
-    headshotHref: text("headshot_href"),
-    team: text("team"),
-    qualified: integer("qualified", { mode: "boolean" }).notNull(),
-    contentHash: text("content_hash"),
-    updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
+    ...metrics(),
   },
-  (t) => [index("qbr_season_team_idx").on(t.teamId, t.season)],
+  (t) => [uniqueIndex("espn_qbr_season_unique_idx").on(t.playerId, t.seasonId, t.seasonType)],
 );
 
-export const espn_qbr_week = sqliteTable(
+export const espnQbrWeek = sqliteTable(
   "espn_qbr_week",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
-    playerId: integer("player_id").references(() => player.id),
-    teamId: integer("team_id").references(() => team.id),
-    season: real("season"),
-    seasonType: text("season_type").notNull(),
-    gameWeek: text("game_week").notNull(),
-    nameShort: text("name_short"),
-    rank: real("rank"),
-    qbrTotal: real("qbr_total"),
-    ptsAdded: real("pts_added"),
-    qbPlays: real("qb_plays"),
-    epaTotal: real("epa_total"),
-    pass: real("pass"),
-    run: real("run"),
-    expSack: real("exp_sack"),
-    penalty: real("penalty"),
-    qbrRaw: real("qbr_raw"),
-    sack: real("sack"),
-    nameFirst: text("name_first"),
-    nameLast: text("name_last"),
-    nameDisplay: text("name_display"),
-    headshotHref: text("headshot_href"),
-    team: text("team"),
-    qualified: integer("qualified", { mode: "boolean" }).notNull(),
-    weekText: text("week_text"),
-    oppId: text("opp_id"),
-    oppAbb: text("opp_abb"),
-    oppTeam: text("opp_team"),
-    oppName: text("opp_name"),
-    weekNum: real("week_num"),
-    contentHash: text("content_hash"),
-    updatedAt: integer("updated_at", { mode: "timestamp_ms" }),
+    playerId: integer("player_id")
+      .notNull()
+      .references(() => player.id),
+    gameId: integer("game_id").references(() => game.id),
+    ...metrics(),
   },
-  (t) => [index("qbr_week_team_idx").on(t.teamId, t.season)],
+  (t) => [uniqueIndex("espn_qbr_week_unique_idx").on(t.playerId, t.gameId)],
 );
