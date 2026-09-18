@@ -191,3 +191,7 @@ Why are play's player refs denormalized? I feel like the number of cols (3: name
 ``` -> opencode
 The nfl.ts file and schema.ts file are both quite large - it would be great to split out the code into proper files in a subfolder with an index file containing the main export that would be used.
 ```
+
+``` ->
+I want to make sure my server API exposes a graphql endpoint AND a separate graphiql (or other gql playground) page, for exploring the schema. How can I make that happen with graphql yoga and hono? I have some setup in the index.ts of the apps/server pkg, but I am not sure the setup works for graphiql, or if it would be best to have a separate package that handles graphiql.
+```
