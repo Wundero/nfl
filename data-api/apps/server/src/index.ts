@@ -24,7 +24,7 @@ app.on(["POST", "GET"], "/api/auth/*", async (c) => (await createAuth()).handler
 
 const yoga = createYoga<Env & ExecutionContext>({
   schema,
-  graphqlEndpoint: "/api/graphql/v1",
+  graphqlEndpoint: "/api/graphql",
   graphiql: false,
   plugins: [
     useResponseCache({
@@ -33,19 +33,20 @@ const yoga = createYoga<Env & ExecutionContext>({
   ],
 });
 
-app.use("/api/graphql/v1/*", async (c) => {
-  // TODO im not sure URL versioning makes sense for gql, might be more sensible to bake version into the schema
+app.use("/api/graphql", async (c) => {
 
   // @ts-expect-error Request type confusion, but this is valid
   return yoga.fetch(c.req.raw, c.env, c.executionCtx);
 });
 
 app.get("/api/graphql/playground", async (c) => {
-  return c.html(renderGraphiQL({
-    endpoint: "/api/graphql/v1",
-    title: "NFL Data API - GQL Playground",
-  }))
-})
+  return c.html(
+    renderGraphiQL({
+      endpoint: "/api/graphql/v1",
+      title: "NFL Data API - GQL Playground",
+    }),
+  );
+});
 
 app.use("/api/data/v1/*", async (c) => {
   // TODO openapi from drizzle, readonly
